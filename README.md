@@ -8,13 +8,16 @@ It's a tool to generate newborn  [Blood Spot Test Outcome event FHIR messages](h
 ## Pre-requisites
 Install [NodeJS](https://nodejs.org/) on your computer.
 
+## How to deploy/install the tool locally
+
+    npm install
+
+    npm run dist
+
+
 ## How to build and run tests
 
     npm test
-
-## How to deploy/install the tool locally
-
-    npm run dist
 
 
 ## How to run the tool adhoc
