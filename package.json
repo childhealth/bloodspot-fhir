@@ -4,7 +4,8 @@
   "description": "Generates newborn blood spot outcome FHIR events from screening laboratory data.",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "lint": "tslint 'src/**/*.ts'",
+    "build": "tsc && npm run lint",
     "pretest": "npm run build",
     "test": "jasmine --config=./jasmine.json"
   },
@@ -16,6 +17,7 @@
     "@types/jasmine": "^2.8.7",
     "@types/node": "^10.1.4",
     "jasmine": "^3.1.0",
+    "tslint": "^5.10.0",
     "typescript": "^2.8.4"
   }
 }
