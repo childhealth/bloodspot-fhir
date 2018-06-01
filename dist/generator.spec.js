@@ -9,7 +9,7 @@ describe("Generator", () => {
     describe("generateFHIRMessage", () => {
         it("should throw error if input is empty", () => {
             expect(() => {
-                const ignoredFhirMessage = subject.generateFHIRMessage('');
+                const ignoredFhirMessage = subject.generateFHIRMessage("");
             }).toThrow(new Error("Input must not be empty."));
         });
     });
