@@ -1,20 +1,26 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const local_file_input_channel_1 = require("./local.file.input.channel");
 // Read some command-line arguments (process.argv) to determine set the input and output
 const args = process.argv;
 if (args.length !== 4) {
     throw new Error("Its got to have 4 arguments: node index.js inputFileUrl outputFolderUrl");
 }
-args.shift();
-args.shift();
-const locaFileUrl = args.shift();
+args.shift(); // ignore 'node'
+args.shift(); // ignore 'index.js'
+const localFileUrl = args.shift();
+if (typeof localFileUrl === "undefined") {
+    // tslint:disable-next-line:no-console
+    console.log("oh no, its undefined :(");
+    process.exit(1);
+}
 const outputFolderUrl = args.shift();
 // tslint:disable-next-line:no-console
-console.log("locaFileUrl", locaFileUrl);
+console.log("locaFileUrl", localFileUrl);
 // tslint:disable-next-line:no-console
 console.log("outputFolderUrl", outputFolderUrl);
-// const inputChannel: InputChannel = new LocalFileInputChannel(locaFileUrl);
+const inputChannel = new local_file_input_channel_1.LocalFileInputChannel(localFileUrl);
 // const outputChannel = new OutputChannel(localFolderUrl);
 // const generator = new Generator(inputChannel, outputChannel);
 // tslint:disable-next-line:max-line-length
