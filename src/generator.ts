@@ -4,20 +4,19 @@ import { OutputChannel } from "./output.channel";
 export class Generator {
 
     constructor(
-        private inputChannel: InputChannel,
-        private outputChannel: OutputChannel,
+        public inputChannel: InputChannel,
+        public outputChannel: OutputChannel,
     ) {
     }
 
     public execute() {
         for (const eachOutcome of this.inputChannel.outcomes) {
             const outcomeMessage = this.generateFHIRMessage(eachOutcome);
+            this.outputChannel.write(outcomeMessage);
         }
-
-        // TODO this.outputChannel.write()
     }
 
-    public generateFHIRMessage(outcome: any): string {
+    private generateFHIRMessage(outcome: any): string {
         if (outcome === null) {
             throw new Error("Input must not be empty.");
         }

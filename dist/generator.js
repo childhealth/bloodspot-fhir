@@ -8,8 +8,8 @@ class Generator {
     execute() {
         for (const eachOutcome of this.inputChannel.outcomes) {
             const outcomeMessage = this.generateFHIRMessage(eachOutcome);
+            this.outputChannel.write(outcomeMessage);
         }
-        // TODO this.outputChannel.write()
     }
     generateFHIRMessage(outcome) {
         if (outcome === null) {
