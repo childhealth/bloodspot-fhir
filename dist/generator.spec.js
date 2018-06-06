@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const generator_1 = require("./generator");
-const local_file_input_channel_1 = require("./local.file.input.channel");
 const local_folder_output_channel_1 = require("./local.folder.output.channel");
+const dummy_local_file_input_channel_1 = require("./testing/dummy.local.file.input.channel");
 describe("Generator", () => {
     let inputChannel;
     let outputChannel;
     let subject;
     let subjectWithPrivateMethods;
     beforeEach(() => {
-        inputChannel = new local_file_input_channel_1.LocalFileInputChannel("./testing/input01.csv");
+        inputChannel = new dummy_local_file_input_channel_1.DummyLocalFileInputChannel();
         outputChannel = new local_folder_output_channel_1.LocalFolderOutputChannel("temp-output-folder");
         subject = new generator_1.Generator(inputChannel, outputChannel);
         subjectWithPrivateMethods = subject;
@@ -35,3 +35,4 @@ describe("Generator", () => {
         });
     });
 });
+//# sourceMappingURL=generator.spec.js.map

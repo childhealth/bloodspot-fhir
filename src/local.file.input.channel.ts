@@ -1,3 +1,4 @@
+import * as fs from "fs";
 import { InputChannel } from "./input.channel";
 
 export class LocalFileInputChannel extends InputChannel {
@@ -10,10 +11,15 @@ export class LocalFileInputChannel extends InputChannel {
     }
 
     private readCSVFile(localFileUrl: string): string[] {
-        return [
-            "123,456,789",
-            "2123,2456,2789",
-        ];
+        let localFile = null;
+        try {
+            localFile = fs.readFileSync(localFileUrl).toString();
+        } catch (e) {
+            const message = "Input file \"" + localFileUrl + "\" not found.";
+            throw new Error(message);
+        }
+
+        return localFile.trim().split("\n");
     }
 
 }

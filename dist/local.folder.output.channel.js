@@ -8,3 +8,4 @@ class LocalFolderOutputChannel extends output_channel_1.OutputChannel {
     }
 }
 exports.LocalFolderOutputChannel = LocalFolderOutputChannel;
+//# sourceMappingURL=local.folder.output.channel.js.map

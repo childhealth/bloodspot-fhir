@@ -11,3 +11,4 @@ class OutputChannel {
     }
 }
 exports.OutputChannel = OutputChannel;
+//# sourceMappingURL=output.channel.js.map
