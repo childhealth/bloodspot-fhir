@@ -1,4 +1,4 @@
-import { OutputChannel } from "../output.channel";
+import { OutputChannel } from "../output/output.channel";
 
 export class DummyLocalFolderOutputChannel extends OutputChannel {
 }

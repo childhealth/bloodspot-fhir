@@ -1,5 +1,5 @@
-import { InputChannel } from "./input.channel";
-import { OutputChannel } from "./output.channel";
+import { InputChannel } from "../input/input.channel";
+import { OutputChannel } from "../output/output.channel";
 
 export class Generator {
 

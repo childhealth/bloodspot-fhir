@@ -1,4 +1,4 @@
-import { InputChannel } from "../input.channel";
+import { InputChannel } from "../input/input.channel";
 
 export class DummyLocalFileInputChannel extends InputChannel {
 }

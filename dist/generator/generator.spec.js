@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const dummy_local_file_input_channel_1 = require("../testing/dummy.local.file.input.channel");
+const dummy_local_folder_output_channel_1 = require("../testing/dummy.local.folder.output.channel");
 const generator_1 = require("./generator");
-const dummy_local_file_input_channel_1 = require("./testing/dummy.local.file.input.channel");
-const dummy_local_folder_output_channel_1 = require("./testing/dummy.local.folder.output.channel");
 describe("Generator", () => {
     let inputChannel;
     let outputChannel;

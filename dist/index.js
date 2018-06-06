@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const generator_1 = require("./generator");
-const local_file_input_channel_1 = require("./local.file.input.channel");
-const local_folder_output_channel_1 = require("./local.folder.output.channel");
+const generator_1 = require("./generator/generator");
+const local_file_input_channel_1 = require("./input/local.file.input.channel");
+const local_folder_output_channel_1 = require("./output/local.folder.output.channel");
 // Read some command-line arguments (process.argv) to determine set the input and output
 const args = process.argv;
 if (args.length !== 4) {

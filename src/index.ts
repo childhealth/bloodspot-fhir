@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import { Generator } from "./generator";
-import { InputChannel } from "./input.channel";
-import { LocalFileInputChannel } from "./local.file.input.channel";
-import { LocalFolderOutputChannel } from "./local.folder.output.channel";
-import { OutputChannel } from "./output.channel";
+import { Generator } from "./generator/generator";
+import { InputChannel } from "./input/input.channel";
+import { LocalFileInputChannel } from "./input/local.file.input.channel";
+import { LocalFolderOutputChannel } from "./output/local.folder.output.channel";
+import { OutputChannel } from "./output/output.channel";
 
 // Read some command-line arguments (process.argv) to determine set the input and output
 const args = process.argv;

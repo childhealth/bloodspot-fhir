@@ -1,10 +1,8 @@
+import { InputChannel } from "../input/input.channel";
+import { OutputChannel } from "../output/output.channel";
+import { DummyLocalFileInputChannel } from "../testing/dummy.local.file.input.channel";
+import { DummyLocalFolderOutputChannel } from "../testing/dummy.local.folder.output.channel";
 import { Generator } from "./generator";
-import { InputChannel } from "./input.channel";
-import { LocalFileInputChannel } from "./local.file.input.channel";
-import { LocalFolderOutputChannel } from "./local.folder.output.channel";
-import { OutputChannel } from "./output.channel";
-import { DummyLocalFileInputChannel } from "./testing/dummy.local.file.input.channel";
-import { DummyLocalFolderOutputChannel } from "./testing/dummy.local.folder.output.channel";
 
 describe("Generator", () => {
     let inputChannel: InputChannel;
