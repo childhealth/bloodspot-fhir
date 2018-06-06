@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const generator_1 = require("./generator");
-const local_folder_output_channel_1 = require("./local.folder.output.channel");
 const dummy_local_file_input_channel_1 = require("./testing/dummy.local.file.input.channel");
+const dummy_local_folder_output_channel_1 = require("./testing/dummy.local.folder.output.channel");
 describe("Generator", () => {
     let inputChannel;
     let outputChannel;
@@ -10,7 +10,7 @@ describe("Generator", () => {
     let subjectWithPrivateMethods;
     beforeEach(() => {
         inputChannel = new dummy_local_file_input_channel_1.DummyLocalFileInputChannel();
-        outputChannel = new local_folder_output_channel_1.LocalFolderOutputChannel("temp-output-folder");
+        outputChannel = new dummy_local_folder_output_channel_1.DummyLocalFolderOutputChannel();
         subject = new generator_1.Generator(inputChannel, outputChannel);
         subjectWithPrivateMethods = subject;
     });

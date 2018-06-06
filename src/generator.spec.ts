@@ -4,6 +4,7 @@ import { LocalFileInputChannel } from "./local.file.input.channel";
 import { LocalFolderOutputChannel } from "./local.folder.output.channel";
 import { OutputChannel } from "./output.channel";
 import { DummyLocalFileInputChannel } from "./testing/dummy.local.file.input.channel";
+import { DummyLocalFolderOutputChannel } from "./testing/dummy.local.folder.output.channel";
 
 describe("Generator", () => {
     let inputChannel: InputChannel;
@@ -13,7 +14,7 @@ describe("Generator", () => {
 
     beforeEach(() => {
         inputChannel = new DummyLocalFileInputChannel();
-        outputChannel = new LocalFolderOutputChannel("temp-output-folder");
+        outputChannel = new DummyLocalFolderOutputChannel();
         subject = new Generator(inputChannel, outputChannel);
         subjectWithPrivateMethods = subject as any;
     });
