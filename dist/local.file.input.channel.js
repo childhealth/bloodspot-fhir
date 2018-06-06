@@ -8,6 +8,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
+const os = __importStar(require("os"));
 const input_channel_1 = require("./input.channel");
 class LocalFileInputChannel extends input_channel_1.InputChannel {
     constructor(localCSVFileUrl) {
@@ -24,7 +25,7 @@ class LocalFileInputChannel extends input_channel_1.InputChannel {
             const message = "Input file \"" + localFileUrl + "\" not found.";
             throw new Error(message);
         }
-        return localFile.trim().split("\n");
+        return localFile.trim().split(os.EOL);
     }
 }
 exports.LocalFileInputChannel = LocalFileInputChannel;

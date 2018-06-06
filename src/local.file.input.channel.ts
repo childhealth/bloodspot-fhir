@@ -1,4 +1,6 @@
 import * as fs from "fs";
+import * as os from "os";
+
 import { InputChannel } from "./input.channel";
 
 export class LocalFileInputChannel extends InputChannel {
@@ -19,7 +21,7 @@ export class LocalFileInputChannel extends InputChannel {
             throw new Error(message);
         }
 
-        return localFile.trim().split("\n");
+        return localFile.trim().split(os.EOL);
     }
 
 }
