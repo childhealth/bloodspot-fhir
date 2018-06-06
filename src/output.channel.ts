@@ -5,8 +5,7 @@ export class OutputChannel {
      * @param message the message to write.
      */
     public write(message: string) {
-            // tslint:disable-next-line:no-console
-            console.log("write() message:", message);
+        throw new Error("Not implemented. Derived class must implement.");
     }
 
 }

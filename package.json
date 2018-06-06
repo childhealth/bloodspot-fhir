@@ -18,8 +18,10 @@
   "devDependencies": {
     "@types/jasmine": "^2.8.7",
     "@types/node": "^10.1.4",
+    "@types/tmp": "0.0.33",
     "jasmine": "^3.1.0",
     "rimraf": "^2.6.2",
+    "tmp": "0.0.33",
     "tslint": "^5.10.0",
     "typescript": "^2.8.4"
   }
