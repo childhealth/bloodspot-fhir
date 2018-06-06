@@ -22,7 +22,12 @@ class LocalFolderOutputChannel extends output_channel_1.OutputChannel {
     }
     guaranteeFolder(folderUrl) {
         if (!fs.existsSync(folderUrl)) {
-            fs.mkdirSync(folderUrl);
+            try {
+                fs.mkdirSync(folderUrl);
+            }
+            catch (e) {
+                throw new Error("Cannot create output folder \"" + folderUrl + "\".");
+            }
         }
     }
 }

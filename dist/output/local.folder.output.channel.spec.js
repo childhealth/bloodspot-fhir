@@ -8,6 +8,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
+const os = __importStar(require("os"));
 const path = __importStar(require("path"));
 const tmp = __importStar(require("tmp"));
 const local_folder_output_channel_1 = require("./local.folder.output.channel");
@@ -23,7 +24,12 @@ describe("LocalFolderOutputChannel", () => {
         doesExist = fs.existsSync(folderUrl);
         expect(doesExist).toBeTruthy();
     });
-    // should throw an error if it cannot create the folder
+    it("constructor(folderUrl) should throw an error if it cannot create the folder", () => {
+        const badlyFormedFolderUrl = path.join(os.tmpdir(), tmp.tmpNameSync());
+        expect(() => {
+            subject = new local_folder_output_channel_1.LocalFolderOutputChannel(badlyFormedFolderUrl);
+        }).toThrow(new Error("Cannot create output folder \"" + badlyFormedFolderUrl + "\"."));
+    });
     // should throw an error if it cannot write to the folder
 });
 //# sourceMappingURL=local.folder.output.channel.spec.js.map

@@ -19,7 +19,11 @@ export class LocalFolderOutputChannel extends OutputChannel {
 
     private guaranteeFolder(folderUrl: string) {
         if (!fs.existsSync(folderUrl)) {
-            fs.mkdirSync(folderUrl);
+            try {
+                fs.mkdirSync(folderUrl);
+            } catch (e) {
+                throw new Error("Cannot create output folder \"" + folderUrl + "\".");
+            }
         }
     }
 }
