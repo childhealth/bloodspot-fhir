@@ -15,6 +15,7 @@ describe("LocalFolderOutputChannel", () => {
         expect(doesExist).toBeFalsy();
 
         subject = new LocalFolderOutputChannel(folderUrl);
+
         // check the folder exists after subject is created
         doesExist = fs.existsSync(folderUrl);
         expect(doesExist).toBeTruthy();
@@ -27,5 +28,16 @@ describe("LocalFolderOutputChannel", () => {
         }).toThrow(new Error("Cannot create output folder \"" + badlyFormedFolderUrl + "\"."));
     });
 
-    // should throw an error if it cannot write to the folder
+    it("constructor(folderUrl) should throw an error if it cannot write a file to the folder", () => {
+        const folderUrl = path.join(tmp.tmpNameSync());
+        const myfs = jasmine.createSpyObj("fsSpy", ["writeFileSync"]);
+        myfs.writeFileSync.and.throwError("ERROR");
+        const filename = path.join(folderUrl, "message-1.xml");
+
+        subject = new LocalFolderOutputChannel(folderUrl, myfs);
+
+        expect(() => {
+            subject.write("expect write() to fail");
+        }).toThrow(new Error("Cannot write output file \"" + filename + "\"."));
+    });
 });

@@ -8,17 +8,26 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
+const path = __importStar(require("path"));
 const output_channel_1 = require("./output.channel");
 class LocalFolderOutputChannel extends output_channel_1.OutputChannel {
-    constructor(localFolderUrl) {
+    constructor(localFolderUrl, fileSystem = fs) {
         super();
         this.localFolderUrl = localFolderUrl;
+        this.fileSystem = fileSystem;
+        this.writeMessageCount = 0;
         this.guaranteeFolder(localFolderUrl);
     }
     write(message) {
-        // tslint:disable-next-line:no-console
-        console.log("write: message=" + message);
-        // What filename?
+        const messageNumber = this.writeMessageCount + 1;
+        const filename = path.join(this.localFolderUrl, "message-" + messageNumber + ".xml");
+        try {
+            this.fileSystem.writeFileSync(filename, message);
+        }
+        catch (e) {
+            throw new Error("Cannot write output file \"" + filename + "\".");
+        }
+        this.writeMessageCount++;
     }
     guaranteeFolder(folderUrl) {
         if (!fs.existsSync(folderUrl)) {
