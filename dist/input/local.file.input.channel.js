@@ -9,12 +9,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const os = __importStar(require("os"));
+const csv_outcome_mapper_1 = require("./csv.outcome.mapper");
 const input_channel_1 = require("./input.channel");
 class LocalFileInputChannel extends input_channel_1.InputChannel {
-    constructor(localCSVFileUrl) {
+    constructor(localCSVFileUrl, mapper = new csv_outcome_mapper_1.CSVOutcomeMapper()) {
         super();
         this.localCSVFileUrl = localCSVFileUrl;
-        this.outcomes = this.readCSVFile(localCSVFileUrl);
+        this.mapper = mapper;
+        const csvAsStrings = this.readCSVFile(localCSVFileUrl);
+        this.outcomes = mapper.buildOutcomes(csvAsStrings);
     }
     readCSVFile(localFileUrl) {
         let localFile = null;

@@ -1,15 +1,19 @@
 import * as fs from "fs";
 import * as os from "os";
 
+import { Outcome } from "../model/outcome";
+import { CSVOutcomeMapper } from "./csv.outcome.mapper";
 import { InputChannel } from "./input.channel";
 
 export class LocalFileInputChannel extends InputChannel {
 
     constructor(
         private localCSVFileUrl: string,
+        private mapper = new CSVOutcomeMapper(),
     ) {
         super();
-        this.outcomes = this.readCSVFile(localCSVFileUrl);
+        const csvAsStrings = this.readCSVFile(localCSVFileUrl);
+        this.outcomes = mapper.buildOutcomes(csvAsStrings);
     }
 
     private readCSVFile(localFileUrl: string): string[] {

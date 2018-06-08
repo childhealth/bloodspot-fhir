@@ -1,4 +1,5 @@
 import { InputChannel } from "../input/input.channel";
+import { Outcome } from "../model/outcome";
 import { OutputChannel } from "../output/output.channel";
 
 export class Generator {
@@ -16,7 +17,7 @@ export class Generator {
         }
     }
 
-    private generateFHIRMessage(outcome: any): string {
+    private generateFHIRMessage(outcome: Outcome): string {
         if (outcome === null) {
             throw new Error("Input must not be empty.");
         }
