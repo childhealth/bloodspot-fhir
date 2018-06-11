@@ -13,6 +13,12 @@ export class LocalFileInputChannel extends InputChannel {
     ) {
         super();
         const csvAsStrings = this.readCSVFile(localCSVFileUrl);
+
+        // Discard first line if its headings
+        if (csvAsStrings[0].startsWith("National_Id")) {
+            csvAsStrings.shift();
+        }
+
         this.outcomes = mapper.buildOutcomes(csvAsStrings);
     }
 

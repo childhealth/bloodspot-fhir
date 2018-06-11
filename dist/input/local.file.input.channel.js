@@ -17,6 +17,10 @@ class LocalFileInputChannel extends input_channel_1.InputChannel {
         this.localCSVFileUrl = localCSVFileUrl;
         this.mapper = mapper;
         const csvAsStrings = this.readCSVFile(localCSVFileUrl);
+        // Discard first line if its headings
+        if (csvAsStrings[0].startsWith("National_Id")) {
+            csvAsStrings.shift();
+        }
         this.outcomes = mapper.buildOutcomes(csvAsStrings);
     }
     readCSVFile(localFileUrl) {
