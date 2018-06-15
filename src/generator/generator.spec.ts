@@ -39,4 +39,17 @@ describe("Generator", () => {
             }).toThrow(new Error("Input must not be empty."));
         });
     });
+
+    describe("buildOrganisation", () => {
+        it("should return a simple organisation XML element by default", () => {
+            const thingy = subjectWithPrivateMethods.buildOrganisation("123");
+            expect(thingy).toBe("<Organization>123</Organization>");
+        });
+
+        it("should return a simple JSON organisation when formatType is set to JSON", () => {
+            subject.formatType = "json";
+            const thingy = subjectWithPrivateMethods.buildOrganisation("123");
+            expect(thingy).toBe("{\"Organization\":\"123\"}");
+        });
+    });
 });

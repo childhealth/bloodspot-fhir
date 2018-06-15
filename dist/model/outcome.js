@@ -24,10 +24,7 @@ class Outcome {
         this.pkuSupplementaryCode = "";
         this.pkuStatus = "";
         const fields = allValues.split(",");
-        if (fields.length !== Outcome.MaxFields) {
-            throw new Error("Invalid values: string has " + fields.length
-                + " values but was expecting " + Outcome.MaxFields + ".");
-        }
+        this.validate(fields);
         // this.dateOfBirth = new Date();
         this.nationalId = fields[0];
         this.labSerialNo = fields[1];
@@ -38,6 +35,12 @@ class Outcome {
         this.pkuStatusCode = fields[30];
         this.pkuSupplementaryCode = fields[31];
         this.pkuStatus = fields[32];
+    }
+    validate(fields) {
+        if (fields.length !== Outcome.MaxFields) {
+            throw new Error("Invalid values: string has " + fields.length
+                + " values but was expecting " + Outcome.MaxFields + ".");
+        }
     }
 }
 Outcome.MaxFields = 57;

@@ -28,10 +28,7 @@ export class Outcome {
     constructor(public allValues: string) {
         const fields = allValues.split(",");
 
-        if (fields.length !== Outcome.MaxFields) {
-            throw new Error("Invalid values: string has " + fields.length
-              + " values but was expecting " + Outcome.MaxFields + ".");
-        }
+        this.validate(fields);
 
         // this.dateOfBirth = new Date();
         this.nationalId = fields[0];
@@ -44,5 +41,12 @@ export class Outcome {
         this.pkuStatusCode = fields[30];
         this.pkuSupplementaryCode = fields[31];
         this.pkuStatus = fields[32];
+    }
+
+    private validate(fields: string[]) {
+        if (fields.length !== Outcome.MaxFields) {
+            throw new Error("Invalid values: string has " + fields.length
+              + " values but was expecting " + Outcome.MaxFields + ".");
+        }
     }
 }

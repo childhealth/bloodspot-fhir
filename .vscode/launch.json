@@ -14,7 +14,7 @@
                 "${workspaceFolder}/**/*.js"
             ],
             "args": [
-                "input.csv",
+                "src/testing/NBBSTestfile.csv",
                 "outputFolder"
             ]
         },
