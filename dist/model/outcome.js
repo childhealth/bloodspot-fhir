@@ -50,7 +50,13 @@ class Outcome {
         }
         const year = Number(components[2]);
         const month = Number(components[1]) - 1;
+        if (month > 11) {
+            throw new Error("Invalid date \"" + dateString + "\".");
+        }
         const day = Number(components[0]);
+        if (day > 31) {
+            throw new Error("Invalid date \"" + dateString + "\".");
+        }
         return new Date(Date.UTC(year, month, day));
     }
 }

@@ -50,6 +50,18 @@ describe("Outcome", () => {
                     const ignored = subjectWithPrivateMethods.validateDate("1/2/3/4");
                 }).toThrow(new Error("Invalid date \"1/2/3/4\"."));
             });
+
+            it("should throw error when given '32/1/2018'", () => {
+                expect(() => {
+                    const ignored = subjectWithPrivateMethods.validateDate("32/1/2018");
+                }).toThrow(new Error("Invalid date \"32/1/2018\"."));
+            });
+
+            it("should throw error when given '1/15/2018'", () => {
+                expect(() => {
+                    const ignored = subjectWithPrivateMethods.validateDate("1/15/2018");
+                }).toThrow(new Error("Invalid date \"1/15/2018\"."));
+            });
         });
     });
 });
