@@ -14,11 +14,56 @@ export class Outcome {
     public surname = "";
     public firstName = "";
     public dateOfBirth: Date;
-
+    // genderCode
+    // gpName
+    // gpCode
+    // birthOrder
+    // birthConfinement
+    // birthWeight
+    // gestationLength
+    // nicu
+    // mothersSurname
+    // alternativeSurname
+    // mothersFirstname
+    // address1
+    // address2
+    // address3
+    // address4
+    // address5
+    // postcode
+    // mothersTelephone
+    // receiptDate
+    // collectionDate
+    // previousLabSerialNo
+    // sampleTaker
     public labCode = "";
     public pkuStatusCode = "";
     public pkuSupplementaryCode = "";
     public pkuStatus = "";
+    public chtStatusCode = "";
+    public chtSupplementaryCode = "";
+    public chtStatus = "";
+    public sickleStatusCode = "";
+    public sickleSupplementaryCode = "";
+    public sickleStatus = "";
+    public cfStatusCode = "";
+    public cfSupplementaryCode = "";
+    public cfStatus = "";
+    public mcaddStatusCode = "";
+    public mcaddSupplementaryCode = "";
+    public mcaddStatus = "";
+    public hcuStatusCode = "";
+    public hcuSupplementaryCode = "";
+    public hcuStatus = "";
+    public msudStatusCode = "";
+    public msudSupplementaryCode = "";
+    public msudStatus = "";
+    public ga1StatusCode = "";
+    public ga1SupplementaryCode = "";
+    public ga1Status = "";
+    public ivaStatusCode = "";
+    public ivaSupplementaryCode = "";
+    public ivaStatus = "";
 
     /**
      * Constructs an Outcome object.
@@ -30,7 +75,7 @@ export class Outcome {
 
         this.validate(fields);
 
-        this.nationalId = fields[0];
+        // this.nationalId = fields[0]; // Not used?
         this.labSerialNo = fields[1];
         this.providerUnit = fields[2];
         this.nhsNo = fields[3].replace(/ /g, "");  // "NNN NNN NNN" is a display string for "NNNNNNNNN"
@@ -39,9 +84,18 @@ export class Outcome {
         this.dateOfBirth = this.validateDate(fields[6]);
 
         this.labCode = fields[29];
+
         this.pkuStatusCode = fields[30];
         this.pkuSupplementaryCode = fields[31];
         this.pkuStatus = fields[32];
+
+        this.chtStatusCode = fields[33];
+        this.chtSupplementaryCode = fields[34];
+        this.chtStatus = fields[35];
+
+        this.sickleStatusCode = fields[36];
+        this.sickleSupplementaryCode = fields[37];
+        this.sickleStatus = fields[38];
     }
 
     private validate(fields: string[]) {
