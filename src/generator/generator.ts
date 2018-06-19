@@ -31,9 +31,16 @@ export class Generator {
     }
 
     // A DCH-BloodSpotTestOutcome-Bundle is a DCH-Bundle element with 16 entries:
-    // [0]: a DCH-MessageHeader identifying that this message is a Blood Spot Test Outcome
-    // [1]: a CareConnect-DCH-Organization
-    // [2]: a HealthcareService
+    // [0]: DCH-MessageHeader-1:
+    //      resource identifier - a publication reference number which will use a UUID format
+    //      event type: identifying that this message is a Blood Spot Test Outcome
+    //      source: IT system holding the event data - the lab's LIMS (config)
+    //      responsible: event publisher - the lab (config)
+    //      period.start: (CareConnect-DCH-Encounter-1) event date time - assume same
+    //                   as timestamp - datetime stamp when this tool is run.
+    //      timestamp: event published date - now
+    // [1]: a CareConnect-DCH-Organization - the screening lab
+    // [2]: a HealthcareService - assume hardcoded value for a screening lab
     // [3]: Patient
     // [4]: CareConnect-DCH-NewbornBloodSpotScreeningPKU-Procedure-1
     // [5]: CareConnect-DCH-NewbornBloodSpotScreeningSCD-Procedure-1
@@ -45,8 +52,8 @@ export class Generator {
     // [11]: CareConnect-DCH-NewbornBloodSpotScreeningGA1-Procedure-1
     // [12]: CareConnect-DCH-NewbornBloodSpotScreeningIVA-Procedure-1
     // [13]: DCH-NewbornBloodSpotScreening-DiagnosticReport-1 - Child Screening Report
-    // [14]: CareConnect-DCH-Encounter-1 - subject (patient), period, location, serviceProvider
-    // [15]: CareConnect-DCH-Location-1
+    // [14]: CareConnect-DCH-Encounter-1 - subject (patient), period, location, serviceProvider(lab)
+    // [15]: CareConnect-DCH-Location-1 location at which the event occurred the lab's ODS code (config)
 
     private buildOrganisation(odsCode: string): string {
         const element = {

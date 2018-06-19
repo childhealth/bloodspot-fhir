@@ -7,9 +7,9 @@ export class Outcome {
 
     private static MaxFields = 57;
 
-    public nationalId = "";
+    // nationalId
     public labSerialNo = "";
-    public providerUnit = "";
+    public providerUnit = ""; // e.g. St James Maternity unit
     public nhsNo = "";
     public surname = "";
     public firstName = "";
@@ -21,7 +21,7 @@ export class Outcome {
     // birthConfinement
     // birthWeight
     // gestationLength
-    // nicu
+    // nicu - Is the baby in Intensive Care Unit? "1" or "0"
     // mothersSurname
     // alternativeSurname
     // mothersFirstname
@@ -75,7 +75,7 @@ export class Outcome {
 
         this.validate(fields);
 
-        // this.nationalId = fields[0]; // Not used?
+        // this.nationalId = fields[0]; // Not used
         this.labSerialNo = fields[1];
         this.providerUnit = fields[2];
         this.nhsNo = fields[3].replace(/ /g, "");  // "NNN NNN NNN" is a display string for "NNNNNNNNN"

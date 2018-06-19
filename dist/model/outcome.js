@@ -13,9 +13,9 @@ class Outcome {
      */
     constructor(allValues) {
         this.allValues = allValues;
-        this.nationalId = "";
+        // nationalId
         this.labSerialNo = "";
-        this.providerUnit = "";
+        this.providerUnit = ""; // e.g. St James Maternity unit
         this.nhsNo = "";
         this.surname = "";
         this.firstName = "";
@@ -26,7 +26,7 @@ class Outcome {
         // birthConfinement
         // birthWeight
         // gestationLength
-        // nicu
+        // nicu - Is the baby in Intensive Care Unit? "1" or "0"
         // mothersSurname
         // alternativeSurname
         // mothersFirstname
@@ -71,7 +71,7 @@ class Outcome {
         this.ivaStatus = "";
         const fields = allValues.split(",");
         this.validate(fields);
-        // this.nationalId = fields[0]; // Not used?
+        // this.nationalId = fields[0]; // Not used
         this.labSerialNo = fields[1];
         this.providerUnit = fields[2];
         this.nhsNo = fields[3].replace(/ /g, ""); // "NNN NNN NNN" is a display string for "NNNNNNNNN"

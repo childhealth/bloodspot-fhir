@@ -18,7 +18,6 @@ describe("Outcome", () => {
         });
         it("should set the simple fields", () => {
             expect(subject.labSerialNo).toBe("16N023744");
-            expect(subject.nationalId).toBe("");
             expect(subject.providerUnit).toBe("08A");
             expect(subject.nhsNo).toBe("9991234567");
             expect(subject.surname).toBe("TEST");
