@@ -1,11 +1,8 @@
-import xml from "xml";
 import { InputChannel } from "../input/input.channel";
 import { Outcome } from "../model/outcome";
 import { OutputChannel } from "../output/output.channel";
 
 export class Generator {
-
-    public formatType: string = "xml";
 
     constructor(
         public inputChannel: InputChannel,
@@ -20,14 +17,16 @@ export class Generator {
         }
     }
 
-    private generateFHIRMessage(outcome: Outcome): string {
+    private generateFHIRMessage(outcome: Outcome): any {
         if (outcome === null) {
             throw new Error("Input must not be empty.");
         }
 
         const orgEntry = this.buildOrganisation(outcome.providerUnit);
 
-        return "<awesome-fhir-message>" + orgEntry + "</awesome-fhir-message>";
+        return {
+            awesomeFhirMessage: orgEntry,
+        };
     }
 
     // A DCH-BloodSpotTestOutcome-Bundle is a DCH-Bundle element with 16 entries:
@@ -55,18 +54,12 @@ export class Generator {
     // [14]: CareConnect-DCH-Encounter-1 - subject (patient), period, location, serviceProvider(lab)
     // [15]: CareConnect-DCH-Location-1 location at which the event occurred the lab's ODS code (config)
 
-    private buildOrganisation(odsCode: string): string {
+    private buildOrganisation(odsCode: string): any {
         const element = {
             Organization: odsCode,
         };
 
-        if (this.formatType === "json") {
-            return JSON.stringify(element);
-        } else if (this.formatType === "xml") {
-            return xml(element);
-        }
-
-        throw new Error("Unhandled formatType \"" + this.formatType + "\"");
+        return element;
     }
 
 }

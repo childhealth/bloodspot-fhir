@@ -1,14 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const xml_1 = __importDefault(require("xml"));
 class Generator {
     constructor(inputChannel, outputChannel) {
         this.inputChannel = inputChannel;
         this.outputChannel = outputChannel;
-        this.formatType = "xml";
     }
     execute() {
         for (const eachOutcome of this.inputChannel.outcomes) {
@@ -21,7 +16,9 @@ class Generator {
             throw new Error("Input must not be empty.");
         }
         const orgEntry = this.buildOrganisation(outcome.providerUnit);
-        return "<awesome-fhir-message>" + orgEntry + "</awesome-fhir-message>";
+        return {
+            awesomeFhirMessage: orgEntry,
+        };
     }
     // A DCH-BloodSpotTestOutcome-Bundle is a DCH-Bundle element with 16 entries:
     // [0]: DCH-MessageHeader-1:
@@ -51,13 +48,7 @@ class Generator {
         const element = {
             Organization: odsCode,
         };
-        if (this.formatType === "json") {
-            return JSON.stringify(element);
-        }
-        else if (this.formatType === "xml") {
-            return xml_1.default(element);
-        }
-        throw new Error("Unhandled formatType \"" + this.formatType + "\"");
+        return element;
     }
 }
 exports.Generator = Generator;

@@ -41,15 +41,10 @@ describe("Generator", () => {
     });
 
     describe("buildOrganisation", () => {
-        it("should return a simple organisation XML element by default", () => {
-            const thingy = subjectWithPrivateMethods.buildOrganisation("123");
-            expect(thingy).toBe("<Organization>123</Organization>");
-        });
-
-        it("should return a simple JSON organisation when formatType is set to JSON", () => {
-            subject.formatType = "json";
-            const thingy = subjectWithPrivateMethods.buildOrganisation("123");
-            expect(thingy).toBe("{\"Organization\":\"123\"}");
+        it("should return a simple organisation object", () => {
+            const actual = subjectWithPrivateMethods.buildOrganisation("123");
+            const expected = {Organization: "123"};
+            expect(actual).toEqual(expected);
         });
     });
 });

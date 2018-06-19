@@ -14,12 +14,16 @@ export class LocalFolderOutputChannel extends OutputChannel {
         this.guaranteeFolder(localFolderUrl);
     }
 
-    public write(message: string) {
+    public write(message: any) {
+        // tslint:disable-next-line:no-console
+        console.log("message:", message);
         const messageNumber = this.writeMessageCount + 1;
         const filename = path.join(this.localFolderUrl, "message-" + messageNumber + ".xml");
 
+        const messageString = this.getFormattedMessage(message);
+
         try {
-            this.fileSystem.writeFileSync(filename, message);
+            this.fileSystem.writeFileSync(filename, messageString);
         } catch (e) {
             throw new Error("Cannot write output file \"" + filename + "\".");
         }
