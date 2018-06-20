@@ -3,6 +3,7 @@ import { Outcome } from "../model/outcome";
 import { OutputChannel } from "../output/output.channel";
 import { DummyLocalFileInputChannel } from "../testing/dummy.local.file.input.channel";
 import { DummyLocalFolderOutputChannel } from "../testing/dummy.local.folder.output.channel";
+import { DummyUuidService } from "../testing/dummy.uuid.service";
 import { Generator } from "./generator";
 
 describe("Generator", () => {
@@ -17,7 +18,7 @@ describe("Generator", () => {
     beforeEach(() => {
         inputChannel = new DummyLocalFileInputChannel();
         outputChannel = new DummyLocalFolderOutputChannel();
-        subject = new Generator(inputChannel, outputChannel);
+        subject = new Generator(inputChannel, outputChannel, new DummyUuidService());
         subjectWithPrivateMethods = subject as any;
     });
 
@@ -56,7 +57,7 @@ describe("Generator", () => {
                 },
                 "id": {
                     "@": {
-                        value: "todoUuid",
+                        value: "dummyUuid",
                     },
                 },
                 "meta": {

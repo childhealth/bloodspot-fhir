@@ -1,12 +1,14 @@
 import { InputChannel } from "../input/input.channel";
 import { Outcome } from "../model/outcome";
 import { OutputChannel } from "../output/output.channel";
+import { UuidService } from "./uuid.service";
 
 export class Generator {
 
     constructor(
         public inputChannel: InputChannel,
         public outputChannel: OutputChannel,
+        private uuidService = new UuidService(),
     ) {
     }
 
@@ -22,15 +24,15 @@ export class Generator {
             throw new Error("Input must not be empty.");
         }
 
+        const bundleIdUuid = this.uuidService.generateUuid();
         const orgEntry = this.buildOrganisation(outcome.providerUnit);
-
         const bundleObject = {
             "@": {
                 xmlns: "http://hl7.org/fhir",
             },
             "id": {
                 "@": {
-                    value: "todoUuid",
+                    value: bundleIdUuid,
                 },
             },
             "meta": {

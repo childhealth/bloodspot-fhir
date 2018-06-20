@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const uuid_service_1 = require("./uuid.service");
 class Generator {
-    constructor(inputChannel, outputChannel) {
+    constructor(inputChannel, outputChannel, uuidService = new uuid_service_1.UuidService()) {
         this.inputChannel = inputChannel;
         this.outputChannel = outputChannel;
+        this.uuidService = uuidService;
     }
     execute() {
         for (const eachOutcome of this.inputChannel.outcomes) {
@@ -15,6 +17,7 @@ class Generator {
         if (outcome === null) {
             throw new Error("Input must not be empty.");
         }
+        const bundleIdUuid = this.uuidService.generateUuid();
         const orgEntry = this.buildOrganisation(outcome.providerUnit);
         const bundleObject = {
             "@": {
@@ -22,7 +25,7 @@ class Generator {
             },
             "id": {
                 "@": {
-                    value: "todoUuid",
+                    value: bundleIdUuid,
                 },
             },
             "meta": {

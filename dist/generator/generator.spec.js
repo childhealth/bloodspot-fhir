@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const outcome_1 = require("../model/outcome");
 const dummy_local_file_input_channel_1 = require("../testing/dummy.local.file.input.channel");
 const dummy_local_folder_output_channel_1 = require("../testing/dummy.local.folder.output.channel");
+const dummy_uuid_service_1 = require("../testing/dummy.uuid.service");
 const generator_1 = require("./generator");
 describe("Generator", () => {
     let inputChannel;
@@ -14,7 +15,7 @@ describe("Generator", () => {
     beforeEach(() => {
         inputChannel = new dummy_local_file_input_channel_1.DummyLocalFileInputChannel();
         outputChannel = new dummy_local_folder_output_channel_1.DummyLocalFolderOutputChannel();
-        subject = new generator_1.Generator(inputChannel, outputChannel);
+        subject = new generator_1.Generator(inputChannel, outputChannel, new dummy_uuid_service_1.DummyUuidService());
         subjectWithPrivateMethods = subject;
     });
     describe("execute", () => {
@@ -48,7 +49,7 @@ describe("Generator", () => {
                 },
                 "id": {
                     "@": {
-                        value: "todoUuid",
+                        value: "dummyUuid",
                     },
                 },
                 "meta": {
