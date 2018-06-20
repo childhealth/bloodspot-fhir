@@ -1,4 +1,4 @@
-import xml from "xml";
+import js2xmlparser from "js2xmlparser";
 
 export enum FormatType {
     XML = "xml",
@@ -19,7 +19,7 @@ export class OutputChannel {
 
     protected getFormattedMessage(message: any): string {
         if (this.formatType === FormatType.XML) {
-            return xml(message);
+            return js2xmlparser.parse("Bundle", message);
         } else if (this.formatType === FormatType.JSON) {
             return JSON.stringify(message);
         }

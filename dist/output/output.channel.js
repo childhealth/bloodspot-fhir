@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const xml_1 = __importDefault(require("xml"));
+const js2xmlparser_1 = __importDefault(require("js2xmlparser"));
 var FormatType;
 (function (FormatType) {
     FormatType["XML"] = "xml";
@@ -22,7 +22,7 @@ class OutputChannel {
     }
     getFormattedMessage(message) {
         if (this.formatType === FormatType.XML) {
-            return xml_1.default(message);
+            return js2xmlparser_1.default.parse("Bundle", message);
         }
         else if (this.formatType === FormatType.JSON) {
             return JSON.stringify(message);
