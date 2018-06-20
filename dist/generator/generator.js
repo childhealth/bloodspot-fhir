@@ -16,9 +16,33 @@ class Generator {
             throw new Error("Input must not be empty.");
         }
         const orgEntry = this.buildOrganisation(outcome.providerUnit);
-        return {
-            awesomeFhirMessage: orgEntry,
+        const bundleObject = {
+            "@": {
+                xmlns: "http://hl7.org/fhir",
+            },
+            "id": {
+                "@": {
+                    value: "todoUuid",
+                },
+            },
+            "meta": {
+                profile: {
+                    "@": {
+                        value: "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1",
+                    },
+                },
+            },
+            "type": {
+                "@": {
+                    value: "message",
+                },
+            },
+            // tslint:disable-next-line:object-literal-sort-keys
+            "entry": [
+                orgEntry,
+            ],
         };
+        return bundleObject;
     }
     // A DCH-BloodSpotTestOutcome-Bundle is a DCH-Bundle element with 16 entries:
     // [0]: DCH-MessageHeader-1:

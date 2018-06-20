@@ -46,10 +46,35 @@ describe("Generator", () => {
         it("should return a simple fhir message", () => {
             const outcome = new Outcome(csv1);
             const actual = subjectWithPrivateMethods.generateFHIRMessage(outcome);
+
+            const org = {
+                Organization: "08A",
+            };
             const expected = {
-                awesomeFhirMessage: {
-                    Organization: "08A",
+                "@": {
+                    xmlns: "http://hl7.org/fhir",
                 },
+                "id": {
+                    "@": {
+                        value: "todoUuid",
+                    },
+                },
+                "meta": {
+                    profile: {
+                        "@": {
+                            value: "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1",
+                        },
+                    },
+                },
+                "type": {
+                    "@": {
+                        value: "message",
+                    },
+                },
+                // tslint:disable-next-line:object-literal-sort-keys
+                "entry": [
+                    org,
+                ],
             };
             expect(actual).toEqual(expected);
         });
