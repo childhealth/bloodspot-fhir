@@ -19,8 +19,6 @@ class LocalFolderOutputChannel extends output_channel_1.OutputChannel {
         this.guaranteeFolder(localFolderUrl);
     }
     write(message) {
-        // tslint:disable-next-line:no-console
-        console.log("message:", message);
         const messageNumber = this.writeMessageCount + 1;
         const filename = path.join(this.localFolderUrl, "message-" + messageNumber + ".xml");
         const messageString = this.getFormattedMessage(message);
