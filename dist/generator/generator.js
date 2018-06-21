@@ -70,6 +70,7 @@ class Generator {
     // [15]: CareConnect-DCH-Location-1 location at which the event occurred the lab's ODS code (config)
     buildMessageHeader() {
         const messageHeaderId = this.uuidService.generateUuid();
+        const bloodspotEvent = this.buildChildHealthEvent("CH035", "Blood Spot Test Outcome");
         return {
             fullUrl: {
                 "@": {
@@ -85,6 +86,7 @@ class Generator {
                     },
                     meta: this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-MessageHeader-1"),
                     extension: this.buildNewMessageEventExtension(),
+                    event: bloodspotEvent,
                 },
             },
         };
@@ -120,6 +122,25 @@ class Generator {
                             value: "New event message",
                         },
                     },
+                },
+            },
+        };
+    }
+    buildChildHealthEvent(code, display) {
+        return {
+            system: {
+                "@": {
+                    value: "https://fhir.nhs.uk/STU3/CodeSystem/DCH-ChildHealthEventType-1",
+                },
+            },
+            code: {
+                "@": {
+                    value: code,
+                },
+            },
+            display: {
+                "@": {
+                    value: display,
                 },
             },
         };

@@ -70,6 +70,29 @@ describe("Generator", () => {
             expect(actual).toEqual(expected);
         });
     });
+    describe("buildChildHealthEvent", () => {
+        it("should set the code and display text", () => {
+            const actual = subjectWithPrivateMethods.buildChildHealthEvent("123", "One two three");
+            const expected = {
+                system: {
+                    "@": {
+                        value: "https://fhir.nhs.uk/STU3/CodeSystem/DCH-ChildHealthEventType-1",
+                    },
+                },
+                code: {
+                    "@": {
+                        value: "123",
+                    },
+                },
+                display: {
+                    "@": {
+                        value: "One two three",
+                    },
+                },
+            };
+            expect(actual).toEqual(expected);
+        });
+    });
     describe("buildOrganisation", () => {
         it("should return a simple organisation object", () => {
             const actual = subjectWithPrivateMethods.buildOrganisation("123");

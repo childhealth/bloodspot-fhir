@@ -80,6 +80,7 @@ export class Generator {
 
     private buildMessageHeader(): any {
         const messageHeaderId = this.uuidService.generateUuid();
+        const bloodspotEvent = this.buildChildHealthEvent("CH035", "Blood Spot Test Outcome");
         return {
             fullUrl: {
                 "@": {
@@ -95,6 +96,7 @@ export class Generator {
                     },
                     meta: this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-MessageHeader-1"),
                     extension: this.buildNewMessageEventExtension(),
+                    event: bloodspotEvent,
                 },
             },
         };
@@ -132,6 +134,26 @@ export class Generator {
                             value: "New event message",
                         },
                     },
+                },
+            },
+        };
+    }
+
+    private buildChildHealthEvent(code: string, display: string) {
+        return {
+            system: {
+                "@": {
+                    value: "https://fhir.nhs.uk/STU3/CodeSystem/DCH-ChildHealthEventType-1",
+                },
+            },
+            code: {
+                "@": {
+                    value: code,
+                },
+            },
+            display: {
+                "@": {
+                    value: display,
                 },
             },
         };
