@@ -97,6 +97,7 @@ export class Generator {
                     meta: this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-MessageHeader-1"),
                     extension: this.buildNewMessageEventExtension(),
                     event: bloodspotEvent,
+                    timestamp: this.buildTimestamp(new Date()),
                 },
             },
         };
@@ -155,6 +156,15 @@ export class Generator {
                 "@": {
                     value: display,
                 },
+            },
+        };
+    }
+
+    private buildTimestamp(date: Date): any {
+        const theDate = date.toISOString();
+        return {
+            "@": {
+                value: theDate,
             },
         };
     }

@@ -64,8 +64,22 @@ describe("Generator", () => {
             expect(keys).toContain("type");
             expect(keys).toContain("entry");
         });
+    });
 
-        // TODO check the entries are the correct type in the correct order
+    describe("buildMessageHeader", () => {
+        it("should contain entries of the correct type in the correct order", () => {
+            const actual = subjectWithPrivateMethods.buildMessageHeader();
+            const keys = Object.keys(actual);
+            expect(keys). toContain("fullUrl");
+            expect(keys). toContain("resource");
+            const mh = actual.resource.MessageHeader;
+            const mhKeys = Object.keys(mh);
+            expect(mhKeys).toContain("id");
+            expect(mhKeys).toContain("meta");
+            expect(mhKeys).toContain("extension");
+            expect(mhKeys).toContain("event");
+            expect(mhKeys).toContain("timestamp");
+        });
     });
 
     describe("buildProfile", () => {
@@ -100,6 +114,19 @@ describe("Generator", () => {
                     "@": {
                         value: "One two three",
                     },
+                },
+            };
+            expect(actual).toEqual(expected);
+        });
+    });
+
+    describe("buildTimestamp", () => {
+        it("should ", () => {
+            const christmasDay = new Date(2018, 11, 25);
+            const actual = subjectWithPrivateMethods.buildTimestamp(christmasDay);
+            const expected = {
+                "@": {
+                    value: "2018-12-25T00:00:00.000Z",
                 },
             };
             expect(actual).toEqual(expected);
