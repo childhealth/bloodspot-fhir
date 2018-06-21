@@ -23,9 +23,7 @@ describe("OutputChannel", () => {
             });
             it("should return an XML message with 2 entries", () => {
                 const entries = {
-                    // tslint:disable-next-line:object-literal-key-quotes
-                    "OrgEntry": org,
-                    // tslint:disable-next-line:object-literal-sort-keys
+                    OrgEntry: org,
                     AnotherOrgEntry: org,
                 };
                 const actual = subjectWithPrivateMethods.getFormattedMessage(entries);

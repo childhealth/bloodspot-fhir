@@ -43,7 +43,6 @@ export class Generator {
                     value: "message",
                 },
             },
-            // tslint:disable-next-line:object-literal-sort-keys
             "entry": [
                 messageHeaderEntry,
                 orgEntry,
@@ -56,8 +55,9 @@ export class Generator {
     // A DCH-BloodSpotTestOutcome-Bundle is a DCH-Bundle element with 16 entries:
     // [0]: DCH-MessageHeader-1:
     //      resource identifier - a publication reference number which will use a UUID format
-    //      event type: identifying that this message is a Blood Spot Test Outcome
-    //      source: IT system holding the event data - the lab's LIMS (config)
+    //      extension: new message event Extension-DCH-MessageEventType
+    //      event: system, code, display - CH035 Blood Spot Test Outcome
+    //      source: endpoint, IT system holding the event data - the lab's LIMS (config)
     //      responsible: event publisher - the lab (config)
     //      period.start: (CareConnect-DCH-Encounter-1) event date time - assume same
     //                   as timestamp - datetime stamp when this tool is run.
@@ -94,6 +94,7 @@ export class Generator {
                         },
                     },
                     meta: this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-MessageHeader-1"),
+                    extension: this.buildNewMessageEventExtension(),
                 },
             },
         };
@@ -104,6 +105,33 @@ export class Generator {
             profile: {
                 "@": {
                     value: profileValue,
+                },
+            },
+        };
+    }
+
+    private buildNewMessageEventExtension(): any {
+        return {
+            "@": {
+                url: "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-DCH-MessageEventType-1",
+            },
+            "valueCodeableConcept": {
+                coding: {
+                    system: {
+                        "@": {
+                            value: "https://fhir.nhs.uk/STU3/CodeSystem/DCH-MessageEventType-1",
+                        },
+                    },
+                    code: {
+                        "@": {
+                            value: "new",
+                        },
+                    },
+                    display: {
+                        "@": {
+                            value: "New event message",
+                        },
+                    },
                 },
             },
         };
