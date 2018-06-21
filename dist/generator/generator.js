@@ -18,6 +18,7 @@ class Generator {
             throw new Error("Input must not be empty.");
         }
         const bundleIdUuid = this.uuidService.generateUuid();
+        const messageHeaderEntry = this.buildMessageHeader();
         const orgEntry = this.buildOrganisation(outcome.providerUnit);
         const bundleObject = {
             "@": {
@@ -42,6 +43,7 @@ class Generator {
             },
             // tslint:disable-next-line:object-literal-sort-keys
             "entry": [
+                messageHeaderEntry,
                 orgEntry,
             ],
         };
@@ -71,6 +73,27 @@ class Generator {
     // [13]: DCH-NewbornBloodSpotScreening-DiagnosticReport-1 - Child Screening Report
     // [14]: CareConnect-DCH-Encounter-1 - subject (patient), period, location, serviceProvider(lab)
     // [15]: CareConnect-DCH-Location-1 location at which the event occurred the lab's ODS code (config)
+    buildMessageHeader() {
+        const messageHeaderId = this.uuidService.generateUuid();
+        return {
+            fullUrl: {
+                "@": {
+                    value: "urn:uuid:" + messageHeaderId,
+                },
+            },
+            resource: {
+                MessageHeader: {
+                    id: {
+                        "@": {
+                            value: messageHeaderId,
+                        },
+                    },
+                    // tslint:disable-next-line:object-literal-sort-keys
+                    hello: 123,
+                },
+            },
+        };
+    }
     buildOrganisation(odsCode) {
         const element = {
             Organization: odsCode,

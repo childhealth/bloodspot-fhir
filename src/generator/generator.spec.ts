@@ -51,6 +51,24 @@ describe("Generator", () => {
             const org = {
                 Organization: "08A",
             };
+            const messageHeaderEntry = {
+                fullUrl: {
+                    "@": {
+                        value: "urn:uuid:dummyUuid",
+                    },
+                },
+                resource: {
+                    MessageHeader: {
+                        id: {
+                            "@": {
+                                value: "dummyUuid",
+                            },
+                        },
+                        // tslint:disable-next-line:object-literal-sort-keys
+                        hello: 123,
+                    },
+                },
+            };
             const expected = {
                 "@": {
                     xmlns: "http://hl7.org/fhir",
@@ -74,6 +92,7 @@ describe("Generator", () => {
                 },
                 // tslint:disable-next-line:object-literal-sort-keys
                 "entry": [
+                    messageHeaderEntry,
                     org,
                 ],
             };
