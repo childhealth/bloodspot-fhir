@@ -31,6 +31,15 @@ describe("Generator", () => {
             expect(subjectWithPrivateMethods.generateFHIRMessage).toHaveBeenCalledTimes(inputOutcomes.length);
         });
     });
+    function buildProfile(theValue) {
+        return {
+            profile: {
+                "@": {
+                    value: theValue,
+                },
+            },
+        };
+    }
     describe("generateFHIRMessage", () => {
         it("should throw error if input is empty", () => {
             expect(() => {
@@ -56,8 +65,7 @@ describe("Generator", () => {
                                 value: "dummyUuid",
                             },
                         },
-                        // tslint:disable-next-line:object-literal-sort-keys
-                        hello: 123,
+                        meta: buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-MessageHeader-1"),
                     },
                 },
             };
@@ -70,13 +78,7 @@ describe("Generator", () => {
                         value: "dummyUuid",
                     },
                 },
-                "meta": {
-                    profile: {
-                        "@": {
-                            value: "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1",
-                        },
-                    },
-                },
+                "meta": buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1"),
                 "type": {
                     "@": {
                         value: "message",
@@ -87,6 +89,19 @@ describe("Generator", () => {
                     messageHeaderEntry,
                     org,
                 ],
+            };
+            expect(actual).toEqual(expected);
+        });
+    });
+    describe("buildProfile", () => {
+        it("should return a simple meta element", () => {
+            const actual = subjectWithPrivateMethods.buildProfile("theProfileValue");
+            const expected = {
+                profile: {
+                    "@": {
+                        value: "theProfileValue",
+                    },
+                },
             };
             expect(actual).toEqual(expected);
         });

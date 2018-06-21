@@ -26,6 +26,7 @@ export class Generator {
 
         const bundleIdUuid = this.uuidService.generateUuid();
         const messageHeaderEntry = this.buildMessageHeader();
+        const metaBundle = this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1");
         const orgEntry = this.buildOrganisation(outcome.providerUnit);
         const bundleObject = {
             "@": {
@@ -36,13 +37,7 @@ export class Generator {
                     value: bundleIdUuid,
                 },
             },
-            "meta": {
-                profile: {
-                    "@": {
-                        value: "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1",
-                    },
-                },
-            },
+            "meta": metaBundle,
             "type": {
                 "@": {
                     value: "message",
@@ -98,8 +93,17 @@ export class Generator {
                             value: messageHeaderId,
                         },
                     },
-                    // tslint:disable-next-line:object-literal-sort-keys
-                    hello: 123,
+                    meta: this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-MessageHeader-1"),
+                },
+            },
+        };
+    }
+
+    private buildProfile(profileValue: string): any {
+        return {
+            profile: {
+                "@": {
+                    value: profileValue,
                 },
             },
         };
