@@ -27,7 +27,6 @@
   },
   "dependencies": {
     "@types/uuid": "^3.4.3",
-    "@types/xml": "^1.0.2",
     "js2xmlparser": "^3.0.0",
     "uuid": "^3.2.1"
   }
