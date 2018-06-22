@@ -39,7 +39,7 @@ it('Checking Provider_unit parameter in the message', function(){
             //Load generated xml
             console.log("Verifying record "+(i+1)+" from CSV")
             var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
-            checker.checkMessageElements(eachOutcome, "providerUnit", xmlFormat, '//Bundle/entry/Organization')
+            checker.checkMessageElementsValue(eachOutcome, "providerUnit", xmlFormat, '//Bundle/entry//Organization/identifier/value')
             i = i+1
         }
  });
