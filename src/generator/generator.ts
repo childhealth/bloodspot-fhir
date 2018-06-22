@@ -1,6 +1,7 @@
 import { InputChannel } from "../input/input.channel";
 import { Outcome } from "../model/outcome";
 import { OutputChannel } from "../output/output.channel";
+import { ConfigurationService } from "../services/configuration.service";
 import { UuidService } from "./uuid.service";
 
 export class Generator {
@@ -9,6 +10,7 @@ export class Generator {
         public inputChannel: InputChannel,
         public outputChannel: OutputChannel,
         private uuidService = new UuidService(),
+        private configurationService = new ConfigurationService(),
     ) {
     }
 
@@ -25,9 +27,13 @@ export class Generator {
         }
 
         const bundleIdUuid = this.uuidService.generateUuid();
-        const messageHeaderEntry = this.buildMessageHeader();
+        const organisationId = this.uuidService.generateUuid();
+        const encounterId = this.uuidService.generateUuid();
+
+        const messageHeaderEntry = this.buildMessageHeader(organisationId, encounterId);
         const metaBundle = this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1");
         const orgEntry = this.buildOrganisation(outcome.providerUnit);
+
         const bundleObject = {
             "@": {
                 xmlns: "http://hl7.org/fhir",
@@ -54,15 +60,16 @@ export class Generator {
 
     // A DCH-BloodSpotTestOutcome-Bundle is a DCH-Bundle element with 16 entries:
     // [0]: DCH-MessageHeader-1:
-    //      resource identifier - a publication reference number which will use a UUID format
+    //      id - a publication reference number which will use a UUID format
     //      extension: new message event Extension-DCH-MessageEventType
     //      event: system, code, display - CH035 Blood Spot Test Outcome
+    //      timestamp: event published date - now
     //      source: endpoint, IT system holding the event data - the lab's LIMS (config)
-    //      responsible: event publisher - the lab (config)
+    //      responsible: organisation - event publisher - the lab (config)
     //      period.start: (CareConnect-DCH-Encounter-1) event date time - assume same
     //                   as timestamp - datetime stamp when this tool is run.
-    //      timestamp: event published date - now
-    // [1]: a CareConnect-DCH-Organization - the screening lab
+    //      focus: the encounter below
+    // [1]: a CareConnect-DCH-Organization - the screening lab (responsible in message header)
     // [2]: a HealthcareService - assume hardcoded value for a screening lab
     // [3]: Patient
     // [4]: CareConnect-DCH-NewbornBloodSpotScreeningPKU-Procedure-1
@@ -78,9 +85,11 @@ export class Generator {
     // [14]: CareConnect-DCH-Encounter-1 - subject (patient), period, location, serviceProvider(lab)
     // [15]: CareConnect-DCH-Location-1 location at which the event occurred the lab's ODS code (config)
 
-    private buildMessageHeader(): any {
+    private buildMessageHeader(responsibleId: string, focusId: string): any {
         const messageHeaderId = this.uuidService.generateUuid();
         const bloodspotEvent = this.buildChildHealthEvent("CH035", "Blood Spot Test Outcome");
+        const sourceOdsCode = this.configurationService.laboratory.odsCode;
+        const labDescription = this.configurationService.laboratory.description;
         return {
             fullUrl: {
                 "@": {
@@ -98,6 +107,9 @@ export class Generator {
                     extension: this.buildNewMessageEventExtension(),
                     event: bloodspotEvent,
                     timestamp: this.buildTimestamp(new Date()),
+                    source: this.buildSource(sourceOdsCode),
+                    responsible: this.buildResponsible(responsibleId, labDescription),
+                    focus: this.buildFocus(focusId),
                 },
             },
         };
@@ -165,6 +177,43 @@ export class Generator {
         return {
             "@": {
                 value: theDate,
+            },
+        };
+    }
+
+    private buildSource(odsCode: string): any {
+        return {
+            source: {
+                endpoint: {
+                    "@": {
+                        value: "urn:nhs-uk:addressing:ods:" + odsCode,
+                    },
+                },
+            },
+        };
+    }
+
+    private buildResponsible(id: string, display: string): any {
+        return {
+            reference: {
+                "@": {
+                    value: "urn:uuid:" + id,
+                },
+            },
+            display: {
+                "@": {
+                    value: display,
+                },
+            },
+        };
+    }
+
+    private buildFocus(id: string): any {
+        return {
+            reference: {
+                "@": {
+                    value: "urn:uuid:" + id,
+                },
             },
         };
     }

@@ -37,16 +37,6 @@ describe("Generator", () => {
         });
     });
 
-    function buildProfile(theValue: string): any {
-        return {
-            profile: {
-                "@": {
-                    value: theValue,
-                },
-            },
-        };
-    }
-
     describe("generateFHIRMessage", () => {
         it("should throw error if input is empty", () => {
             expect(() => {
@@ -79,6 +69,9 @@ describe("Generator", () => {
             expect(mhKeys).toContain("extension");
             expect(mhKeys).toContain("event");
             expect(mhKeys).toContain("timestamp");
+            expect(mhKeys).toContain("source");
+            expect(mhKeys).toContain("responsible");
+            expect(mhKeys).toContain("focus");
         });
     });
 
@@ -127,6 +120,59 @@ describe("Generator", () => {
             const expected = {
                 "@": {
                     value: "2018-12-25T00:00:00.000Z",
+                },
+            };
+            expect(actual).toEqual(expected);
+        });
+    });
+
+    describe("buildSource", () => {
+        it("should set the ods code in the endpoint value", () => {
+            const odsCode = "RX3EP";
+            const actual = subjectWithPrivateMethods.buildSource(odsCode);
+            const expected = {
+                source: {
+                    endpoint: {
+                        "@": {
+                            value: "urn:nhs-uk:addressing:ods:" + odsCode,
+                        },
+                    },
+                },
+            };
+            expect(actual).toEqual(expected);
+        });
+    });
+
+    describe("buildResponsible", () => {
+        it("should set id and display text", () => {
+            const id = "id";
+            const description = "description";
+            const actual = subjectWithPrivateMethods.buildResponsible(id, description);
+            const expected = {
+                reference: {
+                    "@": {
+                        value: "urn:uuid:id",
+                    },
+                },
+                display: {
+                    "@": {
+                        value: description,
+                    },
+                },
+            };
+            expect(actual).toEqual(expected);
+        });
+    });
+
+    describe("buildFocus", () => {
+        it("should set the id", () => {
+            const id = "FOCUS01";
+            const actual = subjectWithPrivateMethods.buildFocus(id);
+            const expected = {
+                reference: {
+                    "@": {
+                        value: "urn:uuid:" + id,
+                    },
                 },
             };
             expect(actual).toEqual(expected);
