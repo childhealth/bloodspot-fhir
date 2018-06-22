@@ -20,20 +20,20 @@ xmlFiles = fileHandler.getFiles(outFolder)
 
 var checker = require('./messageChecker')
 
-it('Checking message header for all generated xml messages', function(){
+it('Checked \"MessageHeader\" for all generated xml messages', function(){
     for (const file of xmlFiles) {
         //Load generated xml
-        console.log("Verifying XML file "+file+" header");
+        console.log("Verifying XML file \""+file+"\" header");
         json = fileHandler.getXml2Js(file);
         headerMessage = checker.getXpathElementValue(json, '//MessageHeader//event/display');
         headerCode = checker.getXpathElementValue(json, '//MessageHeader//event/code');
         expect(headerMessage).toEqual('Blood Spot Test Outcome');
         expect(headerCode).toEqual('CH035');
-        console.log("Verified MessageHeader "+headerMessage+" code "+headerCode)
+        console.log("Verified MessageHeader \""+headerMessage+"\" code \""+headerCode+"\"")
     }
 });
 
-it('Checking Provider_unit parameter in the message', function(){
+it('Checked \"Provider_unit/Organization\" parameter in the message', function(){
     var i = 0;
         for (const eachOutcome of srcFilecontent.outcomes) {
             //Load generated xml
