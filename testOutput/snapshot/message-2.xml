@@ -1,0 +1,49 @@
+<?xml version='1.0'?>
+<Bundle xmlns='http://hl7.org/fhir'>
+    <id value='4dcda016-29ca-4e50-bc8c-d5fc3e85ad3e'/>
+    <meta>
+        <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1'/>
+    </meta>
+    <type value='message'/>
+    <entry>
+        <fullUrl value='urn:uuid:b0b605fa-50a0-4b3c-bec2-3531113523a7'/>
+        <resource>
+            <MessageHeader>
+                <id value='b0b605fa-50a0-4b3c-bec2-3531113523a7'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/DCH-MessageHeader-1'/>
+                </meta>
+                <extension url='https://fhir.nhs.uk/STU3/StructureDefinition/Extension-DCH-MessageEventType-1'>
+                    <valueCodeableConcept>
+                        <coding>
+                            <system value='https://fhir.nhs.uk/STU3/CodeSystem/DCH-MessageEventType-1'/>
+                            <code value='new'/>
+                            <display value='New event message'/>
+                        </coding>
+                    </valueCodeableConcept>
+                </extension>
+                <event>
+                    <system value='https://fhir.nhs.uk/STU3/CodeSystem/DCH-ChildHealthEventType-1'/>
+                    <code value='CH035'/>
+                    <display value='Blood Spot Test Outcome'/>
+                </event>
+                <timestamp value='2018-06-22T14:04:50.765Z'/>
+                <source>
+                    <source>
+                        <endpoint value='urn:nhs-uk:addressing:ods:LAB01'/>
+                    </source>
+                </source>
+                <responsible>
+                    <reference value='urn:uuid:3d9aaad4-9a93-48f5-9761-7b5043772a1c'/>
+                    <display value='Laboratory 01'/>
+                </responsible>
+                <focus>
+                    <reference value='urn:uuid:7e7664b9-3f45-46a8-8621-5b9e0f5bb8ad'/>
+                </focus>
+            </MessageHeader>
+        </resource>
+    </entry>
+    <entry>
+        <Organization>07N</Organization>
+    </entry>
+</Bundle>
