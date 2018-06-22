@@ -9,7 +9,7 @@ export class MockConfigurationService extends ConfigurationService {
             odsCode: "LAB01",
             description: "Laboratory 01",
             address: {
-                line: "Address Line 1",
+                line1: "Address Line 1",
                 city: "Lab City",
                 district: "District 1",
                 postCode: "NN1 1AA",

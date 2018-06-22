@@ -169,7 +169,7 @@ describe("Generator", () => {
             const orgId = "ORGID01";
             const orgCode = "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Organization-1";
             const mockLabOdsCode = "LAB01";
-            const labName = "University Hospital of Big City";
+            const labName = "Laboratory 01";
             const actual = subjectWithPrivateMethods.buildOrganisation(orgId);
             const expected = {
                 fullUrl: "urn:uuid:" + orgId,
@@ -192,6 +192,33 @@ describe("Generator", () => {
                             value: {
                                 "@": {
                                     value: mockLabOdsCode,
+                                },
+                            },
+                        },
+                        name: {
+                            "@": {
+                                value: labName,
+                            },
+                        },
+                        address: {
+                            line: {
+                                "@": {
+                                    value: "Address Line 1",
+                                },
+                            },
+                            city: {
+                                "@": {
+                                    value: "Lab City",
+                                },
+                            },
+                            district: {
+                                "@": {
+                                    value: "District 1",
+                                },
+                            },
+                            postCode: {
+                                "@": {
+                                    value: "NN1 1AA",
                                 },
                             },
                         },

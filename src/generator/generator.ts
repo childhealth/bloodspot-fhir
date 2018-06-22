@@ -233,10 +233,56 @@ export class Generator {
         };
     }
 
+    private buildName(name: string): any {
+        return {
+            "@": {
+                value: name,
+            },
+        };
+    }
+
+    private buildAddress(
+        line1: string,
+        city: string,
+        district: string,
+        postCode: string,
+    ) {
+        return {
+            line: {
+                "@": {
+                    value: line1,
+                },
+            },
+            city: {
+                "@": {
+                    value: city,
+                },
+            },
+            district: {
+                "@": {
+                    value: district,
+                },
+            },
+            postCode: {
+                "@": {
+                    value: postCode,
+                },
+            },
+        };
+    }
+
     private buildOrganisation(orgId: string): any {
         const organisationCode = "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Organization-1";
         const odsSystem = "https://fhir.nhs.uk/Id/ods-organization-code";
-        const orgSystemValue = this.buildSystemValue(odsSystem, this.configurationService.laboratory.odsCode);
+        const lab = this.configurationService.laboratory;
+        const orgSystemValue = this.buildSystemValue(odsSystem, lab.odsCode);
+        const labName = this.buildName(lab.description);
+        const labAddress = this.buildAddress(
+            lab.address.line1,
+            lab.address.city,
+            lab.address.district,
+            lab.address.postCode);
+
         const element = {
             fullUrl: "urn:uuid:" + orgId,
             resource: {
@@ -244,8 +290,8 @@ export class Generator {
                     id: orgId,
                     meta: this.buildProfile(organisationCode),
                     identifier: orgSystemValue,
-                    // TODO: name
-                    // TODO: address
+                    name: labName,
+                    address: labAddress,
                 },
             },
         };
