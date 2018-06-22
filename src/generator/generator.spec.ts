@@ -4,6 +4,7 @@ import { OutputChannel } from "../output/output.channel";
 import { DummyLocalFileInputChannel } from "../testing/dummy.local.file.input.channel";
 import { DummyLocalFolderOutputChannel } from "../testing/dummy.local.folder.output.channel";
 import { DummyUuidService } from "../testing/dummy.uuid.service";
+import { MockConfigurationService } from "../testing/mock.configuration.service";
 import { Generator } from "./generator";
 
 describe("Generator", () => {
@@ -18,7 +19,7 @@ describe("Generator", () => {
     beforeEach(() => {
         inputChannel = new DummyLocalFileInputChannel();
         outputChannel = new DummyLocalFolderOutputChannel();
-        subject = new Generator(inputChannel, outputChannel, new DummyUuidService());
+        subject = new Generator(inputChannel, outputChannel, new DummyUuidService(), new MockConfigurationService());
         subjectWithPrivateMethods = subject as any;
     });
 
@@ -181,8 +182,43 @@ describe("Generator", () => {
 
     describe("buildOrganisation", () => {
         it("should return a simple organisation object", () => {
-            const actual = subjectWithPrivateMethods.buildOrganisation("123");
-            const expected = {Organization: "123"};
+            const orgId = "ORGID01";
+            const orgCode = "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Organization-1";
+            const mockLabOdsCode = "LAB01";
+            const labName = "University Hospital of Big City";
+            const actual = subjectWithPrivateMethods.buildOrganisation(orgId);
+            const expected = {
+                fullUrl: "urn:uuid:" + orgId,
+                resource: {
+                    Organization: {
+                        id: orgId,
+                        meta: {
+                            profile: {
+                                "@": {
+                                    value: orgCode,
+                                },
+                            },
+                        },
+                        identifier: {
+                            system: {
+                                "@": {
+                                    value: "https://fhir.nhs.uk/Id/ods-organization-code",
+                                },
+                            },
+                            value: {
+                                "@": {
+                                    value: mockLabOdsCode,
+                                },
+                            },
+                        },
+                        // name: {
+                        //     "@": {
+                        //         value: labName,
+                        //     },
+                        // },
+                    },
+                },
+            };
             expect(actual).toEqual(expected);
         });
     });

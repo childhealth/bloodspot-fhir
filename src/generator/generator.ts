@@ -32,7 +32,7 @@ export class Generator {
 
         const messageHeaderEntry = this.buildMessageHeader(organisationId, encounterId);
         const metaBundle = this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1");
-        const orgEntry = this.buildOrganisation(outcome.providerUnit);
+        const organisationEntry = this.buildOrganisation(organisationId);
 
         const bundleObject = {
             "@": {
@@ -51,7 +51,7 @@ export class Generator {
             },
             "entry": [
                 messageHeaderEntry,
-                orgEntry,
+                organisationEntry,
             ],
         };
 
@@ -218,9 +218,36 @@ export class Generator {
         };
     }
 
-    private buildOrganisation(odsCode: string): any {
+    private buildSystemValue(thing1: string, thing2: string): any {
+        return {
+            system: {
+                "@": {
+                    value: thing1,
+                },
+            },
+            value: {
+                "@": {
+                    value: thing2,
+                },
+            },
+        };
+    }
+
+    private buildOrganisation(orgId: string): any {
+        const organisationCode = "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Organization-1";
+        const odsSystem = "https://fhir.nhs.uk/Id/ods-organization-code";
+        const orgSystemValue = this.buildSystemValue(odsSystem, this.configurationService.laboratory.odsCode);
         const element = {
-            Organization: odsCode,
+            fullUrl: "urn:uuid:" + orgId,
+            resource: {
+                Organization: {
+                    id: orgId,
+                    meta: this.buildProfile(organisationCode),
+                    identifier: orgSystemValue,
+                    // TODO: name
+                    // TODO: address
+                },
+            },
         };
 
         return element;
