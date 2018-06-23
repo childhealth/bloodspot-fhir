@@ -1,0 +1,12 @@
+{
+    "laboratory": {
+        "odsCode": "LAB01",
+        "description": "Laboratory 01",
+        "address": {
+            "line1": "First line of the address",
+            "city": "City",
+            "district": "District",
+            "postCode": "Post Code"
+        }
+    }
+}

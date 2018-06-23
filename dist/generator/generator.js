@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const configuration_service_1 = require("../services/configuration.service");
 const uuid_service_1 = require("./uuid.service");
 class Generator {
-    constructor(inputChannel, outputChannel, uuidService = new uuid_service_1.UuidService(), configurationService = new configuration_service_1.ConfigurationService()) {
+    constructor(inputChannel, outputChannel, uuidService = new uuid_service_1.UuidService(), configurationService = new configuration_service_1.ConfigurationService("./bloodspot-helper.json")) {
         this.inputChannel = inputChannel;
         this.outputChannel = outputChannel;
         this.uuidService = uuidService;

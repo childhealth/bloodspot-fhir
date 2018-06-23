@@ -1,16 +1,34 @@
-export class ConfigurationService {
+import fs from "fs";
+import { IConfigurationService } from "./i.configuration.service";
+
+export class ConfigurationService implements IConfigurationService {
     public readonly laboratory: any;
 
-    constructor() {
-        this.laboratory = {
-            odsCode: "LAB01",
-            description: "Laboratory 01",
-            address: {
-                line1: "TODO file handling",
-                city: "TODO file handling",
-                district: "TODO file handling",
-                postCode: "TODO file handling",
-            },
-        };
+    private config: any;
+
+    constructor(
+        private configUrl: string,
+        private logger: any = console,
+    ) {
+        this.config = this.readConfig(configUrl);
+        this.laboratory = this.config.laboratory;
+    }
+
+    private readConfig(url: string): string {
+        let configFile = null;
+        try {
+            configFile = fs.readFileSync(url).toString();
+        } catch (e) {
+            const message = e.message.startsWith("ENOENT") ?
+                                "Cannot read config file '" + this.configUrl + "'."
+                                : e.message;
+            this.logger.log("Error: readConfig: url '"
+              + ((typeof url) === "object" ? JSON.stringify(url) : url) + "': " + message);
+            throw new Error(message);
+        }
+
+        const configJson = JSON.parse(configFile);
+
+        return configJson;
     }
 }

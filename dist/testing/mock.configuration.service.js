@@ -1,9 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const configuration_service_1 = require("../services/configuration.service");
-class MockConfigurationService extends configuration_service_1.ConfigurationService {
+class MockConfigurationService {
     constructor() {
-        super();
         this.laboratory = {
             odsCode: "LAB01",
             description: "Laboratory 01",

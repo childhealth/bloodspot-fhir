@@ -2,6 +2,7 @@ import { InputChannel } from "../input/input.channel";
 import { Outcome } from "../model/outcome";
 import { OutputChannel } from "../output/output.channel";
 import { ConfigurationService } from "../services/configuration.service";
+import { IConfigurationService } from "../services/i.configuration.service";
 import { UuidService } from "./uuid.service";
 
 export class Generator {
@@ -10,7 +11,7 @@ export class Generator {
         public inputChannel: InputChannel,
         public outputChannel: OutputChannel,
         private uuidService = new UuidService(),
-        private configurationService = new ConfigurationService(),
+        private configurationService: IConfigurationService = new ConfigurationService("./bloodspot-helper.json"),
     ) {
     }
 
