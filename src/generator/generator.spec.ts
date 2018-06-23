@@ -3,8 +3,8 @@ import { Outcome } from "../model/outcome";
 import { OutputChannel } from "../output/output.channel";
 import { DummyLocalFileInputChannel } from "../testing/dummy.local.file.input.channel";
 import { DummyLocalFolderOutputChannel } from "../testing/dummy.local.folder.output.channel";
-import { DummyUuidService } from "../testing/dummy.uuid.service";
 import { MockConfigurationService } from "../testing/mock.configuration.service";
+import { MockUuidService } from "../testing/mock.uuid.service";
 import { Generator } from "./generator";
 
 describe("Generator", () => {
@@ -19,7 +19,7 @@ describe("Generator", () => {
     beforeEach(() => {
         inputChannel = new DummyLocalFileInputChannel();
         outputChannel = new DummyLocalFolderOutputChannel();
-        subject = new Generator(inputChannel, outputChannel, new DummyUuidService(), new MockConfigurationService());
+        subject = new Generator(inputChannel, outputChannel, new MockUuidService(), new MockConfigurationService());
         subjectWithPrivateMethods = subject as any;
     });
 
