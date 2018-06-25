@@ -106,11 +106,9 @@ describe("Generator", () => {
             const odsCode = "RX3EP";
             const actual = subjectWithPrivateMethods.buildSource(odsCode);
             const expected = {
-                source: {
-                    endpoint: {
-                        "@": {
-                            value: "urn:nhs-uk:addressing:ods:" + odsCode,
-                        },
+                endpoint: {
+                    "@": {
+                        value: "urn:nhs-uk:addressing:ods:" + odsCode,
                     },
                 },
             };
@@ -203,7 +201,7 @@ describe("Generator", () => {
                                     value: "District 1",
                                 },
                             },
-                            postCode: {
+                            postalCode: {
                                 "@": {
                                     value: "NN1 1AA",
                                 },

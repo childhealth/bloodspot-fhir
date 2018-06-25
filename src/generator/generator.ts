@@ -185,11 +185,9 @@ export class Generator {
 
     private buildSource(odsCode: string): any {
         return {
-            source: {
-                endpoint: {
-                    "@": {
-                        value: "urn:nhs-uk:addressing:ods:" + odsCode,
-                    },
+            endpoint: {
+                "@": {
+                    value: "urn:nhs-uk:addressing:ods:" + odsCode,
                 },
             },
         };
@@ -265,7 +263,7 @@ export class Generator {
                     value: district,
                 },
             },
-            postCode: {
+            postalCode: {
                 "@": {
                     value: postCode,
                 },

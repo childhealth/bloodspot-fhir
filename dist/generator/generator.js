@@ -166,11 +166,9 @@ class Generator {
     }
     buildSource(odsCode) {
         return {
-            source: {
-                endpoint: {
-                    "@": {
-                        value: "urn:nhs-uk:addressing:ods:" + odsCode,
-                    },
+            endpoint: {
+                "@": {
+                    value: "urn:nhs-uk:addressing:ods:" + odsCode,
                 },
             },
         };
@@ -236,7 +234,7 @@ class Generator {
                     value: district,
                 },
             },
-            postCode: {
+            postalCode: {
                 "@": {
                     value: postCode,
                 },
