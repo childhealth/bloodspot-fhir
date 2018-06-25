@@ -66,6 +66,25 @@ describe("HealthcareServiceGenerator", () => {
                                 },
                             },
                         },
+                        specialty: {
+                            coding: {
+                                system: {
+                                    "@": {
+                                        value: "https://fhir.nhs.uk/STU3/CodeSystem/DCH-Specialty-1",
+                                    },
+                                },
+                                code: {
+                                    "@": {
+                                        value: "560",
+                                    },
+                                },
+                                display: {
+                                    "@": {
+                                        value: "MIDWIFE EPISODE",
+                                    },
+                                },
+                            },
+                        },
                     },
                 },
             };

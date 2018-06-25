@@ -17,6 +17,10 @@ class MockConfigurationService {
                 code: "ProfTypeCODE1",
                 description: "ProfTypeDescription",
             },
+            specialty: {
+                code: "560",
+                description: "MIDWIFE EPISODE",
+            },
         };
     }
 }

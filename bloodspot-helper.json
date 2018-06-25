@@ -13,6 +13,10 @@
         "professionalType": {
             "code": "C09",
             "description": "Screener (in a National Screening Programme)"
+        },
+        "specialty": {
+            "code": "560",
+            "description": "MIDWIFE EPISODE"
         }
     }
 }
