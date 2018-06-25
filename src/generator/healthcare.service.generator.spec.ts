@@ -17,7 +17,9 @@ describe("HealthcareServiceGenerator", () => {
     describe("buildHealthcareService", () => {
         it("should set the healthcareServiceId", () => {
             const healthcareServiceId = "843484id";
-            const actual = subject.buildHealthcareService(healthcareServiceId);
+            const organisationId = "OrG02iD";
+            const locationId = "LoCaTiOn01Id";
+            const actual = subject.buildHealthcareService(healthcareServiceId, organisationId, locationId);
             const expected = {
                 fullUrl: "urn:uuid:" + healthcareServiceId,
                 resource: {
@@ -25,6 +27,13 @@ describe("HealthcareServiceGenerator", () => {
                         id: {
                             "@": {
                                 value: healthcareServiceId,
+                            },
+                        },
+                        meta: {
+                            profile: {
+                                "@": {
+                                    value: "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-HealthcareService-1",
+                                },
                             },
                         },
                         type: {
@@ -43,6 +52,56 @@ describe("HealthcareServiceGenerator", () => {
                                     "@": {
                                         value: "ProfTypeDescription",
                                     },
+                                },
+                            },
+                        },
+                        providedBy: {
+                            reference: {
+                                "@": {
+                                    value: "urn:uuid:" + organisationId,
+                                },
+                            },
+                            display: {
+                                "@": {
+                                    value: "Laboratory 01",
+                                },
+                            },
+                        },
+                        specialty: {
+                            coding: {
+                                system: {
+                                    "@": {
+                                        value: "https://fhir.nhs.uk/STU3/CodeSystem/DCH-Specialty-1",
+                                    },
+                                },
+                                code: {
+                                    "@": {
+                                        value: "560",
+                                    },
+                                },
+                                display: {
+                                    "@": {
+                                        value: "MIDWIFE EPISODE",
+                                    },
+                                },
+                            },
+                        },
+                        location: {
+                            reference: {
+                                "@": {
+                                    value: "urn:uuid:" + locationId,
+                                },
+                            },
+                        },
+                        telecom: {
+                            system: {
+                                "@": {
+                                    value: "phone",
+                                },
+                            },
+                            value: {
+                                "@": {
+                                    value: "123412345",
                                 },
                             },
                         },

@@ -10,11 +10,16 @@ export class MockConfigurationService implements IConfigurationService {
             district: "District 1",
             postCode: "NN1 1AA",
         },
+        phone: "123412345",
     };
     public readonly healthcareService = {
         professionalType: {
             code: "ProfTypeCODE1",
             description: "ProfTypeDescription",
+        },
+        specialty: {
+            code: "560",
+            description: "MIDWIFE EPISODE",
         },
     };
 }

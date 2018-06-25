@@ -66,29 +66,6 @@ describe("Generator", () => {
             expect(mhKeys).toContain("focus");
         });
     });
-    describe("buildChildHealthEvent", () => {
-        it("should set the code and display text", () => {
-            const actual = subjectWithPrivateMethods.buildChildHealthEvent("123", "One two three");
-            const expected = {
-                system: {
-                    "@": {
-                        value: "https://fhir.nhs.uk/STU3/CodeSystem/DCH-ChildHealthEventType-1",
-                    },
-                },
-                code: {
-                    "@": {
-                        value: "123",
-                    },
-                },
-                display: {
-                    "@": {
-                        value: "One two three",
-                    },
-                },
-            };
-            expect(actual).toEqual(expected);
-        });
-    });
     describe("buildTimestamp", () => {
         it("should ", () => {
             const christmasDay = new Date(2018, 11, 25);

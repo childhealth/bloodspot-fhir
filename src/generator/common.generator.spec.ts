@@ -21,4 +21,28 @@ describe("CommonGenerator", () => {
         });
     });
 
+    describe("buildCoding", () => {
+        it("should set the code and display text", () => {
+            const actual = subject.buildCoding("CoDiNgSyStEm", "123", "One two three");
+            const expected = {
+                system: {
+                    "@": {
+                        value: "CoDiNgSyStEm",
+                    },
+                },
+                code: {
+                    "@": {
+                        value: "123",
+                    },
+                },
+                display: {
+                    "@": {
+                        value: "One two three",
+                    },
+                },
+            };
+            expect(actual).toEqual(expected);
+        });
+    });
+
 });

@@ -10,6 +10,25 @@ class CommonGenerator {
             },
         };
     }
+    buildCoding(system, code, display) {
+        return {
+            system: {
+                "@": {
+                    value: system,
+                },
+            },
+            code: {
+                "@": {
+                    value: code,
+                },
+            },
+            display: {
+                "@": {
+                    value: display,
+                },
+            },
+        };
+    }
 }
 exports.CommonGenerator = CommonGenerator;
 //# sourceMappingURL=common.generator.js.map

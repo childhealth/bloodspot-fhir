@@ -7,12 +7,17 @@
             "city": "City",
             "district": "District",
             "postCode": "Post Code"
-        }
+        },
+        "phone": "0113 123 4567"
     },
     "healthcareService": {
         "professionalType": {
             "code": "C09",
             "description": "Screener (in a National Screening Programme)"
+        },
+        "specialty": {
+            "code": "560",
+            "description": "MIDWIFE EPISODE"
         }
     }
 }
