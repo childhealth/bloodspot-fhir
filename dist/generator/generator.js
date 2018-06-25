@@ -30,8 +30,8 @@ class Generator {
         const bundleCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1";
         const metaBundle = this.commonGenerator.buildProfile(bundleCode);
         const organisationEntry = this.buildOrganisation(organisationId);
-        const healthcareServiceGenerator = new healthcare_service_generator_1.HealthcareServiceGenerator(this.configurationService);
-        const healthcareServiceEntry = healthcareServiceGenerator.buildHealthcareService(healthcareServiceId);
+        const healthcareGenerator = new healthcare_service_generator_1.HealthcareServiceGenerator(this.configurationService);
+        const healthcareEntry = healthcareGenerator.buildHealthcareService(healthcareServiceId, organisationId);
         const bundleObject = {
             "@": {
                 xmlns: "http://hl7.org/fhir",
@@ -50,7 +50,7 @@ class Generator {
             "entry": [
                 messageHeaderEntry,
                 organisationEntry,
-                healthcareServiceEntry,
+                healthcareEntry,
             ],
         };
         return bundleObject;

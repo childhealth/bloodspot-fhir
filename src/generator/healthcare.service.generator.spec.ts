@@ -17,7 +17,8 @@ describe("HealthcareServiceGenerator", () => {
     describe("buildHealthcareService", () => {
         it("should set the healthcareServiceId", () => {
             const healthcareServiceId = "843484id";
-            const actual = subject.buildHealthcareService(healthcareServiceId);
+            const organisationId = "OrG02iD";
+            const actual = subject.buildHealthcareService(healthcareServiceId, organisationId);
             const expected = {
                 fullUrl: "urn:uuid:" + healthcareServiceId,
                 resource: {
@@ -25,6 +26,13 @@ describe("HealthcareServiceGenerator", () => {
                         id: {
                             "@": {
                                 value: healthcareServiceId,
+                            },
+                        },
+                        meta: {
+                            profile: {
+                                "@": {
+                                    value: "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-HealthcareService-1",
+                                },
                             },
                         },
                         type: {
@@ -43,6 +51,18 @@ describe("HealthcareServiceGenerator", () => {
                                     "@": {
                                         value: "ProfTypeDescription",
                                     },
+                                },
+                            },
+                        },
+                        providedBy: {
+                            reference: {
+                                "@": {
+                                    value: "urn:uuid:" + organisationId,
+                                },
+                            },
+                            display: {
+                                "@": {
+                                    value: "Laboratory 01",
                                 },
                             },
                         },

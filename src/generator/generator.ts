@@ -40,8 +40,8 @@ export class Generator {
         const bundleCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1";
         const metaBundle = this.commonGenerator.buildProfile(bundleCode);
         const organisationEntry = this.buildOrganisation(organisationId);
-        const healthcareServiceGenerator = new HealthcareServiceGenerator(this.configurationService);
-        const healthcareServiceEntry = healthcareServiceGenerator.buildHealthcareService(healthcareServiceId);
+        const healthcareGenerator = new HealthcareServiceGenerator(this.configurationService);
+        const healthcareEntry = healthcareGenerator.buildHealthcareService(healthcareServiceId, organisationId);
 
         const bundleObject = {
             "@": {
@@ -61,7 +61,7 @@ export class Generator {
             "entry": [
                 messageHeaderEntry,
                 organisationEntry,
-                healthcareServiceEntry,
+                healthcareEntry,
             ],
         };
 
