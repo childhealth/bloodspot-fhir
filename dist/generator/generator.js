@@ -83,7 +83,8 @@ class Generator {
     // [15]: CareConnect-DCH-Location-1 location at which the event occurred the lab's ODS code (config)
     buildMessageHeader(responsibleId, focusId) {
         const messageHeaderId = this.uuidService.generateUuid();
-        const bloodspotEvent = this.buildChildHealthEvent("CH035", "Blood Spot Test Outcome");
+        const childHealthEventTypeCode = "https://fhir.nhs.uk/STU3/CodeSystem/DCH-ChildHealthEventType-1";
+        const bloodspotEvent = this.commonGenerator.buildCoding(childHealthEventTypeCode, "CH035", "Blood Spot Test Outcome");
         const sourceOdsCode = this.configurationService.laboratory.odsCode;
         const labDescription = this.configurationService.laboratory.description;
         const messageHeaderCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-MessageHeader-1";
@@ -112,47 +113,13 @@ class Generator {
         };
     }
     buildNewMessageEventExtension() {
+        const messageEventTypeCode = "https://fhir.nhs.uk/STU3/CodeSystem/DCH-MessageEventType-1";
         return {
             "@": {
                 url: "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-DCH-MessageEventType-1",
             },
             "valueCodeableConcept": {
-                coding: {
-                    system: {
-                        "@": {
-                            value: "https://fhir.nhs.uk/STU3/CodeSystem/DCH-MessageEventType-1",
-                        },
-                    },
-                    code: {
-                        "@": {
-                            value: "new",
-                        },
-                    },
-                    display: {
-                        "@": {
-                            value: "New event message",
-                        },
-                    },
-                },
-            },
-        };
-    }
-    buildChildHealthEvent(code, display) {
-        return {
-            system: {
-                "@": {
-                    value: "https://fhir.nhs.uk/STU3/CodeSystem/DCH-ChildHealthEventType-1",
-                },
-            },
-            code: {
-                "@": {
-                    value: code,
-                },
-            },
-            display: {
-                "@": {
-                    value: display,
-                },
+                coding: this.commonGenerator.buildCoding(messageEventTypeCode, "new", "New event message"),
             },
         };
     }

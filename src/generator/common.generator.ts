@@ -10,4 +10,24 @@ export class CommonGenerator {
         };
     }
 
+    public buildCoding(system: string, code: string, display: string) {
+        return {
+            system: {
+                "@": {
+                    value: system,
+                },
+            },
+            code: {
+                "@": {
+                    value: code,
+                },
+            },
+            display: {
+                "@": {
+                    value: display,
+                },
+            },
+        };
+    }
+
 }
