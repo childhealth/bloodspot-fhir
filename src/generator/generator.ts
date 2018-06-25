@@ -3,6 +3,7 @@ import { Outcome } from "../model/outcome";
 import { OutputChannel } from "../output/output.channel";
 import { ConfigurationService } from "../services/configuration.service";
 import { IConfigurationService } from "../services/i.configuration.service";
+import { HealthcareServiceGenerator } from "./healthcare.service.generator";
 import { UuidService } from "./uuid.service";
 
 export class Generator {
@@ -29,11 +30,14 @@ export class Generator {
 
         const bundleIdUuid = this.uuidService.generateUuid();
         const organisationId = this.uuidService.generateUuid();
+        const healthcareServiceId = this.uuidService.generateUuid();
         const encounterId = this.uuidService.generateUuid();
 
         const messageHeaderEntry = this.buildMessageHeader(organisationId, encounterId);
         const metaBundle = this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1");
         const organisationEntry = this.buildOrganisation(organisationId);
+        const healthcareServiceGenerator = new HealthcareServiceGenerator(this.configurationService);
+        const healthcareServiceEntry = healthcareServiceGenerator.buildHealthcareService(healthcareServiceId);
 
         const bundleObject = {
             "@": {
@@ -53,6 +57,7 @@ export class Generator {
             "entry": [
                 messageHeaderEntry,
                 organisationEntry,
+                healthcareServiceEntry,
             ],
         };
 

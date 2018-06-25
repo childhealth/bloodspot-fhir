@@ -8,5 +8,11 @@
             "district": "District",
             "postCode": "Post Code"
         }
+    },
+    "healthcareService": {
+        "professionalType": {
+            "code": "C09",
+            "description": "Screener (in a National Screening Programme)"
+        }
     }
 }

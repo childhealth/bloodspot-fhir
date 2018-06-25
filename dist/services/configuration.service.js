@@ -10,6 +10,7 @@ class ConfigurationService {
         this.logger = logger;
         this.config = this.readConfig(configUrl);
         this.laboratory = this.config.laboratory;
+        this.healthcareService = this.config.healthcareService;
     }
     readConfig(url) {
         let configFile = null;

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const configuration_service_1 = require("../services/configuration.service");
+const healthcare_service_generator_1 = require("./healthcare.service.generator");
 const uuid_service_1 = require("./uuid.service");
 class Generator {
     constructor(inputChannel, outputChannel, uuidService = new uuid_service_1.UuidService(), configurationService = new configuration_service_1.ConfigurationService("./bloodspot-helper.json")) {
@@ -21,10 +22,13 @@ class Generator {
         }
         const bundleIdUuid = this.uuidService.generateUuid();
         const organisationId = this.uuidService.generateUuid();
+        const healthcareServiceId = this.uuidService.generateUuid();
         const encounterId = this.uuidService.generateUuid();
         const messageHeaderEntry = this.buildMessageHeader(organisationId, encounterId);
         const metaBundle = this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1");
         const organisationEntry = this.buildOrganisation(organisationId);
+        const healthcareServiceGenerator = new healthcare_service_generator_1.HealthcareServiceGenerator(this.configurationService);
+        const healthcareServiceEntry = healthcareServiceGenerator.buildHealthcareService(healthcareServiceId);
         const bundleObject = {
             "@": {
                 xmlns: "http://hl7.org/fhir",
@@ -43,6 +47,7 @@ class Generator {
             "entry": [
                 messageHeaderEntry,
                 organisationEntry,
+                healthcareServiceEntry,
             ],
         };
         return bundleObject;

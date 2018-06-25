@@ -11,4 +11,10 @@ export class MockConfigurationService implements IConfigurationService {
             postCode: "NN1 1AA",
         },
     };
+    public readonly healthcareService = {
+        professionalType: {
+            code: "ProfTypeCODE1",
+            description: "ProfTypeDescription",
+        },
+    };
 }

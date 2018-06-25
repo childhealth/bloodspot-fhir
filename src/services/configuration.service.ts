@@ -3,6 +3,7 @@ import { IConfigurationService } from "./i.configuration.service";
 
 export class ConfigurationService implements IConfigurationService {
     public readonly laboratory: any;
+    public readonly healthcareService: any;
 
     private config: any;
 
@@ -12,6 +13,7 @@ export class ConfigurationService implements IConfigurationService {
     ) {
         this.config = this.readConfig(configUrl);
         this.laboratory = this.config.laboratory;
+        this.healthcareService = this.config.healthcareService;
     }
 
     private readConfig(url: string): string {

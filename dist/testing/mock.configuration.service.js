@@ -12,6 +12,12 @@ class MockConfigurationService {
                 postCode: "NN1 1AA",
             },
         };
+        this.healthcareService = {
+            professionalType: {
+                code: "ProfTypeCODE1",
+                description: "ProfTypeDescription",
+            },
+        };
     }
 }
 exports.MockConfigurationService = MockConfigurationService;
