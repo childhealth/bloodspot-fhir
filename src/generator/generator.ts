@@ -3,10 +3,13 @@ import { Outcome } from "../model/outcome";
 import { OutputChannel } from "../output/output.channel";
 import { ConfigurationService } from "../services/configuration.service";
 import { IConfigurationService } from "../services/i.configuration.service";
+import { CommonGenerator } from "./common.generator";
 import { HealthcareServiceGenerator } from "./healthcare.service.generator";
 import { UuidService } from "./uuid.service";
 
 export class Generator {
+
+    private commonGenerator = new CommonGenerator();
 
     constructor(
         public inputChannel: InputChannel,
@@ -34,7 +37,8 @@ export class Generator {
         const encounterId = this.uuidService.generateUuid();
 
         const messageHeaderEntry = this.buildMessageHeader(organisationId, encounterId);
-        const metaBundle = this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1");
+        const bundleCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1";
+        const metaBundle = this.commonGenerator.buildProfile(bundleCode);
         const organisationEntry = this.buildOrganisation(organisationId);
         const healthcareServiceGenerator = new HealthcareServiceGenerator(this.configurationService);
         const healthcareServiceEntry = healthcareServiceGenerator.buildHealthcareService(healthcareServiceId);
@@ -96,6 +100,8 @@ export class Generator {
         const bloodspotEvent = this.buildChildHealthEvent("CH035", "Blood Spot Test Outcome");
         const sourceOdsCode = this.configurationService.laboratory.odsCode;
         const labDescription = this.configurationService.laboratory.description;
+        const messageHeaderCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-MessageHeader-1";
+
         return {
             fullUrl: {
                 "@": {
@@ -109,23 +115,13 @@ export class Generator {
                             value: messageHeaderId,
                         },
                     },
-                    meta: this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-MessageHeader-1"),
+                    meta: this.commonGenerator.buildProfile(messageHeaderCode),
                     extension: this.buildNewMessageEventExtension(),
                     event: bloodspotEvent,
                     timestamp: this.buildTimestamp(new Date()),
                     source: this.buildSource(sourceOdsCode),
                     responsible: this.buildResponsible(responsibleId, labDescription),
                     focus: this.buildFocus(focusId),
-                },
-            },
-        };
-    }
-
-    private buildProfile(profileValue: string): any {
-        return {
-            profile: {
-                "@": {
-                    value: profileValue,
                 },
             },
         };
@@ -294,7 +290,7 @@ export class Generator {
             resource: {
                 Organization: {
                     id: orgId,
-                    meta: this.buildProfile(organisationCode),
+                    meta: this.commonGenerator.buildProfile(organisationCode),
                     identifier: orgSystemValue,
                     name: labName,
                     address: labAddress,

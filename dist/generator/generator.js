@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const configuration_service_1 = require("../services/configuration.service");
+const common_generator_1 = require("./common.generator");
 const healthcare_service_generator_1 = require("./healthcare.service.generator");
 const uuid_service_1 = require("./uuid.service");
 class Generator {
@@ -9,6 +10,7 @@ class Generator {
         this.outputChannel = outputChannel;
         this.uuidService = uuidService;
         this.configurationService = configurationService;
+        this.commonGenerator = new common_generator_1.CommonGenerator();
     }
     execute() {
         for (const eachOutcome of this.inputChannel.outcomes) {
@@ -25,7 +27,8 @@ class Generator {
         const healthcareServiceId = this.uuidService.generateUuid();
         const encounterId = this.uuidService.generateUuid();
         const messageHeaderEntry = this.buildMessageHeader(organisationId, encounterId);
-        const metaBundle = this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1");
+        const bundleCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1";
+        const metaBundle = this.commonGenerator.buildProfile(bundleCode);
         const organisationEntry = this.buildOrganisation(organisationId);
         const healthcareServiceGenerator = new healthcare_service_generator_1.HealthcareServiceGenerator(this.configurationService);
         const healthcareServiceEntry = healthcareServiceGenerator.buildHealthcareService(healthcareServiceId);
@@ -83,6 +86,7 @@ class Generator {
         const bloodspotEvent = this.buildChildHealthEvent("CH035", "Blood Spot Test Outcome");
         const sourceOdsCode = this.configurationService.laboratory.odsCode;
         const labDescription = this.configurationService.laboratory.description;
+        const messageHeaderCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-MessageHeader-1";
         return {
             fullUrl: {
                 "@": {
@@ -96,22 +100,13 @@ class Generator {
                             value: messageHeaderId,
                         },
                     },
-                    meta: this.buildProfile("https://fhir.nhs.uk/STU3/StructureDefinition/DCH-MessageHeader-1"),
+                    meta: this.commonGenerator.buildProfile(messageHeaderCode),
                     extension: this.buildNewMessageEventExtension(),
                     event: bloodspotEvent,
                     timestamp: this.buildTimestamp(new Date()),
                     source: this.buildSource(sourceOdsCode),
                     responsible: this.buildResponsible(responsibleId, labDescription),
                     focus: this.buildFocus(focusId),
-                },
-            },
-        };
-    }
-    buildProfile(profileValue) {
-        return {
-            profile: {
-                "@": {
-                    value: profileValue,
                 },
             },
         };
@@ -260,7 +255,7 @@ class Generator {
             resource: {
                 Organization: {
                     id: orgId,
-                    meta: this.buildProfile(organisationCode),
+                    meta: this.commonGenerator.buildProfile(organisationCode),
                     identifier: orgSystemValue,
                     name: labName,
                     address: labAddress,

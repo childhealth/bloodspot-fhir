@@ -76,20 +76,6 @@ describe("Generator", () => {
         });
     });
 
-    describe("buildProfile", () => {
-        it("should return a simple meta element", () => {
-            const actual = subjectWithPrivateMethods.buildProfile("theProfileValue");
-            const expected = {
-                profile: {
-                    "@": {
-                        value: "theProfileValue",
-                    },
-                },
-            };
-            expect(actual).toEqual(expected);
-        });
-    });
-
     describe("buildChildHealthEvent", () => {
         it("should set the code and display text", () => {
             const actual = subjectWithPrivateMethods.buildChildHealthEvent("123", "One two three");
