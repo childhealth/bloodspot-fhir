@@ -1,4 +1,5 @@
 var expect = require('expect');
+var fileHandler = require('./fileHandling');
 var checkMessageElementsText = function(srcFormat, elementName, dstXmlFormat, xpathParam) {
     var xpathValue = getXpathElementText(dstXmlFormat, xpathParam)
     console.log("CSV name "+elementName+" and value = "+srcFormat[elementName])
@@ -25,10 +26,23 @@ var getXpathElementText = function(xmlFormat, xpathParam) {
     return result[0]
 }
 
+var xmlValidate = function(xmlFilePath, xsdFilePath) {
+    var xsdparser = require('libxmljs');
+    var xsdDoc = xsdparser.parseXmlString(fileHandler.readFile(xsdFilePath));
+    var xmlDoc = xsdparser.parseXmlString(fileHandler.readFile(xmlFilePath))
+    xmlValidationStatus = xmlDoc.validate(xsdDoc);
+    if (xmlDoc.validationErrors.length > 0){
+        console.log(xmlDoc.validationErrors)
+        return false
+    }
+    return xmlValidationStatus
+}
+
 
 module.exports = {
     checkMessageElementsText,
     checkMessageElementsValue,
     getXpathElementValue,
-    getXpathElementText
+    getXpathElementText,
+    xmlValidate
 };

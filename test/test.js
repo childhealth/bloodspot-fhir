@@ -20,6 +20,17 @@ xmlFiles = fileHandler.getFiles(outFolder)
 
 var checker = require('./messageChecker')
 
+it.skip('Checked XML Schema validation - DCH-BloodSpotTestOutcome-Bundle', function(){
+    var xsd = require('./messageChecker');
+    var fileHandler = require('./fileHandling')
+    filexsd = './test/xmlSchema/DCH-BloodSpotTestOutcome-Bundle-Example-1.xsd'
+    for (const xmlfile of xmlFiles) {
+        console.log("Valdating \""+xmlfile+"\" agaist schema \""+filexsd)
+        result = xsd.xmlValidate(xmlfile, filexsd)
+        expect(result).toEqual(true)
+    }
+ });
+
 it('Checked \"MessageHeader\" for all generated xml messages', function(){
     for (const file of xmlFiles) {
         //Load generated xml
@@ -33,7 +44,7 @@ it('Checked \"MessageHeader\" for all generated xml messages', function(){
     }
 });
 
-it('Checked \"Provider_unit/Organization\" parameter in the message', function(){
+it.skip('Checked \"Provider_unit/Organization\" parameter in the message', function(){
     var i = 0;
         for (const eachOutcome of srcFilecontent.outcomes) {
             //Load generated xml

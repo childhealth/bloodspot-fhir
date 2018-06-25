@@ -13,15 +13,16 @@ var getFiles = function(dir){
 }
 
 var readFile = function(fileName){
-//To be implemented a function for reading and parsing CSV files.
+    const fs = require('fs');
+    var stringFile = fs.readFileSync(fileName).toString();
+    return stringFile
 }
 
 var getXml2Js = function(file){
     var xml2js = require("xml2js");
     var xpath = require("xml2js-xpath");
-    const fs = require('fs');
 
-    var xml = fs.readFileSync(file).toString();
+    var xml =  this.readFile(file);
     xml2js.parseString(xml, function(err, json){
         if(err) throw err;
         res = json
@@ -31,5 +32,6 @@ var getXml2Js = function(file){
 
 module.exports = {
     getFiles,
-    getXml2Js
+    getXml2Js,
+    readFile
 };
