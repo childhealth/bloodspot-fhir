@@ -16,7 +16,8 @@ describe("HealthcareServiceGenerator", () => {
         it("should set the healthcareServiceId", () => {
             const healthcareServiceId = "843484id";
             const organisationId = "OrG02iD";
-            const actual = subject.buildHealthcareService(healthcareServiceId, organisationId);
+            const locationId = "LoCaTiOn01Id";
+            const actual = subject.buildHealthcareService(healthcareServiceId, organisationId, locationId);
             const expected = {
                 fullUrl: "urn:uuid:" + healthcareServiceId,
                 resource: {
@@ -80,6 +81,25 @@ describe("HealthcareServiceGenerator", () => {
                                     "@": {
                                         value: "MIDWIFE EPISODE",
                                     },
+                                },
+                            },
+                        },
+                        location: {
+                            reference: {
+                                "@": {
+                                    value: "urn:uuid:" + locationId,
+                                },
+                            },
+                        },
+                        telecom: {
+                            system: {
+                                "@": {
+                                    value: "phone",
+                                },
+                            },
+                            value: {
+                                "@": {
+                                    value: "123412345",
                                 },
                             },
                         },

@@ -7,7 +7,8 @@
             "city": "City",
             "district": "District",
             "postCode": "Post Code"
-        }
+        },
+        "phone": "0113 123 4567"
     },
     "healthcareService": {
         "professionalType": {

@@ -26,12 +26,13 @@ class Generator {
         const organisationId = this.uuidService.generateUuid();
         const healthcareServiceId = this.uuidService.generateUuid();
         const encounterId = this.uuidService.generateUuid();
+        const locationId = this.uuidService.generateUuid();
         const messageHeaderEntry = this.buildMessageHeader(organisationId, encounterId);
         const bundleCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1";
         const metaBundle = this.commonGenerator.buildProfile(bundleCode);
         const organisationEntry = this.buildOrganisation(organisationId);
         const healthcareGenerator = new healthcare_service_generator_1.HealthcareServiceGenerator(this.configurationService);
-        const healthcareEntry = healthcareGenerator.buildHealthcareService(healthcareServiceId, organisationId);
+        const healthcareEntry = healthcareGenerator.buildHealthcareService(healthcareServiceId, organisationId, locationId);
         const bundleObject = {
             "@": {
                 xmlns: "http://hl7.org/fhir",

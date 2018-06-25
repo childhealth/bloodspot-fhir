@@ -11,6 +11,7 @@ class MockConfigurationService {
                 district: "District 1",
                 postCode: "NN1 1AA",
             },
+            phone: "123412345",
         };
         this.healthcareService = {
             professionalType: {
