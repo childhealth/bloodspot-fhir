@@ -14,29 +14,23 @@ class Outcome {
     constructor(allValues) {
         this.allValues = allValues;
         // nationalId
-        this.labSerialNo = "";
+        this.labCardSerialNo = "";
         this.providerUnit = ""; // e.g. St James Maternity unit
-        this.nhsNo = "";
+        this.nhsNumber = "";
         this.surname = "";
         this.firstName = "";
-        // genderCode
-        // gpName
-        // gpCode
-        // birthOrder
-        // birthConfinement
-        // birthWeight
-        // gestationLength
-        // nicu - Is the baby in Intensive Care Unit? "1" or "0"
-        // mothersSurname
-        // alternativeSurname
-        // mothersFirstname
-        // address1
-        // address2
-        // address3
-        // address4
-        // address5
-        // postcode
-        // mothersTelephone
+        this.gpName = "";
+        this.gpPracticeCode = "";
+        this.mothersSurname = "";
+        this.alternativeSurname = "";
+        this.mothersFirstname = "";
+        this.address1 = "";
+        this.address2 = "";
+        this.address3 = "";
+        this.address4 = "";
+        this.address5 = "";
+        this.postcode = "";
+        this.mothersTelephone = "";
         // receiptDate
         // collectionDate
         // previousLabSerialNo
@@ -72,12 +66,30 @@ class Outcome {
         const fields = allValues.split(",");
         this.validate(fields);
         // this.nationalId = fields[0]; // Not used
-        this.labSerialNo = fields[1];
+        this.labCardSerialNo = fields[1];
         this.providerUnit = fields[2];
-        this.nhsNo = fields[3].replace(/ /g, ""); // "NNN NNN NNN" is a display string for "NNNNNNNNN"
+        this.nhsNumber = fields[3].replace(/ /g, ""); // "NNN NNN NNN" is a display string for "NNNNNNNNN"
         this.surname = fields[4];
         this.firstName = fields[5];
         this.dateOfBirth = this.validateDate(fields[6]);
+        this.genderCode = Number(fields[7]);
+        this.gpName = fields[8];
+        this.gpPracticeCode = fields[9];
+        this.birthOrder = Number(fields[10]);
+        this.birthConfinement = Number(fields[11]);
+        this.birthWeight = Number(fields[12]);
+        this.gestationLength = Number(fields[13]);
+        this.nicu = Number(fields[14]);
+        this.mothersSurname = fields[15];
+        this.alternativeSurname = fields[16];
+        this.mothersFirstname = fields[17];
+        this.address1 = fields[18];
+        this.address2 = fields[19];
+        this.address3 = fields[20];
+        this.address4 = fields[21];
+        this.address5 = fields[22];
+        this.postcode = fields[23];
+        this.mothersTelephone = fields[24];
         this.labCode = fields[29];
         this.pkuStatusCode = fields[30];
         this.pkuSupplementaryCode = fields[31];
@@ -93,6 +105,15 @@ class Outcome {
         if (fields.length !== Outcome.MaxFields) {
             throw new Error("Invalid values: string has " + fields.length
                 + " values but was expecting " + Outcome.MaxFields + ".");
+        }
+        const genderCode = fields[7];
+        this.validateNumber(genderCode);
+        const birthOrder = fields[10];
+        this.validateNumber(birthOrder);
+    }
+    validateNumber(value) {
+        if (isNaN(Number(value))) {
+            throw new Error("Invalid number \"" + value + "\".");
         }
     }
     validateDate(dateString) {

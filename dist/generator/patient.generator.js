@@ -25,9 +25,9 @@ class PatientGenerator {
                 },
             },
         };
-        if (outcome.nhsNo !== "") {
+        if (outcome.nhsNumber !== "") {
             const identifierElement = {
-                identifier: this.commonGenerator.buildSystemValue(nhsNumberCode, outcome.nhsNo),
+                identifier: this.commonGenerator.buildSystemValue(nhsNumberCode, outcome.nhsNumber),
             };
             Object.assign(element.resource.Patient, identifierElement);
         }

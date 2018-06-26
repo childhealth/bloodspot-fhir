@@ -47,7 +47,7 @@ describe("PatientGenerator", () => {
                             },
                             value: {
                                 "@": {
-                                    value: outcome1.nhsNo,
+                                    value: outcome1.nhsNumber,
                                 },
                             },
                         },
