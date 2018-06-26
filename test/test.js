@@ -42,16 +42,34 @@ for (const srcFile of srcFiles) {
             }
         });
         
-        it.skip('should be encoded correctly the \"Provider_unit/Organization\" parameter in the XML message', function(){
+        it('should be encoded correctly the \"Organization\" parameter in the XML message', function(){
             var i = 0;
                 for (const eachOutcome of srcFilecontent.outcomes) {
                     //Load generated xml
                     console.log("Verifying record "+(i+1)+" from CSV")
                     var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
-                    checker.checkMessageElementsValue(eachOutcome, "providerUnit", xmlFormat, '//Bundle/entry//Organization/identifier/value')
+                    expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Organization/identifier/value')).toEqual('LAB01')
+                    expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Organization/name')).toEqual('Laboratory 01')
+                    //TODO: The tests are implemented with verification of config values.
+                    //The verification need to be changed when sample data is available for input
+                    // checker.checkMessageElementsValue(eachOutcome, "providerUnit", xmlFormat, '//Bundle/entry//Organization/identifier/value')
                     i = i+1
                 }
          });
+
+         it('should be encoded correctly the \"HealthcareService\" parameter in the XML message', function(){
+            var i = 0;
+                for (const eachOutcome of srcFilecontent.outcomes) {
+                    //Load generated xml
+                    console.log("Verifying record "+(i+1)+" from CSV")
+                    var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
+                    expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/type/coding/code')).toEqual('C09')
+                    expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/providedBy/display')).toEqual('Laboratory 01')
+                    expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/telecom/system')).toEqual('phone')
+                    i = i+1
+                }
+         });
+
         })
 }
 
