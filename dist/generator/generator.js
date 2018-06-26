@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const configuration_service_1 = require("../services/configuration.service");
 const common_generator_1 = require("./common.generator");
 const healthcare_service_generator_1 = require("./healthcare.service.generator");
+const patient_generator_1 = require("./patient.generator");
 const uuid_service_1 = require("./uuid.service");
 class Generator {
     constructor(inputChannel, outputChannel, uuidService = new uuid_service_1.UuidService(), configurationService = new configuration_service_1.ConfigurationService("./bloodspot-helper.json")) {
@@ -27,12 +28,15 @@ class Generator {
         const healthcareServiceId = this.uuidService.generateUuid();
         const encounterId = this.uuidService.generateUuid();
         const locationId = this.uuidService.generateUuid();
+        const patientId = this.uuidService.generateUuid();
         const messageHeaderEntry = this.buildMessageHeader(organisationId, encounterId);
         const bundleCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1";
         const metaBundle = this.commonGenerator.buildProfile(bundleCode);
         const organisationEntry = this.buildOrganisation(organisationId);
         const healthcareGenerator = new healthcare_service_generator_1.HealthcareServiceGenerator(this.configurationService);
         const healthcareEntry = healthcareGenerator.buildHealthcareService(healthcareServiceId, organisationId, locationId);
+        const patientGenerator = new patient_generator_1.PatientGenerator();
+        const patientEntry = patientGenerator.buildPatient(patientId, outcome);
         const bundleObject = {
             "@": {
                 xmlns: "http://hl7.org/fhir",
@@ -52,6 +56,7 @@ class Generator {
                 messageHeaderEntry,
                 organisationEntry,
                 healthcareEntry,
+                patientEntry,
             ],
         };
         return bundleObject;
@@ -164,20 +169,6 @@ class Generator {
             },
         };
     }
-    buildSystemValue(thing1, thing2) {
-        return {
-            system: {
-                "@": {
-                    value: thing1,
-                },
-            },
-            value: {
-                "@": {
-                    value: thing2,
-                },
-            },
-        };
-    }
     buildName(name) {
         return {
             "@": {
@@ -213,7 +204,7 @@ class Generator {
         const organisationCode = "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Organization-1";
         const odsSystem = "https://fhir.nhs.uk/Id/ods-organization-code";
         const lab = this.configurationService.laboratory;
-        const orgSystemValue = this.buildSystemValue(odsSystem, lab.odsCode);
+        const orgSystemValue = this.commonGenerator.buildSystemValue(odsSystem, lab.odsCode);
         const labName = this.buildName(lab.description);
         const labAddress = this.buildAddress(lab.address.line1, lab.address.city, lab.address.district, lab.address.postCode);
         const element = {

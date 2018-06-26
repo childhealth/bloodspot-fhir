@@ -30,4 +30,19 @@ export class CommonGenerator {
         };
     }
 
+    public buildSystemValue(systemValue: string, valueValue: string): any {
+        return {
+            system: {
+                "@": {
+                    value: systemValue,
+                },
+            },
+            value: {
+                "@": {
+                    value: valueValue,
+                },
+            },
+        };
+    }
+
 }

@@ -5,6 +5,7 @@ import { ConfigurationService } from "../services/configuration.service";
 import { IConfigurationService } from "../services/i.configuration.service";
 import { CommonGenerator } from "./common.generator";
 import { HealthcareServiceGenerator } from "./healthcare.service.generator";
+import { PatientGenerator } from "./patient.generator";
 import { UuidService } from "./uuid.service";
 
 export class Generator {
@@ -36,6 +37,7 @@ export class Generator {
         const healthcareServiceId = this.uuidService.generateUuid();
         const encounterId = this.uuidService.generateUuid();
         const locationId = this.uuidService.generateUuid();
+        const patientId = this.uuidService.generateUuid();
 
         const messageHeaderEntry = this.buildMessageHeader(organisationId, encounterId);
         const bundleCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1";
@@ -44,6 +46,8 @@ export class Generator {
         const healthcareGenerator = new HealthcareServiceGenerator(this.configurationService);
         const healthcareEntry = healthcareGenerator.buildHealthcareService(
             healthcareServiceId, organisationId, locationId);
+        const patientGenerator = new PatientGenerator();
+        const patientEntry = patientGenerator.buildPatient(patientId, outcome);
 
         const bundleObject = {
             "@": {
@@ -64,6 +68,7 @@ export class Generator {
                 messageHeaderEntry,
                 organisationEntry,
                 healthcareEntry,
+                patientEntry,
             ],
         };
 
@@ -187,21 +192,6 @@ export class Generator {
         };
     }
 
-    private buildSystemValue(thing1: string, thing2: string): any {
-        return {
-            system: {
-                "@": {
-                    value: thing1,
-                },
-            },
-            value: {
-                "@": {
-                    value: thing2,
-                },
-            },
-        };
-    }
-
     private buildName(name: string): any {
         return {
             "@": {
@@ -244,7 +234,7 @@ export class Generator {
         const organisationCode = "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Organization-1";
         const odsSystem = "https://fhir.nhs.uk/Id/ods-organization-code";
         const lab = this.configurationService.laboratory;
-        const orgSystemValue = this.buildSystemValue(odsSystem, lab.odsCode);
+        const orgSystemValue = this.commonGenerator.buildSystemValue(odsSystem, lab.odsCode);
         const labName = this.buildName(lab.description);
         const labAddress = this.buildAddress(
             lab.address.line1,

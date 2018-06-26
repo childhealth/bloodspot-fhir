@@ -29,6 +29,20 @@ class CommonGenerator {
             },
         };
     }
+    buildSystemValue(systemValue, valueValue) {
+        return {
+            system: {
+                "@": {
+                    value: systemValue,
+                },
+            },
+            value: {
+                "@": {
+                    value: valueValue,
+                },
+            },
+        };
+    }
 }
 exports.CommonGenerator = CommonGenerator;
 //# sourceMappingURL=common.generator.js.map

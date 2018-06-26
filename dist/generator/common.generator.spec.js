@@ -42,5 +42,23 @@ describe("CommonGenerator", () => {
             expect(actual).toEqual(expected);
         });
     });
+    describe("buildSystemValue", () => {
+        it("should set the system and value", () => {
+            const actual = subject.buildSystemValue("SystemCode", "ValueGoesHere");
+            const expected = {
+                system: {
+                    "@": {
+                        value: "SystemCode",
+                    },
+                },
+                value: {
+                    "@": {
+                        value: "ValueGoesHere",
+                    },
+                },
+            };
+            expect(actual).toEqual(expected);
+        });
+    });
 });
 //# sourceMappingURL=common.generator.spec.js.map
