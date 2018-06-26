@@ -11,6 +11,8 @@ export class PatientGenerator {
         const patientCode = "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Patient-1";
         const nhsNumberCode = "https://fhir.nhs.uk/Id/nhs-number";
 
+        const birthDateString = outcome.dateOfBirth.toISOString().slice(0, 10);
+
         const element = {
             fullUrl: {
                 "@": {
@@ -25,6 +27,67 @@ export class PatientGenerator {
                         },
                     },
                     meta: this.commonGenerator.buildProfile(patientCode),
+                    name: {
+                        use: {
+                            "@": {
+                                value: "official",
+                            },
+                        },
+                        family: {
+                            "@": {
+                                value: outcome.surname,
+                            },
+                        },
+                        given: {
+                            "@": {
+                                value: outcome.firstName,
+                            },
+                        },
+                    },
+                    birthDate: {
+                        "@": {
+                            value: birthDateString,
+                        },
+                    },
+                    address: {
+                        use: {
+                            "@": {
+                                value: "home",
+                            },
+                        },
+                        line: [
+                            {
+                                "@": {
+                                    value: outcome.address1,
+                                },
+                            },
+                            {
+                                "@": {
+                                    value: outcome.address2,
+                                },
+                            },
+                            {
+                                "@": {
+                                    value: outcome.address3,
+                                },
+                            },
+                            {
+                                "@": {
+                                    value: outcome.address4,
+                                },
+                            },
+                            {
+                                "@": {
+                                    value: outcome.address5,
+                                },
+                            },
+                        ],
+                        postalCode: {
+                            "@": {
+                                value: outcome.postcode,
+                            },
+                        },
+                    },
                 },
             },
         };

@@ -54,6 +54,67 @@ describe("PatientGenerator", () => {
                                 },
                             },
                         },
+                        name: {
+                            use: {
+                                "@": {
+                                    value: "official",
+                                },
+                            },
+                            family: {
+                                "@": {
+                                    value: outcome1.surname,
+                                },
+                            },
+                            given: {
+                                "@": {
+                                    value: outcome1.firstName,
+                                },
+                            },
+                        },
+                        birthDate: {
+                            "@": {
+                                value: "2016-06-17",
+                            },
+                        },
+                        address: {
+                            use: {
+                                "@": {
+                                    value: "home",
+                                },
+                            },
+                            line: [
+                                {
+                                    "@": {
+                                        value: outcome1.address1,
+                                    },
+                                },
+                                {
+                                    "@": {
+                                        value: outcome1.address2,
+                                    },
+                                },
+                                {
+                                    "@": {
+                                        value: outcome1.address3,
+                                    },
+                                },
+                                {
+                                    "@": {
+                                        value: outcome1.address4,
+                                    },
+                                },
+                                {
+                                    "@": {
+                                        value: outcome1.address5,
+                                    },
+                                },
+                            ],
+                            postalCode: {
+                                "@": {
+                                    value: outcome1.postcode,
+                                },
+                            },
+                        },
                     },
                 },
             };
