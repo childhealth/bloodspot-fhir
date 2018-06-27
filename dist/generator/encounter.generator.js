@@ -1,26 +1,55 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const dateformat_1 = __importDefault(require("dateformat"));
 const common_generator_1 = require("./common.generator");
 class EncounterGenerator {
     constructor() {
         this.commonGenerator = new common_generator_1.CommonGenerator();
     }
-    buildEncounter(reportId) {
+    buildEncounter(encounterId, patientId, patientName, collectionDate) {
         const code = "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Encounter-1";
+        const collectionDateString = dateformat_1.default(collectionDate, "yyyy-mm-dd");
         const element = {
             fullUrl: {
                 "@": {
-                    value: "urn:uuid:" + reportId,
+                    value: "urn:uuid:" + encounterId,
                 },
             },
             resource: {
                 Encounter: {
                     id: {
                         "@": {
-                            value: reportId,
+                            value: encounterId,
                         },
                     },
                     meta: this.commonGenerator.buildProfile(code),
+                    status: {
+                        "@": {
+                            value: "finished",
+                        },
+                    },
+                    subject: {
+                        reference: {
+                            "@": {
+                                value: "urn:uuid:" + patientId,
+                            },
+                        },
+                        display: {
+                            "@": {
+                                value: patientName,
+                            },
+                        },
+                    },
+                    period: {
+                        start: {
+                            "@": {
+                                value: collectionDateString,
+                            },
+                        },
+                    },
                 },
             },
         };

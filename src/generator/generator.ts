@@ -59,7 +59,11 @@ export class Generator {
         const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
 
         const encounterGenerator = new EncounterGenerator();
-        const encounterEntry = encounterGenerator.buildEncounter(encounterId);
+        const encounterEntry = encounterGenerator.buildEncounter(
+            encounterId,
+            patientId,
+            outcome.displayName,
+            outcome.collectionDate);
 
         const locationGenerator = new LocationGenerator();
         const locationEntry = locationGenerator.buildLocation(locationId);

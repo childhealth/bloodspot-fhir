@@ -12,7 +12,10 @@ describe("EncounterGenerator", () => {
         it("should set the fields", () => {
             const uuidService = new mock_uuid_service_1.MockUuidService();
             const encounterId = uuidService.generateUuid();
-            const actual = subject.buildEncounter(encounterId);
+            const patientId = uuidService.generateUuid();
+            const patientName = "Surname, Firstname";
+            const collectionDate = new Date(2017, 11, 31);
+            const actual = subject.buildEncounter(encounterId, patientId, patientName, collectionDate);
             const expected = {
                 fullUrl: {
                     "@": {
@@ -30,6 +33,30 @@ describe("EncounterGenerator", () => {
                             profile: {
                                 "@": {
                                     value: code,
+                                },
+                            },
+                        },
+                        status: {
+                            "@": {
+                                value: "finished",
+                            },
+                        },
+                        subject: {
+                            reference: {
+                                "@": {
+                                    value: "urn:uuid:" + patientId,
+                                },
+                            },
+                            display: {
+                                "@": {
+                                    value: patientName,
+                                },
+                            },
+                        },
+                        period: {
+                            start: {
+                                "@": {
+                                    value: "2017-12-31",
                                 },
                             },
                         },

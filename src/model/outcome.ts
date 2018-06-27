@@ -33,7 +33,7 @@ export class Outcome {
     public postcode = "";
     public mothersTelephone = "";
     // receiptDate
-    // collectionDate
+    public collectionDate: Date;
     // previousLabSerialNo
     // sampleTaker
     public labCode = "";
@@ -64,6 +64,10 @@ export class Outcome {
     public ivaStatusCode = "";
     public ivaSupplementaryCode = "";
     public ivaStatus = "";
+
+    public get displayName() {
+        return this.surname + ", " + this.firstName;
+    }
 
     /**
      * Constructs an Outcome object.
@@ -100,6 +104,8 @@ export class Outcome {
         this.address5 = fields[22];
         this.postcode = fields[23];
         this.mothersTelephone = fields[24];
+
+        this.collectionDate = this.validateDate(fields[26]);
 
         this.labCode = fields[29];
 

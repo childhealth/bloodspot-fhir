@@ -90,5 +90,10 @@ describe("Outcome", () => {
             });
         });
     });
+    describe("displayName", () => {
+        it("should return a displayable name", () => {
+            expect(subject.displayName).toEqual("TEST, BABY");
+        });
+    });
 });
 //# sourceMappingURL=outcome.spec.js.map

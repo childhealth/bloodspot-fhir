@@ -44,7 +44,7 @@ class Generator {
         const reportGenerator = new diagnostic_report_generator_1.DiagnosticReportGenerator();
         const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
         const encounterGenerator = new encounter_generator_1.EncounterGenerator();
-        const encounterEntry = encounterGenerator.buildEncounter(encounterId);
+        const encounterEntry = encounterGenerator.buildEncounter(encounterId, patientId, outcome.displayName, outcome.collectionDate);
         const locationGenerator = new location_generator_1.LocationGenerator();
         const locationEntry = locationGenerator.buildLocation(locationId);
         const bundleObject = {

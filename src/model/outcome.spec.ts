@@ -101,5 +101,13 @@ describe("Outcome", () => {
                 }).toThrow(new Error("Invalid date \"1/15/2018\"."));
             });
         });
+
     });
+
+    describe("displayName", () => {
+        it("should return a displayable name", () => {
+            expect(subject.displayName).toEqual("TEST, BABY");
+        });
+    });
+
 });

@@ -31,8 +31,6 @@ class Outcome {
         this.address5 = "";
         this.postcode = "";
         this.mothersTelephone = "";
-        // receiptDate
-        // collectionDate
         // previousLabSerialNo
         // sampleTaker
         this.labCode = "";
@@ -90,6 +88,7 @@ class Outcome {
         this.address5 = fields[22];
         this.postcode = fields[23];
         this.mothersTelephone = fields[24];
+        this.collectionDate = this.validateDate(fields[26]);
         this.labCode = fields[29];
         this.pkuStatusCode = fields[30];
         this.pkuSupplementaryCode = fields[31];
@@ -100,6 +99,9 @@ class Outcome {
         this.sickleStatusCode = fields[36];
         this.sickleSupplementaryCode = fields[37];
         this.sickleStatus = fields[38];
+    }
+    get displayName() {
+        return this.surname + ", " + this.firstName;
     }
     validate(fields) {
         if (fields.length !== Outcome.MaxFields) {
