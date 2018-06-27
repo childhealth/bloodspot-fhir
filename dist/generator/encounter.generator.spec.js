@@ -15,7 +15,9 @@ describe("EncounterGenerator", () => {
             const patientId = uuidService.generateUuid();
             const patientName = "Surname, Firstname";
             const collectionDate = new Date(2017, 11, 31);
-            const actual = subject.buildEncounter(encounterId, patientId, patientName, collectionDate);
+            const locationId = uuidService.generateUuid();
+            const healthcareServiceId = uuidService.generateUuid();
+            const actual = subject.buildEncounter(encounterId, patientId, patientName, collectionDate, locationId, healthcareServiceId);
             const expected = {
                 fullUrl: {
                     "@": {
@@ -57,6 +59,22 @@ describe("EncounterGenerator", () => {
                             start: {
                                 "@": {
                                     value: "2017-12-31",
+                                },
+                            },
+                        },
+                        location: {
+                            location: {
+                                reference: {
+                                    "@": {
+                                        value: "urn:uuid:" + locationId,
+                                    },
+                                },
+                            },
+                        },
+                        serviceProvider: {
+                            reference: {
+                                "@": {
+                                    value: "urn:uuid:" + healthcareServiceId,
                                 },
                             },
                         },

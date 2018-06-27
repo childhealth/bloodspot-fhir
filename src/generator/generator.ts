@@ -63,7 +63,9 @@ export class Generator {
             encounterId,
             patientId,
             outcome.displayName,
-            outcome.collectionDate);
+            outcome.collectionDate,
+            locationId,
+            healthcareServiceId);
 
         const locationGenerator = new LocationGenerator();
         const locationEntry = locationGenerator.buildLocation(locationId);

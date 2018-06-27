@@ -10,6 +10,8 @@ export class EncounterGenerator {
         patientId: string,
         patientName: string,
         collectionDate: Date,
+        locationId: string,
+        healthcareServiceId: string,
     ): any {
         const code = "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Encounter-1";
         const collectionDateString = dateformat(collectionDate, "yyyy-mm-dd");
@@ -49,6 +51,22 @@ export class EncounterGenerator {
                         start: {
                             "@": {
                                 value: collectionDateString,
+                            },
+                        },
+                    },
+                    location: {
+                        location: {
+                            reference: {
+                                "@": {
+                                    value: "urn:uuid:" + locationId,
+                                },
+                            },
+                        },
+                    },
+                    serviceProvider: {
+                        reference: {
+                            "@": {
+                                value: "urn:uuid:" + healthcareServiceId,
                             },
                         },
                     },

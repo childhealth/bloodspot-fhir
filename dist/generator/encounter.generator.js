@@ -9,7 +9,7 @@ class EncounterGenerator {
     constructor() {
         this.commonGenerator = new common_generator_1.CommonGenerator();
     }
-    buildEncounter(encounterId, patientId, patientName, collectionDate) {
+    buildEncounter(encounterId, patientId, patientName, collectionDate, locationId, healthcareServiceId) {
         const code = "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Encounter-1";
         const collectionDateString = dateformat_1.default(collectionDate, "yyyy-mm-dd");
         const element = {
@@ -47,6 +47,22 @@ class EncounterGenerator {
                         start: {
                             "@": {
                                 value: collectionDateString,
+                            },
+                        },
+                    },
+                    location: {
+                        location: {
+                            reference: {
+                                "@": {
+                                    value: "urn:uuid:" + locationId,
+                                },
+                            },
+                        },
+                    },
+                    serviceProvider: {
+                        reference: {
+                            "@": {
+                                value: "urn:uuid:" + healthcareServiceId,
                             },
                         },
                     },
