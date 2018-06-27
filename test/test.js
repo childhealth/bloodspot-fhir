@@ -12,6 +12,8 @@ describe(' ***** Converting CSV record files to XML FHIR messages *****', functi
 for (const srcFile of srcFiles) {
         //create Out put folder name as CSV file name
         outFolder = 'testOutput/'+srcFile.split('.')[0].split('/')[2]
+        //Remove if folder already exists
+        fileHandler.rmFolders(outFolder)
         //Convert csv to xml
         converter.convert(srcFile, outFolder)
         //Read CSV source file from Test Input folder

@@ -29,6 +29,11 @@ var getXpathElementText = function(xmlFormat, xpathParam) {
 var xmlValidate = function(xmlFilePath, xsdFilePath) {
     var xsdparser = require('libxmljs');
     var xsdDoc = xsdparser.parseXmlString(fileHandler.readFile(xsdFilePath));
+    if (fileHandler.fileExists(xmlFilePath)){
+        console.log("File generated")
+    }else{
+        console.log("File NOT generated")
+    }
     var xmlDoc = xsdparser.parseXmlString(fileHandler.readFile(xmlFilePath))
     xmlValidationStatus = xmlDoc.validate(xsdDoc);
     if (xmlDoc.validationErrors.length > 0){

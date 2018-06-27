@@ -1,6 +1,6 @@
+const fs = require('fs');
 var getFiles = function(dir){
     files_ = [];
-    const fs = require('fs');
     var files = fs.readdirSync(dir);
     for (var i in files){
         var name = dir + '/' + files[i];
@@ -13,7 +13,6 @@ var getFiles = function(dir){
 }
 
 var readFile = function(fileName){
-    const fs = require('fs');
     var stringFile = fs.readFileSync(fileName).toString();
     return stringFile
 }
@@ -30,8 +29,35 @@ var getXml2Js = function(file){
     return res;
 }
 
+var fileExists = function(path){
+    if (fs.existsSync(path)) {
+        return true
+    }else{
+        return false
+    }
+};
+
+
+var rmFolders = function(path){
+    console.log("File exists: "+path+": "+fileExists(path)+" Removinig")
+    if( fs.existsSync(path) ) {
+        fs.readdirSync(path).forEach(function(file,index){
+          var curPath = path + "/" + file;
+          if(fs.lstatSync(curPath).isDirectory()) { // recurse
+            deleteFolderRecursive(curPath);
+          } else { // delete file
+            fs.unlinkSync(curPath);
+          }
+        });
+        fs.rmdirSync(path);
+      }
+    console.log("File exists:"+ path +" : "+fileExists(path)+" Removed");
+};
+
 module.exports = {
     getFiles,
     getXml2Js,
-    readFile
+    readFile,
+    fileExists,
+    rmFolders
 };
