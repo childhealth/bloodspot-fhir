@@ -43,6 +43,14 @@ class CommonGenerator {
             },
         };
     }
+    buildTimestamp(date) {
+        const theDate = date.toISOString();
+        return {
+            "@": {
+                value: theDate,
+            },
+        };
+    }
 }
 exports.CommonGenerator = CommonGenerator;
 //# sourceMappingURL=common.generator.js.map

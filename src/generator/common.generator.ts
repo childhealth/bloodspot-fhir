@@ -45,4 +45,13 @@ export class CommonGenerator {
         };
     }
 
+    public buildTimestamp(date: Date): any {
+        const theDate = date.toISOString();
+        return {
+            "@": {
+                value: theDate,
+            },
+        };
+    }
+
 }

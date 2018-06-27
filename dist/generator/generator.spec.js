@@ -66,18 +66,6 @@ describe("Generator", () => {
             expect(mhKeys).toContain("focus");
         });
     });
-    describe("buildTimestamp", () => {
-        it("should ", () => {
-            const christmasDay = new Date(2018, 11, 25);
-            const actual = subjectWithPrivateMethods.buildTimestamp(christmasDay);
-            const expected = {
-                "@": {
-                    value: "2018-12-25T00:00:00.000Z",
-                },
-            };
-            expect(actual).toEqual(expected);
-        });
-    });
     describe("buildSource", () => {
         it("should set the ods code in the endpoint value", () => {
             const odsCode = "RX3EP";

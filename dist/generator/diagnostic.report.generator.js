@@ -5,8 +5,9 @@ class DiagnosticReportGenerator {
     constructor() {
         this.commonGenerator = new common_generator_1.CommonGenerator();
     }
-    buildDiagnosticReport(reportId) {
+    buildDiagnosticReport(reportId, patientId, encounterId, issuedDate = new Date()) {
         const code = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-NewbornBloodSpotScreening-DiagnosticReport-1";
+        const childScreeningReportCoding = this.commonGenerator.buildCoding("http://snomed.info/sct", "86637100000010", "Child Screening Report (record artifact)");
         const element = {
             fullUrl: {
                 "@": {
@@ -21,6 +22,29 @@ class DiagnosticReportGenerator {
                         },
                     },
                     meta: this.commonGenerator.buildProfile(code),
+                    status: {
+                        "@": {
+                            value: "final",
+                        },
+                    },
+                    code: {
+                        coding: childScreeningReportCoding,
+                    },
+                    subject: {
+                        reference: {
+                            "@": {
+                                value: "urn:uuid:" + patientId,
+                            },
+                        },
+                    },
+                    context: {
+                        reference: {
+                            "@": {
+                                value: "urn:uuid:" + encounterId,
+                            },
+                        },
+                    },
+                    issued: this.commonGenerator.buildTimestamp(issuedDate),
                 },
             },
         };

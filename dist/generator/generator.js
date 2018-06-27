@@ -42,7 +42,7 @@ class Generator {
         const patientGenerator = new patient_generator_1.PatientGenerator();
         const patientEntry = patientGenerator.buildPatient(patientId, outcome);
         const reportGenerator = new diagnostic_report_generator_1.DiagnosticReportGenerator();
-        const reportEntry = reportGenerator.buildDiagnosticReport(reportId);
+        const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
         const encounterGenerator = new encounter_generator_1.EncounterGenerator();
         const encounterEntry = encounterGenerator.buildEncounter(encounterId);
         const locationGenerator = new location_generator_1.LocationGenerator();
@@ -123,7 +123,7 @@ class Generator {
                     meta: this.commonGenerator.buildProfile(messageHeaderCode),
                     extension: this.buildNewMessageEventExtension(),
                     event: bloodspotEvent,
-                    timestamp: this.buildTimestamp(new Date()),
+                    timestamp: this.commonGenerator.buildTimestamp(new Date()),
                     source: this.buildSource(sourceOdsCode),
                     responsible: this.buildResponsible(responsibleId, labDescription),
                     focus: this.buildFocus(focusId),
@@ -139,14 +139,6 @@ class Generator {
             },
             "valueCodeableConcept": {
                 coding: this.commonGenerator.buildCoding(messageEventTypeCode, "new", "New event message"),
-            },
-        };
-    }
-    buildTimestamp(date) {
-        const theDate = date.toISOString();
-        return {
-            "@": {
-                value: theDate,
             },
         };
     }

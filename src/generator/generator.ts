@@ -56,7 +56,7 @@ export class Generator {
         const patientEntry = patientGenerator.buildPatient(patientId, outcome);
 
         const reportGenerator = new DiagnosticReportGenerator();
-        const reportEntry = reportGenerator.buildDiagnosticReport(reportId);
+        const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
 
         const encounterGenerator = new EncounterGenerator();
         const encounterEntry = encounterGenerator.buildEncounter(encounterId);
@@ -145,7 +145,7 @@ export class Generator {
                     meta: this.commonGenerator.buildProfile(messageHeaderCode),
                     extension: this.buildNewMessageEventExtension(),
                     event: bloodspotEvent,
-                    timestamp: this.buildTimestamp(new Date()),
+                    timestamp: this.commonGenerator.buildTimestamp(new Date()),
                     source: this.buildSource(sourceOdsCode),
                     responsible: this.buildResponsible(responsibleId, labDescription),
                     focus: this.buildFocus(focusId),
@@ -162,15 +162,6 @@ export class Generator {
             },
             "valueCodeableConcept": {
                 coding: this.commonGenerator.buildCoding(messageEventTypeCode, "new", "New event message"),
-            },
-        };
-    }
-
-    private buildTimestamp(date: Date): any {
-        const theDate = date.toISOString();
-        return {
-            "@": {
-                value: theDate,
             },
         };
     }

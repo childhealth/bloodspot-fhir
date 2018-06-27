@@ -60,5 +60,17 @@ describe("CommonGenerator", () => {
             expect(actual).toEqual(expected);
         });
     });
+    describe("buildTimestamp", () => {
+        it("should ", () => {
+            const christmasDay = new Date(2018, 11, 25);
+            const actual = subject.buildTimestamp(christmasDay);
+            const expected = {
+                "@": {
+                    value: "2018-12-25T00:00:00.000Z",
+                },
+            };
+            expect(actual).toEqual(expected);
+        });
+    });
 });
 //# sourceMappingURL=common.generator.spec.js.map
