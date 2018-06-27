@@ -14,10 +14,11 @@ var checkMessageElementsValue = function(srcFormat, elementName, dstXmlFormat, x
     expect(xpathValue).toEqual(srcFormat[elementName])
 }
 
-var getXpathElementValue = function(xmlFormat, xpathParam) {
+var getXpathElementValue = function(xmlFormat, xpathParam, instance) {
     var xpath = require("xml2js-xpath");
+    arrayInstance = typeof  instance  === 'number' ? instance : 0;
     var result = xpath.find(xmlFormat, xpathParam)
-    return result[0].$.value
+    return result[arrayInstance].$.value
 }
 
 var getXpathElementText = function(xmlFormat, xpathParam) {
@@ -25,6 +26,31 @@ var getXpathElementText = function(xmlFormat, xpathParam) {
     var result = xpath.find(xmlFormat, xpathParam)
     return result[0]
 }
+
+/*
+ * Convert a CSV file to JSON
+ */
+var csvToJson = function(csvFile) {
+    var localFile = fileHandler.readFile(csvFile)
+    data = localFile.split("\n");
+
+    // Get first row for column headers
+    headers = data.shift().split(",");
+    
+    var json = [];    
+    data.forEach(function(d){
+        // Loop through each row
+        tmp = {}
+        row = d.split(",")
+        for(var i = 0; i < headers.length; i++){
+            //Trimming header value as white space added on each element in the source
+            tmp[headers[i].trim()] = row[i];
+        }
+        // Add object to list
+        json.push(tmp);
+    });
+    return json
+};
 
 var xmlValidate = function(xmlFilePath, xsdFilePath) {
     var xsdparser = require('libxmljs');
@@ -49,5 +75,6 @@ module.exports = {
     checkMessageElementsValue,
     getXpathElementValue,
     getXpathElementText,
-    xmlValidate
+    xmlValidate,
+    csvToJson
 };

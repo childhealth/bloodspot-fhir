@@ -21,9 +21,12 @@ for (const srcFile of srcFiles) {
         xmlFiles = fileHandler.getFiles(outFolder)
 
     describe(' ***** Verifying XML FHIR messages against CSV records *****'+srcFile, function() {
-        it.skip('should pass XML validation against Schema - DCH-BloodSpotTestOutcome-Bundle', function(){
+        it('should pass XML validation against Schema - DCH-BloodSpotTestOutcome-Bundle', function(){
             var xsd = require('./messageChecker');
-            filexsd = './test/xmlSchema/DCH-BloodSpotTestOutcome-Bundle-Example-1.xsd'
+            //Using modified schema due to differences between sample data and actual spec
+            // The schema generated of : https://fhir.nhs.uk/STU3/Examples/DCH-BloodSpotTestOutcome-Bundle-Example-1.xml
+            // filexsd = './test/xmlSchema/DCH-BloodSpotTestOutcome-Bundle-Example-1.xsd'
+            filexsd = './test/xmlSchema/DCH-BloodSpotTestOutcome-Bundle-Example-1-modified.xsd'
             for (const xmlfile of xmlFiles) {
                 console.log("Valdating \""+xmlfile+"\" agaist schema \""+filexsd)
                 result = xsd.xmlValidate(xmlfile, filexsd)
@@ -68,6 +71,34 @@ for (const srcFile of srcFiles) {
                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/type/coding/code')).toEqual('C09')
                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/providedBy/display')).toEqual('Laboratory 01')
                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/telecom/system')).toEqual('phone')
+                    i = i+1
+                }
+         });
+
+         it('should be encoded correctly the \"Patient\" details in the XML message', function(){
+            var i = 0;
+            source = checker.csvToJson(srcFile)
+                for (let csvRecord of source) {
+                    //Load generated xml
+                    console.log("Verifying record "+(i+1)+" from CSV")
+                    var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
+                    //Verifying Patients name details
+                    // expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/name/family')).toEqual(csvRecord['Surname'])
+                    // expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/name/given')).toEqual(csvRecord['First_Name'])
+                    date = csvRecord['Date_Of_Birth'].split("/").reverse().join("-");
+                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/birthDate')).toEqual(date)
+
+                     //Verifying Patients address
+                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/address/use')).toEqual('home')
+                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/address/line',0)).toEqual(csvRecord['Address_1'])
+                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/address/line',1)).toEqual(csvRecord['Address_2'])
+                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/address/line',2)).toEqual(csvRecord['Address_3'])
+                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/address/line',3)).toEqual(csvRecord['Address_4'])
+                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/address/line',4)).toEqual(csvRecord['Address_5'])
+                    
+                      //Verifying Patients ID
+                      nhsNumber = csvRecord['nhs_no'].replace(/\s/g, "");
+                      expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/identifier/value')).toEqual(nhsNumber)
                     i = i+1
                 }
          });
