@@ -16,11 +16,13 @@ for (const srcFile of srcFiles) {
         fileHandler.rmFolders(outFolder)
         //Convert csv to xml
         converter.convert(srcFile, outFolder)
-        //Read CSV source file from Test Input folder
-        srcFilecontent = converter.srcFileChannel(srcFile);
+        // //Read CSV source file from Test Input folder
+        // srcFilecontent = converter.srcFileChannel(srcFile);
         xmlFiles = fileHandler.getFiles(outFolder)
 
     describe(' ***** Verifying XML FHIR messages against CSV records *****'+srcFile, function() {
+        //Read source file and convert to JSON for access by test cases
+        source = checker.csvToJson(srcFile)
         it('should pass XML validation against Schema - DCH-BloodSpotTestOutcome-Bundle', function(){
             var xsd = require('./messageChecker');
             //Using modified schema due to differences between sample data and actual spec
@@ -49,7 +51,7 @@ for (const srcFile of srcFiles) {
         
         it('should be encoded correctly the \"Organization\" parameter in the XML message', function(){
             var i = 0;
-                for (const eachOutcome of srcFilecontent.outcomes) {
+                for (let csvRecord of source) {
                     //Load generated xml
                     console.log("Verifying record "+(i+1)+" from CSV")
                     var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
@@ -68,9 +70,9 @@ for (const srcFile of srcFiles) {
 
          it('should be encoded correctly the \"HealthcareService\" parameter in the XML message', function(){
             var i = 0;
-                for (const eachOutcome of srcFilecontent.outcomes) {
+                for (let csvRecord of source) {
                     //Load generated xml
-                    console.log("Verifying record "+(i+1)+" from CSV")
+                    console.log("Verifying record "+(i+1)+" from CSV "+srcFile)
                     var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/type/coding/code')).toEqual('C09')
                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/type/coding/display')).toEqual('Screener (in a National Screening Programme)')
@@ -86,7 +88,6 @@ for (const srcFile of srcFiles) {
 
          it('should be encoded correctly the \"Patient\" details in the XML message', function(){
             var i = 0;
-            source = checker.csvToJson(srcFile)
                 for (let csvRecord of source) {
                     //Load generated xml
                     console.log("Verifying record "+(i+1)+" from CSV")
