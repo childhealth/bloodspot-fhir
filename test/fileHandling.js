@@ -39,7 +39,6 @@ var fileExists = function(path){
 
 
 var rmFolders = function(path){
-    console.log("File exists: "+path+": "+fileExists(path)+" Removinig")
     if( fs.existsSync(path) ) {
         fs.readdirSync(path).forEach(function(file,index){
           var curPath = path + "/" + file;
@@ -51,7 +50,7 @@ var rmFolders = function(path){
         });
         fs.rmdirSync(path);
       }
-    console.log("File exists:"+ path +" : "+fileExists(path)+" Removed");
+    console.log("Cleared old testOutput folders");
 };
 
 module.exports = {

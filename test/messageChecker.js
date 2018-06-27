@@ -17,13 +17,25 @@ var checkMessageElementsValue = function(srcFormat, elementName, dstXmlFormat, x
 var getXpathElementValue = function(xmlFormat, xpathParam, instance) {
     var xpath = require("xml2js-xpath");
     arrayInstance = typeof  instance  === 'number' ? instance : 0;
-    var result = xpath.find(xmlFormat, xpathParam)
-    return result[arrayInstance].$.value
+    //Added try catch to report which xpath search failed
+    try{
+        var result = xpath.find(xmlFormat, xpathParam)[arrayInstance].$.value
+    }catch (e) {
+        console.log("Exception when finding xpath element value: "+xpathParam)
+        console.log("Error: "+e)
+    };
+    return result
 }
 
 var getXpathElementText = function(xmlFormat, xpathParam) {
     var xpath = require("xml2js-xpath");
-    var result = xpath.find(xmlFormat, xpathParam)
+    //Added try catch to report which xpath search failed
+    try{
+        var result = xpath.find(xmlFormat, xpathParam)
+    }catch (e) {
+        console.log("Exception when finding xpath element text: "+xpathParam)
+        console.log("Error: "+e)
+    };
     return result[0]
 }
 
