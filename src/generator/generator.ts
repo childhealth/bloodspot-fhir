@@ -4,7 +4,10 @@ import { OutputChannel } from "../output/output.channel";
 import { ConfigurationService } from "../services/configuration.service";
 import { IConfigurationService } from "../services/i.configuration.service";
 import { CommonGenerator } from "./common.generator";
+import { DiagnosticReportGenerator } from "./diagnostic.report.generator";
+import { EncounterGenerator } from "./encounter.generator";
 import { HealthcareServiceGenerator } from "./healthcare.service.generator";
+import { LocationGenerator } from "./location.generator";
 import { PatientGenerator } from "./patient.generator";
 import { UuidService } from "./uuid.service";
 
@@ -38,16 +41,28 @@ export class Generator {
         const encounterId = this.uuidService.generateUuid();
         const locationId = this.uuidService.generateUuid();
         const patientId = this.uuidService.generateUuid();
+        const reportId = this.uuidService.generateUuid();
 
         const messageHeaderEntry = this.buildMessageHeader(organisationId, encounterId);
         const bundleCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1";
         const metaBundle = this.commonGenerator.buildProfile(bundleCode);
         const organisationEntry = this.buildOrganisation(organisationId);
+
         const healthcareGenerator = new HealthcareServiceGenerator(this.configurationService);
         const healthcareEntry = healthcareGenerator.buildHealthcareService(
             healthcareServiceId, organisationId, locationId);
+
         const patientGenerator = new PatientGenerator();
         const patientEntry = patientGenerator.buildPatient(patientId, outcome);
+
+        const reportGenerator = new DiagnosticReportGenerator();
+        const reportEntry = reportGenerator.buildDiagnosticReport(reportId);
+
+        const encounterGenerator = new EncounterGenerator();
+        const encounterEntry = encounterGenerator.buildEncounter(encounterId);
+
+        const locationGenerator = new LocationGenerator();
+        const locationEntry = locationGenerator.buildLocation(locationId);
 
         const bundleObject = {
             "@": {
@@ -69,6 +84,9 @@ export class Generator {
                 organisationEntry,
                 healthcareEntry,
                 patientEntry,
+                reportEntry,
+                encounterEntry,
+                locationEntry,
             ],
         };
 

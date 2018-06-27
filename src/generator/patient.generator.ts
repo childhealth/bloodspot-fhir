@@ -12,6 +12,7 @@ export class PatientGenerator {
         const nhsNumberCode = "https://fhir.nhs.uk/Id/nhs-number";
 
         const birthDateString = outcome.dateOfBirth.toISOString().slice(0, 10);
+        // TODO: Do we need to support birth time component of birthDate field?
 
         const element = {
             fullUrl: {

@@ -2,7 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const configuration_service_1 = require("../services/configuration.service");
 const common_generator_1 = require("./common.generator");
+const diagnostic_report_generator_1 = require("./diagnostic.report.generator");
+const encounter_generator_1 = require("./encounter.generator");
 const healthcare_service_generator_1 = require("./healthcare.service.generator");
+const location_generator_1 = require("./location.generator");
 const patient_generator_1 = require("./patient.generator");
 const uuid_service_1 = require("./uuid.service");
 class Generator {
@@ -29,6 +32,7 @@ class Generator {
         const encounterId = this.uuidService.generateUuid();
         const locationId = this.uuidService.generateUuid();
         const patientId = this.uuidService.generateUuid();
+        const reportId = this.uuidService.generateUuid();
         const messageHeaderEntry = this.buildMessageHeader(organisationId, encounterId);
         const bundleCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1";
         const metaBundle = this.commonGenerator.buildProfile(bundleCode);
@@ -37,6 +41,12 @@ class Generator {
         const healthcareEntry = healthcareGenerator.buildHealthcareService(healthcareServiceId, organisationId, locationId);
         const patientGenerator = new patient_generator_1.PatientGenerator();
         const patientEntry = patientGenerator.buildPatient(patientId, outcome);
+        const reportGenerator = new diagnostic_report_generator_1.DiagnosticReportGenerator();
+        const reportEntry = reportGenerator.buildDiagnosticReport(reportId);
+        const encounterGenerator = new encounter_generator_1.EncounterGenerator();
+        const encounterEntry = encounterGenerator.buildEncounter(encounterId);
+        const locationGenerator = new location_generator_1.LocationGenerator();
+        const locationEntry = locationGenerator.buildLocation(locationId);
         const bundleObject = {
             "@": {
                 xmlns: "http://hl7.org/fhir",
@@ -57,6 +67,9 @@ class Generator {
                 organisationEntry,
                 healthcareEntry,
                 patientEntry,
+                reportEntry,
+                encounterEntry,
+                locationEntry,
             ],
         };
         return bundleObject;
