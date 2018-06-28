@@ -63,7 +63,9 @@ export class Generator {
             pkuProcedureId,
             ScreeningProcedure.PKU,
             patientId,
-            encounterId);
+            encounterId,
+            outcome.pkuStatusCode,
+            outcome.pkuStatus);
 
         const reportGenerator = new DiagnosticReportGenerator();
         const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
