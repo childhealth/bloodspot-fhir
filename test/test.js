@@ -24,6 +24,8 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                 console.log('Converted CSV file: '+srcFile);
               })();
         }
+        console.log('Completed conversion of CSV files ');
+        console.log('============================================================== ');
     });
 
 
