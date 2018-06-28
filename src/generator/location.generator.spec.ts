@@ -1,3 +1,4 @@
+import { MockConfigurationService } from "../testing/mock.configuration.service";
 import { MockUuidService } from "../testing/mock.uuid.service";
 import { LocationGenerator } from "./location.generator";
 
@@ -8,7 +9,7 @@ describe("LocationGenerator", () => {
     let subject: LocationGenerator;
 
     beforeEach(() => {
-        subject = new LocationGenerator();
+        subject = new LocationGenerator(new MockConfigurationService());
     });
 
     describe("buildLocation", () => {
@@ -33,6 +34,18 @@ describe("LocationGenerator", () => {
                             profile: {
                                 "@": {
                                     value: code,
+                                },
+                            },
+                        },
+                        identifier: {
+                            system: {
+                                "@": {
+                                    value: "https://fhir.nhs.uk/Id/ods-site-code",
+                                },
+                            },
+                            value: {
+                                "@": {
+                                    value: "LAB01",
                                 },
                             },
                         },

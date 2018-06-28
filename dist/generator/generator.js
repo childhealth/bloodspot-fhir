@@ -45,7 +45,7 @@ class Generator {
         const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
         const encounterGenerator = new encounter_generator_1.EncounterGenerator();
         const encounterEntry = encounterGenerator.buildEncounter(encounterId, patientId, outcome.displayName, outcome.collectionDate, locationId, healthcareServiceId);
-        const locationGenerator = new location_generator_1.LocationGenerator();
+        const locationGenerator = new location_generator_1.LocationGenerator(this.configurationService);
         const locationEntry = locationGenerator.buildLocation(locationId);
         const bundleObject = {
             "@": {
@@ -207,9 +207,9 @@ class Generator {
     }
     buildOrganisation(orgId) {
         const organisationCode = "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Organization-1";
-        const odsSystem = "https://fhir.nhs.uk/Id/ods-organization-code";
+        const odsOrganizationSystem = "https://fhir.nhs.uk/Id/ods-organization-code";
         const lab = this.configurationService.laboratory;
-        const orgSystemValue = this.commonGenerator.buildSystemValue(odsSystem, lab.odsCode);
+        const orgSystemValue = this.commonGenerator.buildSystemValue(odsOrganizationSystem, lab.odsCode);
         const labName = this.buildName(lab.description);
         const labAddress = this.buildAddress(lab.address.line1, lab.address.city, lab.address.district, lab.address.postCode);
         const element = {
