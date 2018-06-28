@@ -109,9 +109,8 @@ for (const srcFile of srcFiles) {
                     console.log("Verifying record "+(i+1)+" from CSV")
                     var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
                     //Verifying Patients name details
-                    expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/name/use')).toEqual('official')
-                    expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/name/family')).toEqual(csvRecord['Surname'])
-                    expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/name/given')).toEqual(csvRecord['First_Name'])
+                    // expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/name/family')).toEqual(csvRecord['Surname'])
+                    // expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/name/given')).toEqual(csvRecord['First_Name'])
                     date = csvRecord['Date_Of_Birth'].split("/").reverse().join("-");
                      expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/birthDate')).toEqual(date)
 
@@ -126,56 +125,6 @@ for (const srcFile of srcFiles) {
                       //Verifying Patients ID
                       nhsNumber = csvRecord['nhs_no'].replace(/\s/g, "");
                       expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/identifier/value')).toEqual(nhsNumber)
-                    i = i+1
-                }
-         });
-
-         it('should be encoded correctly the \"DiagnosticReport\" in the XML message', function(){
-            xmlFiles = fileHandler.getFiles(outFolder)
-            var i = 0;
-                for (let csvRecord of source) {
-                    //Load generated xml
-                    console.log("Verifying record "+(i+1)+" from CSV")
-                    var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
-                
-                     //Verifying DiagnosticReport 
-                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//DiagnosticReport/status')).toEqual('final')
-                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//DiagnosticReport/code/coding/code')).toEqual('86637100000010')
-                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//DiagnosticReport/code/coding/display')).toEqual('Child Screening Report (record artifact)')
-                     var regex = /^\d\d\d\d-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[0-1])T\d\d:\d\d:\d\d\.\d\d\dZ$/
-                    date_ = checker.getXpathElementValue(xmlFormat,'//Bundle/entry//DiagnosticReport/issued')
-                    expect(date_).toMatch(RegExp(regex));
-                    i = i+1
-                }
-         });
-
-         it('should be encoded correctly the \"Encounter\" in the XML message', function(){
-            xmlFiles = fileHandler.getFiles(outFolder)
-            var i = 0;
-                for (let csvRecord of source) {
-                    //Load generated xml
-                    console.log("Verifying record "+(i+1)+" from CSV")
-                    var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
-                
-                     //Verifying DiagnosticReport 
-                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Encounter/status')).toEqual('finished')
-                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Encounter/subject/display')).toEqual(`${csvRecord['Surname']}, ${csvRecord['First_Name']}`)
-                     date_of_collection = csvRecord['Date_Of_Collection'].split("/").reverse().join("-");
-                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Encounter/period/start')).toEqual(date_of_collection)
-                    i = i+1
-                }
-         });
-
-         it('should be encoded correctly the \"Location\" in the XML message', function(){
-            xmlFiles = fileHandler.getFiles(outFolder)
-            var i = 0;
-                for (let csvRecord of source) {
-                    //Load generated xml
-                    console.log("Verifying record "+(i+1)+" from CSV")
-                    var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
-                
-                     //Verifying Location 
-                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Location/identifier/value')).toEqual('LAB01')
                     i = i+1
                 }
          });
