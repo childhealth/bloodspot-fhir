@@ -50,7 +50,6 @@ var rmFolders = function(path){
         });
         fs.rmdirSync(path);
       }
-    console.log("Cleared old testOutput folders");
 };
 
 module.exports = {
