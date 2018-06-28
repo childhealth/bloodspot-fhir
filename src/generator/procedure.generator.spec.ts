@@ -15,16 +15,16 @@ describe("ProcedureGenerator", () => {
             const screeningProcedure = ScreeningProcedure.PKU;
             const patientId = new MockUuidService("patient").generateUuid();
             const encounterId = new MockUuidService("encounter").generateUuid();
-            const statusCode = "4";
-            const statusDescription = "Something not suspected";
+            const code = "4";
+            const description = "Something not suspected";
 
             const actual = subject.buildProcedure(
                 procedureId,
                 screeningProcedure,
                 patientId,
                 encounterId,
-                statusCode,
-                statusDescription);
+                code,
+                description);
             const expected = {
                 fullUrl: {
                     "@": {
@@ -92,12 +92,12 @@ describe("ProcedureGenerator", () => {
                                 },
                                 code: {
                                     "@": {
-                                        value: statusCode,
+                                        value: code,
                                     },
                                 },
                                 display: {
                                     "@": {
-                                        value: statusDescription,
+                                        value: description,
                                     },
                                 },
                             },

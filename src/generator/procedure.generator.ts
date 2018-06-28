@@ -10,14 +10,14 @@ export class ProcedureGenerator {
         screeningProcedure: ScreeningProcedure,
         patientId: string,
         encounterId: string,
-        statusCode: string,
-        statusDescription: string,
+        code: string,
+        description: string,
     ): any {
 
         const outcomeCoding = this.commonGenerator.buildCoding(
             screeningProcedure.codeSystem,
-            statusCode,
-            statusDescription);
+            code,
+            description);
         // TODO: rename buildCoding(s, c, d) -> buildSystemCodeDisplay(s, c, d)
         // TODO: new buildCoding(s, c, d) will return {coding: buildSCD(s, c, d)}
 
