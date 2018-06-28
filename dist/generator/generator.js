@@ -7,6 +7,8 @@ const encounter_generator_1 = require("./encounter.generator");
 const healthcare_service_generator_1 = require("./healthcare.service.generator");
 const location_generator_1 = require("./location.generator");
 const patient_generator_1 = require("./patient.generator");
+const procedure_generator_1 = require("./procedure.generator");
+const screening_procedure_1 = require("./screening.procedure");
 const uuid_service_1 = require("./uuid.service");
 class Generator {
     constructor(inputChannel, outputChannel, uuidService = new uuid_service_1.UuidService(), configurationService = new configuration_service_1.ConfigurationService("./bloodspot-helper.json")) {
@@ -32,6 +34,7 @@ class Generator {
         const encounterId = this.uuidService.generateUuid();
         const locationId = this.uuidService.generateUuid();
         const patientId = this.uuidService.generateUuid();
+        const pkuProcedureId = this.uuidService.generateUuid();
         const reportId = this.uuidService.generateUuid();
         const messageHeaderEntry = this.buildMessageHeader(organisationId, encounterId);
         const bundleCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1";
@@ -41,6 +44,8 @@ class Generator {
         const healthcareEntry = healthcareGenerator.buildHealthcareService(healthcareServiceId, organisationId, locationId);
         const patientGenerator = new patient_generator_1.PatientGenerator();
         const patientEntry = patientGenerator.buildPatient(patientId, outcome);
+        const procedureGenerator = new procedure_generator_1.ProcedureGenerator();
+        const pkuProcedureEntry = procedureGenerator.buildProcedure(pkuProcedureId, screening_procedure_1.ScreeningProcedure.PKU, patientId, encounterId);
         const reportGenerator = new diagnostic_report_generator_1.DiagnosticReportGenerator();
         const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
         const encounterGenerator = new encounter_generator_1.EncounterGenerator();
@@ -67,6 +72,7 @@ class Generator {
                 organisationEntry,
                 healthcareEntry,
                 patientEntry,
+                pkuProcedureEntry,
                 reportEntry,
                 encounterEntry,
                 locationEntry,
