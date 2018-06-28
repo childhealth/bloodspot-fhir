@@ -35,9 +35,7 @@ export class DiagnosticReportGenerator {
                             value: "final",
                         },
                     },
-                    code: {
-                        coding: childScreeningReportCoding,
-                    },
+                    code: childScreeningReportCoding,
                     subject: {
                         reference: {
                             "@": {

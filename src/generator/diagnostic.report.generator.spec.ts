@@ -20,19 +20,21 @@ describe("DiagnosticReportGenerator", () => {
             const actual = subject.buildDiagnosticReport(reportId, patientId, encounterId, issuedDate);
 
             const childScreeningReportCoding = {
-                system: {
-                    "@": {
-                        value: "http://snomed.info/sct",
+                coding: {
+                    system: {
+                        "@": {
+                            value: "http://snomed.info/sct",
+                        },
                     },
-                },
-                code: {
-                    "@": {
-                        value: "86637100000010",
+                    code: {
+                        "@": {
+                            value: "86637100000010",
+                        },
                     },
-                },
-                display: {
-                    "@": {
-                        value: "Child Screening Report (record artifact)",
+                    display: {
+                        "@": {
+                            value: "Child Screening Report (record artifact)",
+                        },
                     },
                 },
             };
@@ -61,9 +63,7 @@ describe("DiagnosticReportGenerator", () => {
                                 value: "final",
                             },
                         },
-                        code: {
-                            coding: childScreeningReportCoding,
-                        },
+                        code: childScreeningReportCoding,
                         subject: {
                             reference: {
                                 "@": {

@@ -23,9 +23,7 @@ class HealthcareServiceGenerator {
                         },
                     },
                     meta: this.commonGenerator.buildProfile(healthcareServiceCode),
-                    type: {
-                        coding: this.commonGenerator.buildCoding(professionalTypeCode, type.code, type.description),
-                    },
+                    type: this.commonGenerator.buildCoding(professionalTypeCode, type.code, type.description),
                     providedBy: {
                         reference: {
                             "@": {
@@ -38,9 +36,7 @@ class HealthcareServiceGenerator {
                             },
                         },
                     },
-                    specialty: {
-                        coding: this.commonGenerator.buildCoding(specialtyCode, specialty.code, specialty.description),
-                    },
+                    specialty: this.commonGenerator.buildCoding(specialtyCode, specialty.code, specialty.description),
                     location: {
                         reference: {
                             "@": {

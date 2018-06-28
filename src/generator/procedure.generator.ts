@@ -14,12 +14,14 @@ export class ProcedureGenerator {
         description: string,
     ): any {
 
+        const screeningProcedureCoding = this.commonGenerator.buildCoding(
+            "http://snomed.info/sct",
+            screeningProcedure.clinicalTermCode,
+            screeningProcedure.display);
         const outcomeCoding = this.commonGenerator.buildCoding(
             screeningProcedure.codeSystem,
             code,
             description);
-        // TODO: rename buildCoding(s, c, d) -> buildSystemCodeDisplay(s, c, d)
-        // TODO: new buildCoding(s, c, d) will return {coding: buildSCD(s, c, d)}
 
         const element = {
             fullUrl: {
@@ -40,25 +42,7 @@ export class ProcedureGenerator {
                             value: "completed",
                         },
                     },
-                    code: {
-                        coding: {
-                            system: {
-                                "@": {
-                                    value: "http://snomed.info/sct",
-                                },
-                            },
-                            code: {
-                                "@": {
-                                    value: screeningProcedure.clinicalTermCode,
-                                },
-                            },
-                            display: {
-                                "@": {
-                                    value: screeningProcedure.display,
-                                },
-                            },
-                        },
-                    },
+                    code: screeningProcedureCoding,
                     subject: {
                         reference: {
                             "@": {
@@ -73,9 +57,7 @@ export class ProcedureGenerator {
                             },
                         },
                     },
-                    outcome: {
-                        coding: outcomeCoding,
-                    },
+                    outcome: outcomeCoding,
                 },
             },
         };

@@ -142,7 +142,7 @@ export class Generator {
     private buildMessageHeader(responsibleId: string, focusId: string): any {
         const messageHeaderId = this.uuidService.generateUuid();
         const childHealthEventTypeCode = "https://fhir.nhs.uk/STU3/CodeSystem/DCH-ChildHealthEventType-1";
-        const bloodspotEvent = this.commonGenerator.buildCoding(
+        const bloodspotEvent = this.commonGenerator.buildSystemCodeDisplay(
             childHealthEventTypeCode, "CH035", "Blood Spot Test Outcome");
         const sourceOdsCode = this.configurationService.laboratory.odsCode;
         const labDescription = this.configurationService.laboratory.description;
@@ -179,9 +179,7 @@ export class Generator {
             "@": {
                 url: "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-DCH-MessageEventType-1",
             },
-            "valueCodeableConcept": {
-                coding: this.commonGenerator.buildCoding(messageEventTypeCode, "new", "New event message"),
-            },
+            "valueCodeableConcept": this.commonGenerator.buildCoding(messageEventTypeCode, "new", "New event message"),
         };
     }
 

@@ -12,6 +12,12 @@ export class CommonGenerator {
 
     public buildCoding(system: string, code: string, display: string) {
         return {
+            coding: this.buildSystemCodeDisplay(system, code, display),
+        };
+    }
+
+    public buildSystemCodeDisplay(system: string, code: string, display: string) {
+        return {
             system: {
                 "@": {
                     value: system,
