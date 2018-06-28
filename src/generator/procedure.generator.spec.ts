@@ -1,5 +1,4 @@
 import { MockUuidService } from "../testing/mock.uuid.service";
-import { CommonGenerator } from "./common.generator";
 import { ProcedureGenerator } from "./procedure.generator";
 import { ScreeningProcedure } from "./screening.procedure";
 
@@ -12,11 +11,10 @@ describe("ProcedureGenerator", () => {
 
     describe("buildProcedure", () => {
         it("should set all the fields", () => {
-            const uuidService = new MockUuidService();
-            const procedureId = uuidService.generateUuid();
+            const procedureId = new MockUuidService("procedure").generateUuid();
             const screeningProcedure = ScreeningProcedure.PKU;
-            const patientId = uuidService.generateUuid();
-            const encounterId = uuidService.generateUuid();
+            const patientId = new MockUuidService("patient").generateUuid();
+            const encounterId = new MockUuidService("encounter").generateUuid();
             const actual = subject.buildProcedure(
                 procedureId,
                 screeningProcedure,
@@ -25,14 +23,14 @@ describe("ProcedureGenerator", () => {
             const expected = {
                 fullUrl: {
                     "@": {
-                        value: "urn:uuid:dummyUuid",
+                        value: "urn:uuid:procedure-1",
                     },
                 },
                 resource: {
                     Procedure: {
                         id: {
                             "@": {
-                                value: "dummyUuid",
+                                value: "procedure-1",
                             },
                         },
                         meta: {
@@ -69,14 +67,14 @@ describe("ProcedureGenerator", () => {
                         subject: {
                             reference: {
                                 "@": {
-                                    value: "urn:uuid:dummyUuid",
+                                    value: "urn:uuid:patient-1",
                                 },
                             },
                         },
                         context: {
                             reference: {
                                 "@": {
-                                    value: "urn:uuid:dummyUuid",
+                                    value: "urn:uuid:encounter-1",
                                 },
                             },
                         },

@@ -6,6 +6,7 @@ import { DummyLocalFolderOutputChannel } from "../testing/dummy.local.folder.out
 import { MockConfigurationService } from "../testing/mock.configuration.service";
 import { MockUuidService } from "../testing/mock.uuid.service";
 import { Generator } from "./generator";
+import { UuidService } from "./uuid.service";
 
 describe("Generator", () => {
     let inputChannel: InputChannel;
@@ -19,7 +20,11 @@ describe("Generator", () => {
     beforeEach(() => {
         inputChannel = new DummyLocalFileInputChannel();
         outputChannel = new DummyLocalFolderOutputChannel();
-        subject = new Generator(inputChannel, outputChannel, new MockUuidService(), new MockConfigurationService());
+        subject = new Generator(
+            inputChannel,
+            outputChannel,
+            new UuidService(),
+            new MockConfigurationService());
         subjectWithPrivateMethods = subject as any;
     });
 

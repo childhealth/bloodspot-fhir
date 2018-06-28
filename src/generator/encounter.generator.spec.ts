@@ -13,13 +13,12 @@ describe("EncounterGenerator", () => {
 
     describe("buildEncounter", () => {
         it("should set the fields", () => {
-            const uuidService = new MockUuidService();
-            const encounterId = uuidService.generateUuid();
-            const patientId = uuidService.generateUuid();
+            const encounterId = new MockUuidService("encounter").generateUuid();
+            const patientId = new MockUuidService("patient").generateUuid();
             const patientName = "Surname, Firstname";
             const collectionDate = new Date(2017, 11, 31);
-            const locationId = uuidService.generateUuid();
-            const healthcareServiceId = uuidService.generateUuid();
+            const locationId = new MockUuidService("location").generateUuid();
+            const healthcareServiceId = new MockUuidService("healthcareService").generateUuid();
             const actual = subject.buildEncounter(
                 encounterId,
                 patientId,
@@ -30,14 +29,14 @@ describe("EncounterGenerator", () => {
             const expected = {
                 fullUrl: {
                     "@": {
-                        value: "urn:uuid:dummyUuid",
+                        value: "urn:uuid:" + encounterId,
                     },
                 },
                 resource: {
                     Encounter: {
                         id: {
                             "@": {
-                                value: "dummyUuid",
+                                value: encounterId,
                             },
                         },
                         meta: {

@@ -10,23 +10,22 @@ describe("ProcedureGenerator", () => {
     });
     describe("buildProcedure", () => {
         it("should set all the fields", () => {
-            const uuidService = new mock_uuid_service_1.MockUuidService();
-            const procedureId = uuidService.generateUuid();
+            const procedureId = new mock_uuid_service_1.MockUuidService("procedure").generateUuid();
             const screeningProcedure = screening_procedure_1.ScreeningProcedure.PKU;
-            const patientId = uuidService.generateUuid();
-            const encounterId = uuidService.generateUuid();
+            const patientId = new mock_uuid_service_1.MockUuidService("patient").generateUuid();
+            const encounterId = new mock_uuid_service_1.MockUuidService("encounter").generateUuid();
             const actual = subject.buildProcedure(procedureId, screeningProcedure, patientId, encounterId);
             const expected = {
                 fullUrl: {
                     "@": {
-                        value: "urn:uuid:dummyUuid",
+                        value: "urn:uuid:procedure-1",
                     },
                 },
                 resource: {
                     Procedure: {
                         id: {
                             "@": {
-                                value: "dummyUuid",
+                                value: "procedure-1",
                             },
                         },
                         meta: {
@@ -63,14 +62,14 @@ describe("ProcedureGenerator", () => {
                         subject: {
                             reference: {
                                 "@": {
-                                    value: "urn:uuid:dummyUuid",
+                                    value: "urn:uuid:patient-1",
                                 },
                             },
                         },
                         context: {
                             reference: {
                                 "@": {
-                                    value: "urn:uuid:dummyUuid",
+                                    value: "urn:uuid:encounter-1",
                                 },
                             },
                         },

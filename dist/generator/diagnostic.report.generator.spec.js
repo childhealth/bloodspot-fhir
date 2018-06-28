@@ -10,10 +10,9 @@ describe("DiagnosticReportGenerator", () => {
     });
     describe("buildDiagnosticReport", () => {
         it("should set the fields", () => {
-            const uuidService = new mock_uuid_service_1.MockUuidService();
-            const reportId = uuidService.generateUuid();
-            const patientId = uuidService.generateUuid();
-            const encounterId = uuidService.generateUuid();
+            const reportId = new mock_uuid_service_1.MockUuidService("report").generateUuid();
+            const patientId = new mock_uuid_service_1.MockUuidService("patient").generateUuid();
+            const encounterId = new mock_uuid_service_1.MockUuidService("encounter").generateUuid();
             const issuedDate = new Date(2018, 11, 24);
             const actual = subject.buildDiagnosticReport(reportId, patientId, encounterId, issuedDate);
             const childScreeningReportCoding = {
@@ -36,14 +35,14 @@ describe("DiagnosticReportGenerator", () => {
             const expected = {
                 fullUrl: {
                     "@": {
-                        value: "urn:uuid:dummyUuid",
+                        value: "urn:uuid:report-1",
                     },
                 },
                 resource: {
                     DiagnosticReport: {
                         id: {
                             "@": {
-                                value: "dummyUuid",
+                                value: "report-1",
                             },
                         },
                         meta: {

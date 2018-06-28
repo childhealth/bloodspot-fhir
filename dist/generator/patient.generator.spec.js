@@ -16,20 +16,19 @@ describe("PatientGenerator", () => {
     });
     describe("buildPatient", () => {
         it("should return a simple patient element", () => {
-            const uuidService = new mock_uuid_service_1.MockUuidService();
-            const patientId = uuidService.generateUuid();
+            const patientId = new mock_uuid_service_1.MockUuidService("patient").generateUuid();
             const actual = subject.buildPatient(patientId, outcome1);
             const expected = {
                 fullUrl: {
                     "@": {
-                        value: "urn:uuid:dummyUuid",
+                        value: "urn:uuid:patient-1",
                     },
                 },
                 resource: {
                     Patient: {
                         id: {
                             "@": {
-                                value: "dummyUuid",
+                                value: "patient-1",
                             },
                         },
                         meta: {
@@ -118,8 +117,7 @@ describe("PatientGenerator", () => {
             expect(actual).toEqual(expected);
         });
         it("should handle a patient which doesnt have an NHS number", () => {
-            const uuidService = new mock_uuid_service_1.MockUuidService();
-            const patientId = uuidService.generateUuid();
+            const patientId = new mock_uuid_service_1.MockUuidService("patient").generateUuid();
             const actual = subject.buildPatient(patientId, noNhsNumberOutcome);
             const keys = Object.keys(actual.resource.Patient);
             expect("identifier" in keys).toBeFalsy();

@@ -14,20 +14,19 @@ describe("LocationGenerator", () => {
 
     describe("buildLocation", () => {
         it("should set the fields", () => {
-            const uuidService = new MockUuidService();
-            const locationId = uuidService.generateUuid();
+            const locationId = new MockUuidService("location").generateUuid();
             const actual = subject.buildLocation(locationId);
             const expected = {
                 fullUrl: {
                     "@": {
-                        value: "urn:uuid:dummyUuid",
+                        value: "urn:uuid:location-1",
                     },
                 },
                 resource: {
                     Location: {
                         id: {
                             "@": {
-                                value: "dummyUuid",
+                                value: "location-1",
                             },
                         },
                         meta: {

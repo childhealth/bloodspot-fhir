@@ -4,8 +4,8 @@ const outcome_1 = require("../model/outcome");
 const dummy_local_file_input_channel_1 = require("../testing/dummy.local.file.input.channel");
 const dummy_local_folder_output_channel_1 = require("../testing/dummy.local.folder.output.channel");
 const mock_configuration_service_1 = require("../testing/mock.configuration.service");
-const mock_uuid_service_1 = require("../testing/mock.uuid.service");
 const generator_1 = require("./generator");
+const uuid_service_1 = require("./uuid.service");
 describe("Generator", () => {
     let inputChannel;
     let outputChannel;
@@ -16,7 +16,7 @@ describe("Generator", () => {
     beforeEach(() => {
         inputChannel = new dummy_local_file_input_channel_1.DummyLocalFileInputChannel();
         outputChannel = new dummy_local_folder_output_channel_1.DummyLocalFolderOutputChannel();
-        subject = new generator_1.Generator(inputChannel, outputChannel, new mock_uuid_service_1.MockUuidService(), new mock_configuration_service_1.MockConfigurationService());
+        subject = new generator_1.Generator(inputChannel, outputChannel, new uuid_service_1.UuidService(), new mock_configuration_service_1.MockConfigurationService());
         subjectWithPrivateMethods = subject;
     });
     describe("execute", () => {
