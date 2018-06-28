@@ -45,7 +45,8 @@ class Generator {
         const patientGenerator = new patient_generator_1.PatientGenerator();
         const patientEntry = patientGenerator.buildPatient(patientId, outcome);
         const procedureGenerator = new procedure_generator_1.ProcedureGenerator();
-        const pkuProcedureEntry = procedureGenerator.buildProcedure(pkuProcedureId, screening_procedure_1.ScreeningProcedure.PKU, patientId, encounterId, outcome.pkuStatusCode, outcome.pkuStatus);
+        const statusCode = (outcome.pkuSupplementaryCode !== "") ? outcome.pkuSupplementaryCode : outcome.pkuStatusCode;
+        const pkuProcedureEntry = procedureGenerator.buildProcedure(pkuProcedureId, screening_procedure_1.ScreeningProcedure.PKU, patientId, encounterId, statusCode, outcome.pkuStatus);
         const reportGenerator = new diagnostic_report_generator_1.DiagnosticReportGenerator();
         const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
         const encounterGenerator = new encounter_generator_1.EncounterGenerator();

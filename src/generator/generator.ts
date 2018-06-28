@@ -59,12 +59,13 @@ export class Generator {
         const patientEntry = patientGenerator.buildPatient(patientId, outcome);
 
         const procedureGenerator = new ProcedureGenerator();
+        const statusCode = (outcome.pkuSupplementaryCode !== "") ? outcome.pkuSupplementaryCode : outcome.pkuStatusCode;
         const pkuProcedureEntry = procedureGenerator.buildProcedure(
             pkuProcedureId,
             ScreeningProcedure.PKU,
             patientId,
             encounterId,
-            outcome.pkuStatusCode,
+            statusCode,
             outcome.pkuStatus);
 
         const reportGenerator = new DiagnosticReportGenerator();
