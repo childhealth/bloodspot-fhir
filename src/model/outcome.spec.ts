@@ -45,13 +45,37 @@ describe("Outcome", () => {
             expect(subject.pkuSupplementaryCode).toBe("");
             expect(subject.pkuStatusDescription).toBe("PKU Not Suspected. Status Code 04");
 
+            expect(subject.scdStatusCode).toBe("6");
+            expect(subject.scdSupplementaryCode).toBe("602");
+            expect(subject.scdStatusDescription).toBe("Carrier of Other Haemoglobin. Status Code 06");
+
+            expect(subject.cfStatusCode).toBe("4");
+            expect(subject.cfSupplementaryCode).toBe("");
+            expect(subject.cfStatusDescription).toBe("CF Not Suspected. Status Code 04");
+
             expect(subject.chtStatusCode).toBe("4");
             expect(subject.chtSupplementaryCode).toBe("");
             expect(subject.chtStatusDescription).toBe("CHT Not Suspected. Status Code 04");
 
-            expect(subject.scdStatusCode).toBe("6");
-            expect(subject.scdSupplementaryCode).toBe("602");
-            expect(subject.scdStatusDescription).toBe("Carrier of Other Haemoglobin. Status Code 06");
+            expect(subject.mcaddStatusCode).toBe("4");
+            expect(subject.mcaddSupplementaryCode).toBe("");
+            expect(subject.mcaddStatusDescription).toBe("MCADD Not Suspected. Status Code 04");
+
+            expect(subject.hcuStatusCode).toBe("4");
+            expect(subject.hcuSupplementaryCode).toBe("");
+            expect(subject.hcuStatusDescription).toBe("HCU Not Suspected. Status Code 04");
+
+            expect(subject.msudStatusCode).toBe("4");
+            expect(subject.msudSupplementaryCode).toBe("");
+            expect(subject.msudStatusDescription).toBe("MSUD Not Suspected. Status Code 04");
+
+            expect(subject.ga1StatusCode).toBe("4");
+            expect(subject.ga1SupplementaryCode).toBe("");
+            expect(subject.ga1StatusDescription).toBe("GA1 Not Suspected. Status Code 04");
+
+            expect(subject.ivaStatusCode).toBe("4");
+            expect(subject.ivaSupplementaryCode).toBe("");
+            expect(subject.ivaStatusDescription).toBe("IVA Not Suspected. Status Code 04");
         });
 
         describe("validate", () => {

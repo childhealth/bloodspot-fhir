@@ -120,6 +120,30 @@ export class Outcome {
         this.scdStatusCode = fields[36];
         this.scdSupplementaryCode = fields[37];
         this.scdStatusDescription = fields[38];
+
+        this.cfStatusCode = fields[39];
+        this.cfSupplementaryCode = fields[40];
+        this.cfStatusDescription = fields[41];
+
+        this.mcaddStatusCode = fields[42];
+        this.mcaddSupplementaryCode = fields[43];
+        this.mcaddStatusDescription = fields[44];
+
+        this.hcuStatusCode = fields[45];
+        this.hcuSupplementaryCode = fields[46];
+        this.hcuStatusDescription = fields[47];
+
+        this.msudStatusCode = fields[48];
+        this.msudSupplementaryCode = fields[49];
+        this.msudStatusDescription = fields[50];
+
+        this.ga1StatusCode = fields[51];
+        this.ga1SupplementaryCode = fields[52];
+        this.ga1StatusDescription = fields[53];
+
+        this.ivaStatusCode = fields[54];
+        this.ivaSupplementaryCode = fields[55];
+        this.ivaStatusDescription = fields[56];
     }
 
     private validate(fields: string[]) {
