@@ -65,7 +65,7 @@ describe("Generator", () => {
             const statusValue = outcomeCoding.code["@"].value;
             expect(statusValue).toEqual("311");
         });
-        it("should contain a procedure", () => {
+        it("should contain 2 procedures", () => {
             const outcome = new outcome_1.Outcome(csv1);
             const actual = subjectWithPrivateMethods.generateFHIRMessage(outcome);
             let numberOfProcedures = 0;
@@ -74,7 +74,7 @@ describe("Generator", () => {
                     numberOfProcedures = numberOfProcedures + 1;
                 }
             }
-            expect(numberOfProcedures).toEqual(1);
+            expect(numberOfProcedures).toEqual(2);
         });
     });
     describe("buildMessageHeader", () => {
