@@ -193,9 +193,32 @@ for (const srcFile of srcFiles) {
                      expect(checker.getXpathElementValue(procedure,'//Procedure/status')).toEqual('completed')
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/code')).toEqual(`314081000`)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/display')).toEqual('Phenylketonuria screening test')
-
-                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code')).toEqual(csvRecord['PKU_Status_Code'])
+                     //status code replaced by supplementary code if supplementary code not empty
+                     pkuCode = csvRecord['PKU_Supplementary_Code'] === '' ? csvRecord['PKU_Status_Code'] : csvRecord['PKU_Supplementary_Code'];
+                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code')).toEqual(pkuCode)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['PKU_Status'])
+                    
+                    i = i+1
+                }
+         });
+
+         it('should be encoded correctly the \"Sickle cell disease Procedure\" in the XML message', function(){
+            xmlFiles = fileHandler.getFiles(outFolder)
+            var i = 0;
+                for (let csvRecord of source) {
+                    //Load generated xml
+                    console.log("Verifying record "+(i+1)+" from CSV")
+                    var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
+            
+                    procedure = checker.getSubElementProcedure(xmlFormat, `314090007`)
+                     //Verifying Procedure 
+                     expect(checker.getXpathElementValue(procedure,'//Procedure/status')).toEqual('completed')
+                     expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/code')).toEqual(`314090007`)
+                     expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/display')).toEqual('Sickle cell disease screening test')
+                      //status code replaced by supplementary code if supplementary code not empty
+                     sickeCellCode = csvRecord['Sickle_Supplementary_Code'] === '' ? csvRecord['Sickle_Status_Code'] : csvRecord['Sickle_Supplementary_Code'];
+                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code')).toEqual(sickeCellCode)
+                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['Sickle_Status'])
                     
                     i = i+1
                 }
