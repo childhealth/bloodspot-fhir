@@ -40,13 +40,13 @@ describe("Outcome", () => {
         it("should set the lab condition test results", () => {
             expect(subject.pkuStatusCode).toBe("4");
             expect(subject.pkuSupplementaryCode).toBe("");
-            expect(subject.pkuStatus).toBe("PKU Not Suspected. Status Code 04");
+            expect(subject.pkuStatusDescription).toBe("PKU Not Suspected. Status Code 04");
             expect(subject.chtStatusCode).toBe("4");
             expect(subject.chtSupplementaryCode).toBe("");
-            expect(subject.chtStatus).toBe("CHT Not Suspected. Status Code 04");
-            expect(subject.sickleStatusCode).toBe("6");
-            expect(subject.sickleSupplementaryCode).toBe("602");
-            expect(subject.sickleStatus).toBe("Carrier of Other Haemoglobin. Status Code 06");
+            expect(subject.chtStatusDescription).toBe("CHT Not Suspected. Status Code 04");
+            expect(subject.scdStatusCode).toBe("6");
+            expect(subject.scdSupplementaryCode).toBe("602");
+            expect(subject.scdStatusDescription).toBe("Carrier of Other Haemoglobin. Status Code 06");
         });
         describe("validate", () => {
             it("should throw Error if there are not the correct number of values", () => {

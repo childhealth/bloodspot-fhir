@@ -39,31 +39,31 @@ export class Outcome {
     public labCode = "";
     public pkuStatusCode = "";
     public pkuSupplementaryCode = "";
-    public pkuStatus = "";
+    public pkuStatusDescription = "";
     public chtStatusCode = "";
     public chtSupplementaryCode = "";
-    public chtStatus = "";
-    public sickleStatusCode = "";
-    public sickleSupplementaryCode = "";
-    public sickleStatus = "";
+    public chtStatusDescription = "";
+    public scdStatusCode = "";
+    public scdSupplementaryCode = "";
+    public scdStatusDescription = "";
     public cfStatusCode = "";
     public cfSupplementaryCode = "";
-    public cfStatus = "";
+    public cfStatusDescription = "";
     public mcaddStatusCode = "";
     public mcaddSupplementaryCode = "";
-    public mcaddStatus = "";
+    public mcaddStatusDescription = "";
     public hcuStatusCode = "";
     public hcuSupplementaryCode = "";
-    public hcuStatus = "";
+    public hcuStatusDescription = "";
     public msudStatusCode = "";
     public msudSupplementaryCode = "";
-    public msudStatus = "";
+    public msudStatusDescription = "";
     public ga1StatusCode = "";
     public ga1SupplementaryCode = "";
-    public ga1Status = "";
+    public ga1StatusDescription = "";
     public ivaStatusCode = "";
     public ivaSupplementaryCode = "";
-    public ivaStatus = "";
+    public ivaStatusDescription = "";
 
     public get displayName() {
         return this.surname + ", " + this.firstName;
@@ -111,15 +111,15 @@ export class Outcome {
 
         this.pkuStatusCode = fields[30];
         this.pkuSupplementaryCode = fields[31];
-        this.pkuStatus = fields[32];
+        this.pkuStatusDescription = fields[32];
 
         this.chtStatusCode = fields[33];
         this.chtSupplementaryCode = fields[34];
-        this.chtStatus = fields[35];
+        this.chtStatusDescription = fields[35];
 
-        this.sickleStatusCode = fields[36];
-        this.sickleSupplementaryCode = fields[37];
-        this.sickleStatus = fields[38];
+        this.scdStatusCode = fields[36];
+        this.scdSupplementaryCode = fields[37];
+        this.scdStatusDescription = fields[38];
     }
 
     private validate(fields: string[]) {

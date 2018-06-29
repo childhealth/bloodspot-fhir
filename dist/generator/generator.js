@@ -44,8 +44,8 @@ class Generator {
         const healthcareEntry = healthcareGenerator.buildHealthcareService(healthcareServiceId, organisationId, locationId);
         const patientGenerator = new patient_generator_1.PatientGenerator();
         const patientEntry = patientGenerator.buildPatient(patientId, outcome);
-        const pkuProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.PKU, patientId, encounterId, reportId, outcome.pkuStatusCode, outcome.pkuSupplementaryCode, outcome.pkuStatus);
-        const scdProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.SCD, patientId, encounterId, reportId, outcome.sickleStatusCode, outcome.sickleSupplementaryCode, outcome.sickleStatus);
+        const pkuProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.PKU, patientId, encounterId, reportId, outcome.pkuStatusCode, outcome.pkuSupplementaryCode, outcome.pkuStatusDescription);
+        const scdProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.SCD, patientId, encounterId, reportId, outcome.scdStatusCode, outcome.scdSupplementaryCode, outcome.scdStatusDescription);
         const reportGenerator = new diagnostic_report_generator_1.DiagnosticReportGenerator();
         const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
         const encounterGenerator = new encounter_generator_1.EncounterGenerator();
