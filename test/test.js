@@ -108,14 +108,18 @@ for (const srcFile of srcFiles) {
                     //Load generated xml
                     console.log("Verifying record "+(i+1)+" from CSV")
                     var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
-                    //Verifying Patients name details
+                    //Verifying Patient's name details
                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/name/use')).toEqual('official')
                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/name/family')).toEqual(csvRecord['Surname'])
                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/name/given')).toEqual(csvRecord['First_Name'])
                     date = csvRecord['Date_Of_Birth'].split("/").reverse().join("-");
                      expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/birthDate')).toEqual(date)
+                      //Verifying Patient's gender
+                    genderConfig = {"0":"unknown", "1":"male",  "2":"female",  "9":"other",}
+                    gender = genderConfig[csvRecord['Gender_Code']];
+                    expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/gender')).toEqual(gender)
 
-                     //Verifying Patients address
+                     //Verifying Patient's address
                      expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/address/use')).toEqual('home')
                      expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/address/line',0)).toEqual(csvRecord['Address_1'])
                      expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/address/line',1)).toEqual(csvRecord['Address_2'])
@@ -123,7 +127,7 @@ for (const srcFile of srcFiles) {
                      expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/address/line',3)).toEqual(csvRecord['Address_4'])
                      expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/address/line',4)).toEqual(csvRecord['Address_5'])
                     
-                      //Verifying Patients ID
+                      //Verifying Patient's ID
                       nhsNumber = csvRecord['nhs_no'].replace(/\s/g, "");
                       expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/identifier/value')).toEqual(nhsNumber)
                     i = i+1
