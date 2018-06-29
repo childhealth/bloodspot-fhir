@@ -66,6 +66,14 @@ export class Generator {
             outcome.pkuStatusCode,
             outcome.pkuSupplementaryCode,
             outcome.pkuStatus);
+        const scdProcedureEntry = this.prepareProcedure(
+            ScreeningProcedure.SCD,
+            patientId,
+            encounterId,
+            reportId,
+            outcome.sickleStatusCode,
+            outcome.sickleSupplementaryCode,
+            outcome.sickleStatus);
 
         const reportGenerator = new DiagnosticReportGenerator();
         const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
@@ -103,6 +111,7 @@ export class Generator {
                 healthcareEntry,
                 patientEntry,
                 pkuProcedureEntry,
+                scdProcedureEntry,
                 reportEntry,
                 encounterEntry,
                 locationEntry,
