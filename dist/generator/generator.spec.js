@@ -65,6 +65,17 @@ describe("Generator", () => {
             const statusValue = outcomeCoding.code["@"].value;
             expect(statusValue).toEqual("311");
         });
+        it("should contain a procedure", () => {
+            const outcome = new outcome_1.Outcome(csv1);
+            const actual = subjectWithPrivateMethods.generateFHIRMessage(outcome);
+            let numberOfProcedures = 0;
+            for (const element of actual.entry) {
+                if (("resource" in element) && (element.resource.hasOwnProperty("Procedure"))) {
+                    numberOfProcedures = numberOfProcedures + 1;
+                }
+            }
+            expect(numberOfProcedures).toEqual(1);
+        });
     });
     describe("buildMessageHeader", () => {
         it("should contain entries of the correct type in the correct order", () => {

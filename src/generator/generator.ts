@@ -16,6 +16,7 @@ import { UuidService } from "./uuid.service";
 export class Generator {
 
     private commonGenerator = new CommonGenerator();
+    private procedureGenerator = new ProcedureGenerator();
 
     constructor(
         public inputChannel: InputChannel,
@@ -43,7 +44,6 @@ export class Generator {
         const encounterId = this.uuidService.generateUuid();
         const locationId = this.uuidService.generateUuid();
         const patientId = this.uuidService.generateUuid();
-        const pkuProcedureId = this.uuidService.generateUuid();
         const reportId = this.uuidService.generateUuid();
 
         const messageHeaderEntry = this.buildMessageHeader(organisationId, encounterId);
@@ -58,14 +58,12 @@ export class Generator {
         const patientGenerator = new PatientGenerator();
         const patientEntry = patientGenerator.buildPatient(patientId, outcome);
 
-        const procedureGenerator = new ProcedureGenerator();
-        const statusCode = (outcome.pkuSupplementaryCode !== "") ? outcome.pkuSupplementaryCode : outcome.pkuStatusCode;
-        const pkuProcedureEntry = procedureGenerator.buildProcedure(
-            pkuProcedureId,
+        const pkuProcedureEntry = this.prepareProcedure(
             ScreeningProcedure.PKU,
             patientId,
             encounterId,
-            statusCode,
+            outcome.pkuStatusCode,
+            outcome.pkuSupplementaryCode,
             outcome.pkuStatus);
 
         const reportGenerator = new DiagnosticReportGenerator();
@@ -139,6 +137,27 @@ export class Generator {
     // [13]: DCH-NewbornBloodSpotScreening-DiagnosticReport-1 - Child Screening Report
     // [14]: CareConnect-DCH-Encounter-1 - subject (patient), period, location, serviceProvider(lab)
     // [15]: CareConnect-DCH-Location-1 location at which the event occurred the lab's ODS code (config)
+
+    private prepareProcedure(
+        screeningProcedure: ScreeningProcedure,
+        patientId: string,
+        encounterId: string,
+        mainStatusCode: string,
+        supplementaryCode: string,
+        statusDescription: string,
+    ) {
+        const id = this.uuidService.generateUuid();
+        const statusCode = (supplementaryCode !== "") ? supplementaryCode : mainStatusCode;
+        const element = this.procedureGenerator.buildProcedure(
+            id,
+            screeningProcedure,
+            patientId,
+            encounterId,
+            statusCode,
+            statusDescription);
+
+        return element;
+    }
 
     private buildMessageHeader(responsibleId: string, focusId: string): any {
         const messageHeaderId = this.uuidService.generateUuid();
