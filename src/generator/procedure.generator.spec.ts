@@ -15,6 +15,7 @@ describe("ProcedureGenerator", () => {
             const screeningProcedure = ScreeningProcedure.PKU;
             const patientId = new MockUuidService("patient").generateUuid();
             const encounterId = new MockUuidService("encounter").generateUuid();
+            const reportId = new MockUuidService("report").generateUuid();
             const code = "4";
             const description = "Something not suspected";
 
@@ -23,6 +24,7 @@ describe("ProcedureGenerator", () => {
                 screeningProcedure,
                 patientId,
                 encounterId,
+                reportId,
                 code,
                 description);
             const expected = {
@@ -99,6 +101,13 @@ describe("ProcedureGenerator", () => {
                                     "@": {
                                         value: description,
                                     },
+                                },
+                            },
+                        },
+                        report: {
+                            reference: {
+                                "@": {
+                                    value: "urn:uuid:report-1",
                                 },
                             },
                         },

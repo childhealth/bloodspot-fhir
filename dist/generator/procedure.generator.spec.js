@@ -14,9 +14,10 @@ describe("ProcedureGenerator", () => {
             const screeningProcedure = screening_procedure_1.ScreeningProcedure.PKU;
             const patientId = new mock_uuid_service_1.MockUuidService("patient").generateUuid();
             const encounterId = new mock_uuid_service_1.MockUuidService("encounter").generateUuid();
+            const reportId = new mock_uuid_service_1.MockUuidService("report").generateUuid();
             const code = "4";
             const description = "Something not suspected";
-            const actual = subject.buildProcedure(procedureId, screeningProcedure, patientId, encounterId, code, description);
+            const actual = subject.buildProcedure(procedureId, screeningProcedure, patientId, encounterId, reportId, code, description);
             const expected = {
                 fullUrl: {
                     "@": {
@@ -91,6 +92,13 @@ describe("ProcedureGenerator", () => {
                                     "@": {
                                         value: description,
                                     },
+                                },
+                            },
+                        },
+                        report: {
+                            reference: {
+                                "@": {
+                                    value: "urn:uuid:report-1",
                                 },
                             },
                         },

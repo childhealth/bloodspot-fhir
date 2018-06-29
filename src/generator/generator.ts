@@ -62,6 +62,7 @@ export class Generator {
             ScreeningProcedure.PKU,
             patientId,
             encounterId,
+            reportId,
             outcome.pkuStatusCode,
             outcome.pkuSupplementaryCode,
             outcome.pkuStatus);
@@ -142,6 +143,7 @@ export class Generator {
         screeningProcedure: ScreeningProcedure,
         patientId: string,
         encounterId: string,
+        reportId: string,
         mainStatusCode: string,
         supplementaryCode: string,
         statusDescription: string,
@@ -153,6 +155,7 @@ export class Generator {
             screeningProcedure,
             patientId,
             encounterId,
+            reportId,
             statusCode,
             statusDescription);
 

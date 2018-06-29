@@ -10,6 +10,7 @@ export class ProcedureGenerator {
         screeningProcedure: ScreeningProcedure,
         patientId: string,
         encounterId: string,
+        reportId: string,
         code: string,
         description: string,
     ): any {
@@ -58,6 +59,13 @@ export class ProcedureGenerator {
                         },
                     },
                     outcome: outcomeCoding,
+                    report: {
+                        reference: {
+                            "@": {
+                                value: "urn:uuid:" + reportId,
+                            },
+                        },
+                    },
                 },
             },
         };

@@ -5,7 +5,7 @@ class ProcedureGenerator {
     constructor() {
         this.commonGenerator = new common_generator_1.CommonGenerator();
     }
-    buildProcedure(procedureId, screeningProcedure, patientId, encounterId, code, description) {
+    buildProcedure(procedureId, screeningProcedure, patientId, encounterId, reportId, code, description) {
         const screeningProcedureCoding = this.commonGenerator.buildCoding("http://snomed.info/sct", screeningProcedure.clinicalTermCode, screeningProcedure.display);
         const outcomeCoding = this.commonGenerator.buildCoding(screeningProcedure.codeSystem, code, description);
         const element = {
@@ -43,6 +43,13 @@ class ProcedureGenerator {
                         },
                     },
                     outcome: outcomeCoding,
+                    report: {
+                        reference: {
+                            "@": {
+                                value: "urn:uuid:" + reportId,
+                            },
+                        },
+                    },
                 },
             },
         };

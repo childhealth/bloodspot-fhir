@@ -44,7 +44,7 @@ class Generator {
         const healthcareEntry = healthcareGenerator.buildHealthcareService(healthcareServiceId, organisationId, locationId);
         const patientGenerator = new patient_generator_1.PatientGenerator();
         const patientEntry = patientGenerator.buildPatient(patientId, outcome);
-        const pkuProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.PKU, patientId, encounterId, outcome.pkuStatusCode, outcome.pkuSupplementaryCode, outcome.pkuStatus);
+        const pkuProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.PKU, patientId, encounterId, reportId, outcome.pkuStatusCode, outcome.pkuSupplementaryCode, outcome.pkuStatus);
         const reportGenerator = new diagnostic_report_generator_1.DiagnosticReportGenerator();
         const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
         const encounterGenerator = new encounter_generator_1.EncounterGenerator();
@@ -105,10 +105,10 @@ class Generator {
     // [13]: DCH-NewbornBloodSpotScreening-DiagnosticReport-1 - Child Screening Report
     // [14]: CareConnect-DCH-Encounter-1 - subject (patient), period, location, serviceProvider(lab)
     // [15]: CareConnect-DCH-Location-1 location at which the event occurred the lab's ODS code (config)
-    prepareProcedure(screeningProcedure, patientId, encounterId, mainStatusCode, supplementaryCode, statusDescription) {
+    prepareProcedure(screeningProcedure, patientId, encounterId, reportId, mainStatusCode, supplementaryCode, statusDescription) {
         const id = this.uuidService.generateUuid();
         const statusCode = (supplementaryCode !== "") ? supplementaryCode : mainStatusCode;
-        const element = this.procedureGenerator.buildProcedure(id, screeningProcedure, patientId, encounterId, statusCode, statusDescription);
+        const element = this.procedureGenerator.buildProcedure(id, screeningProcedure, patientId, encounterId, reportId, statusCode, statusDescription);
         return element;
     }
     buildMessageHeader(responsibleId, focusId) {
