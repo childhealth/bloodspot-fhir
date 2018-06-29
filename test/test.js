@@ -187,18 +187,20 @@ for (const srcFile of srcFiles) {
                     //Load generated xml
                     console.log("Verifying record "+(i+1)+" from CSV")
                     var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
-                
+            
+                    procedure = checker.getSubElementProcedure(xmlFormat, `314081000`)
                      //Verifying Procedure 
-                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Procedure/status')).toEqual('completed')
-                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Procedure/code/coding/code')).toEqual(`314081000`)
-                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Procedure/code/coding/display')).toEqual('Phenylketonuria screening test')
+                     expect(checker.getXpathElementValue(procedure,'//Procedure/status')).toEqual('completed')
+                     expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/code')).toEqual(`314081000`)
+                     expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/display')).toEqual('Phenylketonuria screening test')
 
-                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Procedure/outcome/coding/code')).toEqual(`4`)
-                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Procedure/outcome/coding/display')).toEqual('PKU Not Suspected. Status Code 04')
+                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code')).toEqual(csvRecord['PKU_Status_Code'])
+                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['PKU_Status'])
                     
                     i = i+1
                 }
          });
+
 }
 
 });

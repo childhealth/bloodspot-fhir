@@ -39,6 +39,27 @@ var getXpathElementText = function(xmlFormat, xpathParam) {
     return result[0]
 }
 
+
+var getSubElementProcedure = function(xmlFormat, procedureCode) {
+    var xpath = require("xml2js-xpath");
+    //Added try catch to report which xpath search failed
+    try{
+        subElements = xpath.find(xmlFormat, '//Bundle//resource');
+
+        for (subElement of subElements){
+            if (xpath.find(subElement, '//Procedure').length > 0){
+                subElementValue = getXpathElementValue(subElement, '//Procedure/code/coding/code')
+                if (subElementValue == procedureCode) {
+                    return subElement;
+                }
+            }
+        }
+    }catch (e) {
+        console.log("Exception inf xpath find")
+        console.log("Exception: "+e)
+    };
+}
+
 /*
  * Convert a CSV file to JSON
  */
@@ -83,5 +104,6 @@ module.exports = {
     getXpathElementValue,
     getXpathElementText,
     xmlValidate,
-    csvToJson
+    csvToJson,
+    getSubElementProcedure
 };
