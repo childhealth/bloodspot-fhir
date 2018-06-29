@@ -74,6 +74,63 @@ export class Generator {
             outcome.scdStatusCode,
             outcome.scdSupplementaryCode,
             outcome.scdStatusDescription);
+        const cfProcedureEntry = this.prepareProcedure(
+            ScreeningProcedure.CF,
+            patientId,
+            encounterId,
+            reportId,
+            outcome.cfStatusCode,
+            outcome.cfSupplementaryCode,
+            outcome.cfStatusDescription);
+        const chtProcedureEntry = this.prepareProcedure(
+            ScreeningProcedure.CHT,
+            patientId,
+            encounterId,
+            reportId,
+            outcome.chtStatusCode,
+            outcome.chtSupplementaryCode,
+            outcome.chtStatusDescription);
+        const mcaddProcedureEntry = this.prepareProcedure(
+            ScreeningProcedure.MCADD,
+            patientId,
+            encounterId,
+            reportId,
+            outcome.mcaddStatusCode,
+            outcome.mcaddSupplementaryCode,
+            outcome.mcaddStatusDescription);
+        const hcuProcedureEntry = this.prepareProcedure(
+            ScreeningProcedure.HCU,
+            patientId,
+            encounterId,
+            reportId,
+            outcome.hcuStatusCode,
+            outcome.hcuSupplementaryCode,
+            outcome.hcuStatusDescription);
+
+        const msudProcedureEntry = this.prepareProcedure(
+            ScreeningProcedure.MSUD,
+            patientId,
+            encounterId,
+            reportId,
+            outcome.msudStatusCode,
+            outcome.msudSupplementaryCode,
+            outcome.msudStatusDescription);
+        const ga1ProcedureEntry = this.prepareProcedure(
+            ScreeningProcedure.GA1,
+            patientId,
+            encounterId,
+            reportId,
+            outcome.ga1StatusCode,
+            outcome.ga1SupplementaryCode,
+            outcome.ga1StatusDescription);
+        const ivaProcedureEntry = this.prepareProcedure(
+            ScreeningProcedure.IVA,
+            patientId,
+            encounterId,
+            reportId,
+            outcome.ivaStatusCode,
+            outcome.ivaSupplementaryCode,
+            outcome.ivaStatusDescription);
 
         const reportGenerator = new DiagnosticReportGenerator();
         const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
@@ -112,6 +169,13 @@ export class Generator {
                 patientEntry,
                 pkuProcedureEntry,
                 scdProcedureEntry,
+                cfProcedureEntry,
+                chtProcedureEntry,
+                mcaddProcedureEntry,
+                hcuProcedureEntry,
+                msudProcedureEntry,
+                ga1ProcedureEntry,
+                ivaProcedureEntry,
                 reportEntry,
                 encounterEntry,
                 locationEntry,

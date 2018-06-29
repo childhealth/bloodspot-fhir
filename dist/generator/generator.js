@@ -46,6 +46,13 @@ class Generator {
         const patientEntry = patientGenerator.buildPatient(patientId, outcome);
         const pkuProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.PKU, patientId, encounterId, reportId, outcome.pkuStatusCode, outcome.pkuSupplementaryCode, outcome.pkuStatusDescription);
         const scdProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.SCD, patientId, encounterId, reportId, outcome.scdStatusCode, outcome.scdSupplementaryCode, outcome.scdStatusDescription);
+        const cfProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.CF, patientId, encounterId, reportId, outcome.cfStatusCode, outcome.cfSupplementaryCode, outcome.cfStatusDescription);
+        const chtProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.CHT, patientId, encounterId, reportId, outcome.chtStatusCode, outcome.chtSupplementaryCode, outcome.chtStatusDescription);
+        const mcaddProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.MCADD, patientId, encounterId, reportId, outcome.mcaddStatusCode, outcome.mcaddSupplementaryCode, outcome.mcaddStatusDescription);
+        const hcuProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.HCU, patientId, encounterId, reportId, outcome.hcuStatusCode, outcome.hcuSupplementaryCode, outcome.hcuStatusDescription);
+        const msudProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.MSUD, patientId, encounterId, reportId, outcome.msudStatusCode, outcome.msudSupplementaryCode, outcome.msudStatusDescription);
+        const ga1ProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.GA1, patientId, encounterId, reportId, outcome.ga1StatusCode, outcome.ga1SupplementaryCode, outcome.ga1StatusDescription);
+        const ivaProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.IVA, patientId, encounterId, reportId, outcome.ivaStatusCode, outcome.ivaSupplementaryCode, outcome.ivaStatusDescription);
         const reportGenerator = new diagnostic_report_generator_1.DiagnosticReportGenerator();
         const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
         const encounterGenerator = new encounter_generator_1.EncounterGenerator();
@@ -74,6 +81,13 @@ class Generator {
                 patientEntry,
                 pkuProcedureEntry,
                 scdProcedureEntry,
+                cfProcedureEntry,
+                chtProcedureEntry,
+                mcaddProcedureEntry,
+                hcuProcedureEntry,
+                msudProcedureEntry,
+                ga1ProcedureEntry,
+                ivaProcedureEntry,
                 reportEntry,
                 encounterEntry,
                 locationEntry,
