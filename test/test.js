@@ -34,6 +34,7 @@ for (const srcFile of srcFiles) {
         outFolder = 'testOutput/'+srcFile.split('.')[0].split('/')[2]
         //Convert source file to JSON
         source = checker.csvToJson(srcFile)
+
         it('should pass XML validation against Schema - DCH-BloodSpotTestOutcome-Bundle', function(){
             xmlFiles = fileHandler.getFiles(outFolder)
             var xsd = require('./messageChecker');
@@ -58,7 +59,6 @@ for (const srcFile of srcFiles) {
                 headerCode = checker.getXpathElementValue(json, '//MessageHeader//event/code');
                 expect(headerMessage).toEqual('Blood Spot Test Outcome');
                 expect(headerCode).toEqual('CH035');
-                console.log("Verified MessageHeader \""+headerMessage+"\" code \""+headerCode+"\"")
             }
         });
         
@@ -87,7 +87,7 @@ for (const srcFile of srcFiles) {
             var i = 0;
                 for (let csvRecord of source) {
                     //Load generated xml
-                    console.log("Verifying record "+(i+1)+" from CSV "+srcFile)
+                    console.log("Verifying record "+(i+1)+" from CSV")
                     var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/type/coding/code')).toEqual('C09')
                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/type/coding/display')).toEqual('Screener (in a National Screening Programme)')
@@ -176,6 +176,26 @@ for (const srcFile of srcFiles) {
                 
                      //Verifying Location 
                      expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Location/identifier/value')).toEqual('LAB01')
+                    i = i+1
+                }
+         });
+
+         it('should be encoded correctly the \"PKU Procedure\" in the XML message', function(){
+            xmlFiles = fileHandler.getFiles(outFolder)
+            var i = 0;
+                for (let csvRecord of source) {
+                    //Load generated xml
+                    console.log("Verifying record "+(i+1)+" from CSV")
+                    var xmlFormat = fileHandler.getXml2Js(xmlFiles[i])
+                
+                     //Verifying Procedure 
+                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Procedure/status')).toEqual('completed')
+                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Procedure/code/coding/code')).toEqual(`314081000`)
+                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Procedure/code/coding/display')).toEqual('Phenylketonuria screening test')
+
+                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Procedure/outcome/coding/code')).toEqual(`4`)
+                     expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Procedure/outcome/coding/display')).toEqual('PKU Not Suspected. Status Code 04')
+                    
                     i = i+1
                 }
          });
