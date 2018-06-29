@@ -85,6 +85,11 @@ class PatientGenerator {
                             },
                         },
                     },
+                    gender: {
+                        "@": {
+                            value: this.getAdministrativeGenderCode(outcome.genderCode),
+                        },
+                    },
                 },
             },
         };
@@ -95,6 +100,21 @@ class PatientGenerator {
             Object.assign(element.resource.Patient, identifierElement);
         }
         return element;
+    }
+    /**
+     * Gets the AdministrativeGender code.
+     *
+     * @param code the number
+     * @see https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-AdministrativeGender-1
+     */
+    getAdministrativeGenderCode(code) {
+        switch (code) {
+            case 0: return "unknown"; // Not Known (not recorded)
+            case 1: return "male";
+            case 2: return "female";
+            case 9: return "other"; // Indeterminate (unable to be classified as either male or female)
+        }
+        throw new Error("Unhandled gender value \"" + code + "\".");
     }
 }
 exports.PatientGenerator = PatientGenerator;

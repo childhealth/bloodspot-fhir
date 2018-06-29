@@ -106,7 +106,6 @@ export class Generator {
             outcome.hcuStatusCode,
             outcome.hcuSupplementaryCode,
             outcome.hcuStatusDescription);
-
         const msudProcedureEntry = this.prepareProcedure(
             ScreeningProcedure.MSUD,
             patientId,
