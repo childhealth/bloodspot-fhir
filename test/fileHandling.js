@@ -52,10 +52,18 @@ var rmFolders = function(path){
       }
 };
 
+var logger = function(message, loglevel){
+    level = {1 : "INFO:: ", 2 : "WARN:: ", 3 : "DEBUG:: "}
+    if (loglevel !== 3){
+        console.log(level[loglevel]+ message)
+    }
+};
+
 module.exports = {
     getFiles,
     getXml2Js,
     readFile,
     fileExists,
-    rmFolders
+    rmFolders,
+    logger
 };
