@@ -2,10 +2,13 @@ import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 import * as tmp from "tmp";
+import { SilentConsole } from "../testing/silent-console";
 import { LocalFolderOutputChannel } from "./local.folder.output.channel";
 
 describe("LocalFolderOutputChannel", () => {
     let subject: LocalFolderOutputChannel;
+
+    const silentConsole = new SilentConsole();
 
     it("constructor(folderUrl) should create a folder if folder doesnt already exist", () => {
         const folderUrl = path.join(tmp.tmpNameSync());
@@ -14,7 +17,7 @@ describe("LocalFolderOutputChannel", () => {
         let doesExist = fs.existsSync(folderUrl);
         expect(doesExist).toBeFalsy();
 
-        subject = new LocalFolderOutputChannel(folderUrl);
+        subject = new LocalFolderOutputChannel(folderUrl, silentConsole);
 
         // check the folder exists after subject is created
         doesExist = fs.existsSync(folderUrl);
@@ -24,7 +27,7 @@ describe("LocalFolderOutputChannel", () => {
     it("constructor(folderUrl) should throw an error if it cannot create the folder", () => {
         const badlyFormedFolderUrl = path.join(os.tmpdir(), tmp.tmpNameSync());
         expect(() => {
-            subject = new LocalFolderOutputChannel(badlyFormedFolderUrl);
+            subject = new LocalFolderOutputChannel(badlyFormedFolderUrl, silentConsole);
         }).toThrow(new Error("Cannot create output folder \"" + badlyFormedFolderUrl + "\"."));
     });
 
@@ -34,7 +37,7 @@ describe("LocalFolderOutputChannel", () => {
         myfs.writeFileSync.and.throwError("ERROR");
         const filename = path.join(folderUrl, "message-1.xml");
 
-        subject = new LocalFolderOutputChannel(folderUrl, myfs);
+        subject = new LocalFolderOutputChannel(folderUrl, silentConsole, myfs);
 
         expect(() => {
             subject.write("expect write() to fail");

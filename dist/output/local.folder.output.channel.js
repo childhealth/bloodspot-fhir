@@ -11,11 +11,13 @@ const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const output_channel_1 = require("./output.channel");
 class LocalFolderOutputChannel extends output_channel_1.OutputChannel {
-    constructor(localFolderUrl, fileSystem = fs) {
+    constructor(localFolderUrl, logger = console, fileSystem = fs) {
         super();
         this.localFolderUrl = localFolderUrl;
+        this.logger = logger;
         this.fileSystem = fileSystem;
         this.writeMessageCount = 0;
+        logger.log("Writing to local output folder \"" + localFolderUrl + "\"...");
         this.guaranteeFolder(localFolderUrl);
     }
     write(message) {

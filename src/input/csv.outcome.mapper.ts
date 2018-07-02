@@ -5,13 +5,26 @@ import { Outcome } from "../model/outcome";
  */
 export class CSVOutcomeMapper {
 
-    public buildOutcomes(lines: string[]): Outcome[] {
+    constructor(
+        private logger: any = console,
+    ) {}
+
+    public buildOutcomes(lines: string[], hasHeader: boolean, filename: string): Outcome[] {
         const result: Outcome[] = [];
+        let lineNumber = 0;
+
+        if (hasHeader) {
+            lineNumber = lineNumber + 1;
+        }
 
         for (const each of lines) {
-            const outcome = new Outcome(each);
-            // outcome.allValues = each;
-            result.push(outcome);
+            lineNumber = lineNumber + 1;
+            try {
+                const outcome = new Outcome(each);
+                result.push(outcome);
+            } catch (error) {
+                this.logger.log("Error in file \"" + filename + "\" at line " + lineNumber + ": " + error);
+            }
         }
 
         return result;

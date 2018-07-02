@@ -18,12 +18,6 @@ args.shift(); // ignore 'index.js'
 const localInputFileUrl = args.shift()!;
 const localOutputFolderUrl = args.shift()!;
 
-// tslint:disable-next-line:no-console
-console.log("Reading local input file \"" + localInputFileUrl + "\"...");
-
-// tslint:disable-next-line:no-console
-console.log("Writing to local output folder \"" + localOutputFolderUrl + "\"...");
-
 const inputChannel: InputChannel = new LocalFileInputChannel(localInputFileUrl);
 const outputChannel: OutputChannel = new LocalFolderOutputChannel(localOutputFolderUrl);
 const generator = new Generator(inputChannel, outputChannel);

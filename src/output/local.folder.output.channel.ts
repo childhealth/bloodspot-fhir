@@ -8,9 +8,11 @@ export class LocalFolderOutputChannel extends OutputChannel {
 
     constructor(
         private localFolderUrl: string,
+        private logger: any = console,
         private fileSystem = fs,
     ) {
         super();
+        logger.log("Writing to local output folder \"" + localFolderUrl + "\"...");
         this.guaranteeFolder(localFolderUrl);
     }
 
