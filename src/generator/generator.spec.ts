@@ -71,7 +71,7 @@ describe("Generator", () => {
             const pkuProcedureEntry = actual.entry[4];
             const outcomeCoding = pkuProcedureEntry.resource.Procedure.outcome.coding;
             const statusValue = outcomeCoding.code["@"].value;
-            expect(statusValue).toEqual("4");
+            expect(statusValue).toEqual("04");
         });
 
         it("should use supplementary code as status code if set", () => {
@@ -81,7 +81,7 @@ describe("Generator", () => {
             const pkuProcedureEntry = actual.entry[4];
             const outcomeCoding = pkuProcedureEntry.resource.Procedure.outcome.coding;
             const statusValue = outcomeCoding.code["@"].value;
-            expect(statusValue).toEqual("311");
+            expect(statusValue).toEqual("0311");
         });
 
         it("should contain 9 procedures", () => {

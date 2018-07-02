@@ -90,32 +90,32 @@ class Outcome {
         this.mothersTelephone = fields[24];
         this.collectionDate = this.validateDate(fields[26]);
         this.labCode = fields[29];
-        this.pkuStatusCode = fields[30];
-        this.pkuSupplementaryCode = fields[31];
+        this.pkuStatusCode = this.validatedStatusCode(fields[30]);
+        this.pkuSupplementaryCode = this.validatedSupplementaryCode(fields[31]);
         this.pkuStatusDescription = fields[32];
-        this.chtStatusCode = fields[33];
-        this.chtSupplementaryCode = fields[34];
+        this.chtStatusCode = this.validatedStatusCode(fields[33]);
+        this.chtSupplementaryCode = this.validatedSupplementaryCode(fields[34]);
         this.chtStatusDescription = fields[35];
-        this.scdStatusCode = fields[36];
-        this.scdSupplementaryCode = fields[37];
+        this.scdStatusCode = this.validatedStatusCode(fields[36]);
+        this.scdSupplementaryCode = this.validatedSupplementaryCode(fields[37]);
         this.scdStatusDescription = fields[38];
-        this.cfStatusCode = fields[39];
-        this.cfSupplementaryCode = fields[40];
+        this.cfStatusCode = this.validatedStatusCode(fields[39]);
+        this.cfSupplementaryCode = this.validatedSupplementaryCode(fields[40]);
         this.cfStatusDescription = fields[41];
-        this.mcaddStatusCode = fields[42];
-        this.mcaddSupplementaryCode = fields[43];
+        this.mcaddStatusCode = this.validatedStatusCode(fields[42]);
+        this.mcaddSupplementaryCode = this.validatedSupplementaryCode(fields[43]);
         this.mcaddStatusDescription = fields[44];
-        this.hcuStatusCode = fields[45];
-        this.hcuSupplementaryCode = fields[46];
+        this.hcuStatusCode = this.validatedStatusCode(fields[45]);
+        this.hcuSupplementaryCode = this.validatedSupplementaryCode(fields[46]);
         this.hcuStatusDescription = fields[47];
-        this.msudStatusCode = fields[48];
-        this.msudSupplementaryCode = fields[49];
+        this.msudStatusCode = this.validatedStatusCode(fields[48]);
+        this.msudSupplementaryCode = this.validatedSupplementaryCode(fields[49]);
         this.msudStatusDescription = fields[50];
-        this.ga1StatusCode = fields[51];
-        this.ga1SupplementaryCode = fields[52];
+        this.ga1StatusCode = this.validatedStatusCode(fields[51]);
+        this.ga1SupplementaryCode = this.validatedSupplementaryCode(fields[52]);
         this.ga1StatusDescription = fields[53];
-        this.ivaStatusCode = fields[54];
-        this.ivaSupplementaryCode = fields[55];
+        this.ivaStatusCode = this.validatedStatusCode(fields[54]);
+        this.ivaSupplementaryCode = this.validatedSupplementaryCode(fields[55]);
         this.ivaStatusDescription = fields[56];
     }
     get displayName() {
@@ -151,6 +151,26 @@ class Outcome {
             throw new Error("Invalid date \"" + dateString + "\".");
         }
         return new Date(Date.UTC(year, month, day));
+    }
+    validatedStatusCode(code) {
+        const numberCode = Number(code);
+        if (isNaN(numberCode) || (numberCode < 1) || (numberCode > 10)) {
+            throw new Error("Status code should be a number between 1 and 10 but was \"" + code + "\".");
+        }
+        if (code.length === 1) {
+            return "0" + code;
+        }
+        return code;
+    }
+    validatedSupplementaryCode(code) {
+        const numberCode = Number(code);
+        if (isNaN(numberCode)) {
+            return code;
+        }
+        if (code.length === 3) {
+            return "0" + code;
+        }
+        return code;
     }
 }
 Outcome.MaxFields = 57;
