@@ -16,7 +16,12 @@ import { UuidService } from "./uuid.service";
 export class Generator {
 
     private commonGenerator = new CommonGenerator();
+    private patientGenerator = new PatientGenerator();
     private procedureGenerator = new ProcedureGenerator();
+    private reportGenerator = new DiagnosticReportGenerator();
+    private encounterGenerator = new EncounterGenerator();
+    private healthcareServiceGenerator: HealthcareServiceGenerator;
+    private locationGenerator: LocationGenerator;
 
     constructor(
         public inputChannel: InputChannel,
@@ -24,6 +29,8 @@ export class Generator {
         private uuidService = new UuidService(),
         private configurationService: IConfigurationService = new ConfigurationService("./bloodspot-helper.json"),
     ) {
+        this.healthcareServiceGenerator = new HealthcareServiceGenerator(configurationService);
+        this.locationGenerator = new LocationGenerator(configurationService);
     }
 
     public execute() {
@@ -51,12 +58,10 @@ export class Generator {
         const metaBundle = this.commonGenerator.buildProfile(bundleCode);
         const organisationEntry = this.buildOrganisation(organisationId);
 
-        const healthcareGenerator = new HealthcareServiceGenerator(this.configurationService);
-        const healthcareEntry = healthcareGenerator.buildHealthcareService(
+        const healthcareEntry = this.healthcareServiceGenerator.buildHealthcareService(
             healthcareServiceId, organisationId, locationId);
 
-        const patientGenerator = new PatientGenerator();
-        const patientEntry = patientGenerator.buildPatient(patientId, outcome);
+        const patientEntry = this.patientGenerator.buildPatient(patientId, outcome);
 
         const pkuProcedureEntry = this.prepareProcedure(
             ScreeningProcedure.PKU,
@@ -131,11 +136,9 @@ export class Generator {
             outcome.ivaSupplementaryCode,
             outcome.ivaStatusDescription);
 
-        const reportGenerator = new DiagnosticReportGenerator();
-        const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
+        const reportEntry = this.reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
 
-        const encounterGenerator = new EncounterGenerator();
-        const encounterEntry = encounterGenerator.buildEncounter(
+        const encounterEntry = this.encounterGenerator.buildEncounter(
             encounterId,
             patientId,
             outcome.displayName,
@@ -143,8 +146,7 @@ export class Generator {
             locationId,
             healthcareServiceId);
 
-        const locationGenerator = new LocationGenerator(this.configurationService);
-        const locationEntry = locationGenerator.buildLocation(locationId);
+        const locationEntry = this.locationGenerator.buildLocation(locationId);
 
         const bundleObject = {
             "@": {

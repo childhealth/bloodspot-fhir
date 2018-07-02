@@ -17,7 +17,12 @@ class Generator {
         this.uuidService = uuidService;
         this.configurationService = configurationService;
         this.commonGenerator = new common_generator_1.CommonGenerator();
+        this.patientGenerator = new patient_generator_1.PatientGenerator();
         this.procedureGenerator = new procedure_generator_1.ProcedureGenerator();
+        this.reportGenerator = new diagnostic_report_generator_1.DiagnosticReportGenerator();
+        this.encounterGenerator = new encounter_generator_1.EncounterGenerator();
+        this.healthcareServiceGenerator = new healthcare_service_generator_1.HealthcareServiceGenerator(configurationService);
+        this.locationGenerator = new location_generator_1.LocationGenerator(configurationService);
     }
     execute() {
         for (const eachOutcome of this.inputChannel.outcomes) {
@@ -40,10 +45,8 @@ class Generator {
         const bundleCode = "https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1";
         const metaBundle = this.commonGenerator.buildProfile(bundleCode);
         const organisationEntry = this.buildOrganisation(organisationId);
-        const healthcareGenerator = new healthcare_service_generator_1.HealthcareServiceGenerator(this.configurationService);
-        const healthcareEntry = healthcareGenerator.buildHealthcareService(healthcareServiceId, organisationId, locationId);
-        const patientGenerator = new patient_generator_1.PatientGenerator();
-        const patientEntry = patientGenerator.buildPatient(patientId, outcome);
+        const healthcareEntry = this.healthcareServiceGenerator.buildHealthcareService(healthcareServiceId, organisationId, locationId);
+        const patientEntry = this.patientGenerator.buildPatient(patientId, outcome);
         const pkuProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.PKU, patientId, encounterId, reportId, outcome.pkuStatusCode, outcome.pkuSupplementaryCode, outcome.pkuStatusDescription);
         const scdProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.SCD, patientId, encounterId, reportId, outcome.scdStatusCode, outcome.scdSupplementaryCode, outcome.scdStatusDescription);
         const cfProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.CF, patientId, encounterId, reportId, outcome.cfStatusCode, outcome.cfSupplementaryCode, outcome.cfStatusDescription);
@@ -53,12 +56,9 @@ class Generator {
         const msudProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.MSUD, patientId, encounterId, reportId, outcome.msudStatusCode, outcome.msudSupplementaryCode, outcome.msudStatusDescription);
         const ga1ProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.GA1, patientId, encounterId, reportId, outcome.ga1StatusCode, outcome.ga1SupplementaryCode, outcome.ga1StatusDescription);
         const ivaProcedureEntry = this.prepareProcedure(screening_procedure_1.ScreeningProcedure.IVA, patientId, encounterId, reportId, outcome.ivaStatusCode, outcome.ivaSupplementaryCode, outcome.ivaStatusDescription);
-        const reportGenerator = new diagnostic_report_generator_1.DiagnosticReportGenerator();
-        const reportEntry = reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
-        const encounterGenerator = new encounter_generator_1.EncounterGenerator();
-        const encounterEntry = encounterGenerator.buildEncounter(encounterId, patientId, outcome.displayName, outcome.collectionDate, locationId, healthcareServiceId);
-        const locationGenerator = new location_generator_1.LocationGenerator(this.configurationService);
-        const locationEntry = locationGenerator.buildLocation(locationId);
+        const reportEntry = this.reportGenerator.buildDiagnosticReport(reportId, patientId, encounterId);
+        const encounterEntry = this.encounterGenerator.buildEncounter(encounterId, patientId, outcome.displayName, outcome.collectionDate, locationId, healthcareServiceId);
+        const locationEntry = this.locationGenerator.buildLocation(locationId);
         const bundleObject = {
             "@": {
                 xmlns: "http://hl7.org/fhir",
