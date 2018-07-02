@@ -184,7 +184,7 @@ for (const srcFile of srcFiles) {
                 }
          });
 
-         it('should be encoded correctly the \"Phenylketonuria screening\" in the XML message', function(){
+         it('should be encoded correctly the Procedure \"Phenylketonuria screening\" in the XML message', function(){
             xmlFiles = fileHandler.getFiles(outFolder)
             var i = 0;
                 for (let csvRecord of source) {
@@ -198,15 +198,19 @@ for (const srcFile of srcFiles) {
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/code')).toEqual(`314081000`)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/display')).toEqual('Phenylketonuria screening test')
                      //status code replaced by supplementary code if supplementary code not empty
-                     pkuCode = csvRecord['PKU_Supplementary_Code'] === '' ? csvRecord['PKU_Status_Code'] : csvRecord['PKU_Supplementary_Code'];
-                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code')).toEqual(pkuCode)
+                     csvPKUCode = csvRecord['PKU_Supplementary_Code'] === '' ? csvRecord['PKU_Status_Code'] : csvRecord['PKU_Supplementary_Code'];
+                     xmlPKUCode = checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code');
+                     //XML code length should 2 or 4
+                     expect([2, 4]).toContain(xmlPKUCode.length);
+                     //Prefix csv code with 0 if code length is 1 or 3 
+                     csvPKUCode = (csvPKUCode.length === 1 || csvPKUCode.length === 3) ? '0'+csvPKUCode : csvPKUCode
+                     expect(xmlPKUCode).toEqual(csvPKUCode)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['PKU_Status'])
-                    
                     i = i+1
                 }
          });
 
-         it('should be encoded correctly the \"Sickle cell disease screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure \"Sickle cell disease screening Procedure\" in the XML message', function(){
             xmlFiles = fileHandler.getFiles(outFolder)
             var i = 0;
                 for (let csvRecord of source) {
@@ -220,15 +224,20 @@ for (const srcFile of srcFiles) {
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/code')).toEqual(`314090007`)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/display')).toEqual('Sickle cell disease screening test')
                       //status code replaced by supplementary code if supplementary code not empty
-                     sickeCellCode = csvRecord['Sickle_Supplementary_Code'] === '' ? csvRecord['Sickle_Status_Code'] : csvRecord['Sickle_Supplementary_Code'];
-                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code')).toEqual(sickeCellCode)
+                     csvSickeCellCode = csvRecord['Sickle_Supplementary_Code'] === '' ? csvRecord['Sickle_Status_Code'] : csvRecord['Sickle_Supplementary_Code'];
+                     xmlSickeCellCode = checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code');
+                     //XML code length should 2 or 4
+                     expect([2, 4]).toContain(xmlSickeCellCode.length);
+                    //Prefix csv code with 0 if code length is 1 or 3 
+                     csvSickeCellCode = (csvSickeCellCode.length === 1 || csvSickeCellCode.length === 3) ? '0'+csvSickeCellCode : csvSickeCellCode
+                     expect(xmlSickeCellCode).toEqual(csvSickeCellCode)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['Sickle_Status'])
                     
                     i = i+1
                 }
          });
 
-         it('should be encoded correctly the \"Cystic fibrosis screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure \"Cystic fibrosis screening Procedure\" in the XML message', function(){
             xmlFiles = fileHandler.getFiles(outFolder)
             var i = 0;
                 for (let csvRecord of source) {
@@ -242,15 +251,20 @@ for (const srcFile of srcFiles) {
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/code')).toEqual(`314080004`)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/display')).toEqual('Cystic fibrosis screening test')
                       //status code replaced by supplementary code if supplementary code not empty
-                      cfCode = csvRecord['CF_Supplementary_Code'] === '' ? csvRecord['CF_Status_Code'] : csvRecord['CF_Supplementary_Code'];
-                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code')).toEqual(cfCode)
+                      csvCFCode = csvRecord['CF_Supplementary_Code'] === '' ? csvRecord['CF_Status_Code'] : csvRecord['CF_Supplementary_Code'];
+                      xmlCFCode = checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code');
+                      //XML code length should 2 or 4
+                      expect([2, 4]).toContain(xmlCFCode.length);
+                     //Prefix csv code with 0 if code length is 1 or 3 
+                     csvCFCode = (csvCFCode.length === 1 || csvCFCode.length === 3) ? '0'+csvCFCode : csvCFCode
+                      expect(xmlCFCode).toEqual(csvCFCode)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['CF_Status'])
                     
                     i = i+1
                 }
          });
 
-         it('should be encoded correctly the \"Congenital hypothyroidism screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure \"Congenital hypothyroidism screening Procedure\" in the XML message', function(){
             xmlFiles = fileHandler.getFiles(outFolder)
             var i = 0;
                 for (let csvRecord of source) {
@@ -264,15 +278,20 @@ for (const srcFile of srcFiles) {
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/code')).toEqual(`400984005`)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/display')).toEqual('Congenital hypothyroidism screening test')
                       //status code replaced by supplementary code if supplementary code not empty
-                      chtCode = csvRecord['CHT_Supplementary_Code'] === '' ? csvRecord['CHT_Status_Code'] : csvRecord['CHT_Supplementary_Code'];
-                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code')).toEqual(chtCode)
+                      csvCTHCode = csvRecord['CHT_Supplementary_Code'] === '' ? csvRecord['CHT_Status_Code'] : csvRecord['CHT_Supplementary_Code'];
+                      xmlCTHCode = checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code');
+                      //XML code length should 2 or 4
+                      expect([2, 4]).toContain(xmlCTHCode.length);
+                     //Prefix csv code with 0 if code length is 1 or 3 
+                     csvCTHCode = (csvCTHCode.length === 1 || csvCTHCode.length === 3) ? '0'+csvCTHCode : csvCTHCode
+                      expect(xmlCTHCode).toEqual(csvCTHCode)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['CHT_Status'])
                     
                     i = i+1
                 }
          });
 
-         it('should be encoded correctly the \"Medium-chain acyl-coenzyme A dehydrogenase deficiency screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure \"Medium-chain acyl-coenzyme A dehydrogenase deficiency screening Procedure\" in the XML message', function(){
             xmlFiles = fileHandler.getFiles(outFolder)
             var i = 0;
                 for (let csvRecord of source) {
@@ -286,15 +305,20 @@ for (const srcFile of srcFiles) {
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/code')).toEqual(`428056008`)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/display')).toEqual('Medium-chain acyl-coenzyme A dehydrogenase deficiency screening test')
                       //status code replaced by supplementary code if supplementary code not empty
-                      mcaddCode = csvRecord['MCADD_Supplementary_Code'] === '' ? csvRecord['MCADD_Status_Code'] : csvRecord['MCADD_Supplementary_Code'];
-                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code')).toEqual(mcaddCode)
+                      csvMCADDCode = csvRecord['MCADD_Supplementary_Code'] === '' ? csvRecord['MCADD_Status_Code'] : csvRecord['MCADD_Supplementary_Code'];
+                      xmlMCADDCode = checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code');
+                      //XML code length should 2 or 4
+                      expect([2, 4]).toContain(xmlMCADDCode.length);
+                     //Prefix csv code with 0 if code length is 1 or 3 
+                     csvMCADDCode = (csvMCADDCode.length === 1 || csvMCADDCode.length === 3) ? '0'+csvMCADDCode : csvMCADDCode
+                      expect(xmlMCADDCode).toEqual(csvCTHCode)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['MCADD_Status'])
                     
                     i = i+1
                 }
          });
 
-         it('should be encoded correctly the \"Blood spot homocystinuria screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure \"Blood spot homocystinuria screening Procedure\" in the XML message', function(){
             xmlFiles = fileHandler.getFiles(outFolder)
             var i = 0;
                 for (let csvRecord of source) {
@@ -308,15 +332,20 @@ for (const srcFile of srcFiles) {
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/code')).toEqual(`940201000000107`)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/display')).toEqual('Blood spot homocystinuria screening test')
                       //status code replaced by supplementary code if supplementary code not empty
-                      hcuCode = csvRecord['HCU_Supplementary_Code'] === '' ? csvRecord['HCU_Status_Code'] : csvRecord['HCU_Supplementary_Code'];
-                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code')).toEqual(hcuCode)
+                      csvHCUCode = csvRecord['HCU_Supplementary_Code'] === '' ? csvRecord['HCU_Status_Code'] : csvRecord['HCU_Supplementary_Code'];
+                      xmlHCUCode = checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code');
+                      //XML code length should 2 or 4
+                      expect([2, 4]).toContain(xmlHCUCode.length);
+                     //Prefix csv code with 0 if code length is 1 or 3 
+                     csvHCUCode = (csvHCUCode.length === 1 || csvHCUCode.length === 3) ? '0'+csvHCUCode : csvHCUCode
+                      expect(xmlHCUCode).toEqual(csvHCUCode)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['HCU_Status'])
                     
                     i = i+1
                 }
          });
 
-         it('should be encoded correctly the \"Blood spot maple syrup urine disease screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure \"Blood spot maple syrup urine disease screening Procedure\" in the XML message', function(){
             xmlFiles = fileHandler.getFiles(outFolder)
             var i = 0;
                 for (let csvRecord of source) {
@@ -330,15 +359,20 @@ for (const srcFile of srcFiles) {
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/code')).toEqual(`940221000000103`)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/display')).toEqual('Blood spot maple syrup urine disease screening test')
                       //status code replaced by supplementary code if supplementary code not empty
-                      msudCode = csvRecord['MSUD_Supplementary_Code'] === '' ? csvRecord['MSUD_Status_Code'] : csvRecord['MSUD_Supplementary_Code'];
-                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code')).toEqual(msudCode)
+                      csvMSUDCode = csvRecord['MSUD_Supplementary_Code'] === '' ? csvRecord['MSUD_Status_Code'] : csvRecord['MSUD_Supplementary_Code'];
+                      xmlMSUDCode = checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code');
+                      //XML code length should 2 or 4
+                      expect([2, 4]).toContain(xmlMSUDCode.length);
+                     //Prefix csv code with 0 if code length is 1 or 3 
+                     csvMSUDCode = (csvMSUDCode.length === 1 || csvMSUDCode.length === 3) ? '0'+csvMSUDCode : csvMSUDCode
+                      expect(xmlMSUDCode).toEqual(csvMSUDCode)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['MSUD_Status'])
                     
                     i = i+1
                 }
          });
 
-         it('should be encoded correctly the \"Blood spot glutaric aciduria type 1 screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure \"Blood spot glutaric aciduria type 1 screening Procedure\" in the XML message', function(){
             xmlFiles = fileHandler.getFiles(outFolder)
             var i = 0;
                 for (let csvRecord of source) {
@@ -352,15 +386,20 @@ for (const srcFile of srcFiles) {
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/code')).toEqual(`940131000000109`)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/display')).toEqual('Blood spot glutaric aciduria type 1 screening test')
                       //status code replaced by supplementary code if supplementary code not empty
-                      ga1Code = csvRecord['GA1_Supplementary_Code'] === '' ? csvRecord['GA1_Status_Code'] : csvRecord['GA1_Supplementary_Code'];
-                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code')).toEqual(ga1Code)
+                      csvGA1Code = csvRecord['GA1_Supplementary_Code'] === '' ? csvRecord['GA1_Status_Code'] : csvRecord['GA1_Supplementary_Code'];
+                      xmlGA1Code = checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code');
+                      //XML code length should 2 or 4
+                      expect([2, 4]).toContain(xmlGA1Code.length);
+                     //Prefix csv code with 0 if code length is 1 or 3 
+                     csvGA1Code = (csvGA1Code.length === 1 || csvGA1Code.length === 3) ? '0'+csvGA1Code : csvGA1Code
+                      expect(xmlGA1Code).toEqual(csvGA1Code)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['GA1_Status'])
                     
                     i = i+1
                 }
          });
 
-         it('should be encoded correctly the \"Blood spot isovaleric acidaemia screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure \"Blood spot isovaleric acidaemia screening Procedure\" in the XML message', function(){
             xmlFiles = fileHandler.getFiles(outFolder)
             var i = 0;
                 for (let csvRecord of source) {
@@ -374,8 +413,13 @@ for (const srcFile of srcFiles) {
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/code')).toEqual(`940151000000102`)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/code/coding/display')).toEqual('Blood spot isovaleric acidaemia screening test')
                       //status code replaced by supplementary code if supplementary code not empty
-                      ivaCode = csvRecord['IVA_Supplementary_Code'] === '' ? csvRecord['IVA_Status_Code'] : csvRecord['IVA_Supplementary_Code'];
-                     expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code')).toEqual(ivaCode)
+                      csvIVACode = csvRecord['IVA_Supplementary_Code'] === '' ? csvRecord['IVA_Status_Code'] : csvRecord['IVA_Supplementary_Code'];
+                      xmlIVACode = checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/code');
+                      //XML code length should 2 or 4
+                      expect([2, 4]).toContain(xmlIVACode.length);
+                     //Prefix csv code with 0 if code length is 1 or 3 
+                     csvIVACode = (csvIVACode.length === 1 || csvIVACode.length === 3) ? '0'+csvIVACode : csvIVACode
+                      expect(xmlIVACode).toEqual(csvIVACode)
                      expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['IVA_Status'].replace(/\r|\n/g, ''))
                     
                     i = i+1
