@@ -1,16 +1,19 @@
 {
-  "name": "nhsd-bloodspot-helper",
+  "name": "bloodspot-helper",
   "version": "1.0.0",
   "description": "Generates newborn blood spot outcome FHIR events from screening laboratory data.",
   "main": "index.js",
+  "bin": "./dist/index.js",
   "scripts": {
     "clean": "rimraf dist",
     "lint": "tslint 'src/**/*.ts'",
+    "build:ts": "tsc",
     "prebuild": "npm run clean",
-    "build": "tsc && npm run lint",
+    "build": "npm run build:ts && npm run lint",
     "unit-tests": "npm run build && jasmine --config=./jasmine.json",
     "e2e-tests": "mocha",
-    "test": "npm run unit-tests && npm run e2e-tests"
+    "test": "npm run unit-tests && npm run e2e-tests",
+    "dist": "npm unlink && npm run build && npm link"
   },
   "keywords": [
     "bloodspot"

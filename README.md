@@ -24,7 +24,7 @@ Install [NodeJS](https://nodejs.org/) on your computer.
 
 ### Examples
 
-    bloodspothelper --input 20180530-lab-data.csv --output output
+    bloodspot-helper 20180530-lab-data.csv outputFolder
 
-The tool will read the file `20180530-lab-data.csv` from the current folder, generate some FHIR event messages and write them into a folder called `output`.
+The tool will read the file `20180530-lab-data.csv` from the current folder, generate some FHIR event messages and write them into a folder called `outputFolder`.
 

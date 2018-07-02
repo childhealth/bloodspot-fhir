@@ -7,7 +7,7 @@ const local_folder_output_channel_1 = require("./output/local.folder.output.chan
 // Read some command-line arguments (process.argv) to determine set the input and output
 const args = process.argv;
 if (args.length !== 4) {
-    throw new Error("Its got to have 4 arguments: node index.js inputFileUrl outputFolderUrl");
+    throw new Error("Missing arguments 'inputFileUrl' and 'outputFolderUrl'.");
 }
 args.shift(); // ignore 'node'
 args.shift(); // ignore 'index.js'
