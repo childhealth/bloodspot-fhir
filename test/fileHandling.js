@@ -53,8 +53,8 @@ var rmFolders = function(path){
 };
 
 var logger = function(message, loglevel){
-    level = {1 : "INFO:: ", 2 : "WARN:: ", 3 : "DEBUG:: "}
-    if (loglevel !== 3){
+    level = {1 : "ERRORS:: ", 2 : "WARN:: ", 3 : "INFO:: ", 4 : "DEBUG:: "}
+    if (loglevel < 4){
         console.log(level[loglevel]+ message)
     }
 };
