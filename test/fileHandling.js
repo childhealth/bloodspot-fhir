@@ -1,7 +1,8 @@
+"use strict";
 const config = require('./test-config.json');
-level = {1 : "ERRORS:: ", 2 : "WARN:: ", 3 : "INFO:: ", 4 : "DEBUG:: "};
-configLevel = config['debug'] ? 4 : config['info'] ? 3 : 2;
-conoleLog = config['console'];
+const level = {1 : "ERRORS:: ", 2 : "WARN:: ", 3 : "INFO:: ", 4 : "DEBUG:: "};
+const configLevel = config['debug'] ? 4 : config['info'] ? 3 : 2;
+const conoleLog = config['console'];
 
 const fs = require('fs');
 var stream = null;
@@ -25,7 +26,7 @@ var endLog = function(){
 };
 
 var getFiles = function(dir){
-    files_ = [];
+    var files_ = [];
     var files = fs.readdirSync(dir);
     for (var i in files){
         var name = dir + '/' + files[i];
@@ -45,7 +46,7 @@ var readFile = function(fileName){
 var getXml2Js = function(file){
     var xml2js = require("xml2js");
     var xpath = require("xml2js-xpath");
-
+    var res = null;
     var xml =  this.readFile(file);
     xml2js.parseString(xml, function(err, json){
         if(err) throw err;

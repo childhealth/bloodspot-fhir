@@ -16,12 +16,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
         Promise = require('bluebird');
         for (const srcFile of srcFiles) {
             //create Out put folder name as CSV file name
-            var outFolder = `testOutput/${srcFile.split('.')[0].split('/')[2]}`;
-            // outFolder = 'testOutput/' + srcFile.split('.')[0].split('/')[2];
+            var outFolder = 'testOutput/' + srcFile.split('.')[0].split('/')[2];
             //Remove if folder already exists
             fileHandler.rmFolders(outFolder);
-            //Convert csv to xml - this is using method from implementation - debug purpose
-            // converter.convert(srcFile, outFolder)
             //Convert all CSV to XML to the output folder
             await Promise.coroutine(function *() {
                 yield cmd.run('node dist/index.js '+srcFile+" "+outFolder);
@@ -38,12 +35,10 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
 
         it('should pass XML validation against Schema - DCH-BloodSpotTestOutcome-Bundle', function(){
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 logger("Verifying CSV file \""+csvFile+"\"  with \""+source.length+"\" records ", 3);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 //Using modified schema due to differences between sample data and actual spec
                 // The schema generated of : https://fhir.nhs.uk/STU3/Examples/DCH-BloodSpotTestOutcome-Bundle-Example-1.xml
                 // filexsd = './test/xmlSchema/DCH-BloodSpotTestOutcome-Bundle-Example-1.xsd'
@@ -60,11 +55,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
         it('should updated with right \"MessageHeader\" for all generated xml messages', function(){
             logger("Verifying XML file for \"MessageHeader\" section", 3);
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 for (const file of xmlFiles) {
                     //Load generated xml
                     logger("Verifying XML file \""+file+"\" header with CSV file: "+csvFile, 4);
@@ -80,11 +73,8 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
         it('should be encoded correctly the \"Organization\" parameter in the XML message', function(){
             logger("Verifying XML file for \"Organization\" section", 3);
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
-                //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 0;
                     for (let csvRecord of source) {
                             //Load generated xml
@@ -105,11 +95,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          it('should be encoded correctly the \"HealthcareService\" parameter in the XML message', function(){
             logger("Verifying XML file for \"HealthcareService\" section", 3);
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 0;
                     for (let csvRecord of source) {
                         //Load generated xml
@@ -131,11 +119,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          it('should be encoded correctly the \"Patient\" details in the XML message', function(){
             logger("Verifying XML file for \"Patient\" section", 3);
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
@@ -172,11 +158,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          it('should be encoded correctly the \"DiagnosticReport\" in the XML message', function(){
             logger("Verifying XML file for \"DiagnosticReport\" section", 3);
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
@@ -200,11 +184,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          it('should be encoded correctly the \"Encounter\" in the XML message', function(){
             logger("Verifying XML file for \"Encounter\" section", 3);
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
@@ -225,11 +207,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          it('should be encoded correctly the \"Location\" in the XML message', function(){
             logger("Verifying XML file for \"Location\" section", 3);
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
@@ -247,11 +227,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          it('should be encoded correctly the Procedure \"Phenylketonuria screening\" in the XML message', function(){
             logger("Verifying XML file for \"Procedures\"", 3);
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
@@ -280,11 +258,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
 
          it('should be encoded correctly the Procedure \"Sickle cell disease screening Procedure\" in the XML message', function(){
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 1;
                     for (let csvRecord of source) {
                        //Load generated xml
@@ -314,11 +290,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
 
          it('should be encoded correctly the Procedure \"Cystic fibrosis screening Procedure\" in the XML message', function(){
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
@@ -348,11 +322,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
 
          it('should be encoded correctly the Procedure \"Congenital hypothyroidism screening Procedure\" in the XML message', function(){
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
@@ -382,11 +354,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
 
          it('should be encoded correctly the Procedure \"Medium-chain acyl-coenzyme A dehydrogenase deficiency screening Procedure\" in the XML message', function(){
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 1;
                 for (let csvRecord of source) {
                     //Load generated xml
@@ -416,11 +386,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
 
          it('should be encoded correctly the Procedure \"Blood spot homocystinuria screening Procedure\" in the XML message', function(){
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
@@ -450,11 +418,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
 
          it('should be encoded correctly the Procedure \"Blood spot maple syrup urine disease screening Procedure\" in the XML message', function(){
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
@@ -484,11 +450,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
 
          it('should be encoded correctly the Procedure \"Blood spot glutaric aciduria type 1 screening Procedure\" in the XML message', function(){
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 1;
                     for (let csvRecord of source) {
                          //Load generated xml
@@ -518,11 +482,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
 
          it('should be encoded correctly the Procedure \"Blood spot isovaleric acidaemia screening Procedure\" in the XML message', function(){
             for (const csvFile of srcFiles) {
-                //Assign Out put folder name from CSV file name
-                var outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2];
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
-                var xmlFiles = fileHandler.getFiles(outFolder);
+                var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml

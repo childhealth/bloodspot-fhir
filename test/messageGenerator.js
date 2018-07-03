@@ -1,7 +1,7 @@
+"use strict";
 const logger =  require('./fileHandling').logger;
 // This funfction converts the source file to XML message files in destination folder
 var convert = function(srcFile, dstFolder){
-    Object.defineProperty(exports, "__esModule", { value: true });
     const generator_1 = require("../dist/generator/generator");
 
     const inputChannel = srcFileChannel(srcFile);
