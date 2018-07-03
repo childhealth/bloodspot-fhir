@@ -143,14 +143,14 @@ describe("Outcome", () => {
     describe("validatedStatusCode", () => {
         it("should throw an error if the value is not a number between 1 and 10.", () => {
             expect(() => {
-                const ignored = subjectWithPrivateMethods.validatedStatusCode("dog");
-            }).toThrow(new Error("Status code should be a number between 1 and 10 but was \"dog\"."));
+                const ignored = subjectWithPrivateMethods.validatedStatusCode("dog", "PKU status code");
+            }).toThrow(new Error("PKU status code should be a number between 1 and 10 but was \"dog\"."));
             expect(() => {
-                const ignored = subjectWithPrivateMethods.validatedStatusCode("0");
-            }).toThrow(new Error("Status code should be a number between 1 and 10 but was \"0\"."));
+                const ignored = subjectWithPrivateMethods.validatedStatusCode("0", "Some status code");
+            }).toThrow(new Error("Some status code should be a number between 1 and 10 but was \"0\"."));
             expect(() => {
-                const ignored = subjectWithPrivateMethods.validatedStatusCode("11");
-            }).toThrow(new Error("Status code should be a number between 1 and 10 but was \"11\"."));
+                const ignored = subjectWithPrivateMethods.validatedStatusCode("11", "Too-high status code");
+            }).toThrow(new Error("Too-high status code should be a number between 1 and 10 but was \"11\"."));
         });
 
         it("should pad a number; should return '04' when given '4'", () => {
