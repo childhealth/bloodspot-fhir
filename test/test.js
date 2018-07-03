@@ -10,6 +10,7 @@ srcFiles = fileHandler.getFiles('test/testInput')
 describe('  ***** Verifying XML FHIR messages against CSV records *****', function() {
  
     before('Converting all CSV files in to XML FHIR messages', async function () {
+        fileHandler.startLog("test-logging.txt")
         var cmd = require('node-command-line');
         Promise = require('bluebird');
         for (const srcFile of srcFiles) {
@@ -27,6 +28,10 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
         }
         logger('Completed conversion of CSV files ', 3);
         logger('============================================================== ', 3);
+    });
+
+    after("Test completed" , async function () {
+        fileHandler.endLog();
     });
 
         it('should pass XML validation against Schema - DCH-BloodSpotTestOutcome-Bundle', function(){
@@ -51,6 +56,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          });
         
         it('should updated with right \"MessageHeader\" for all generated xml messages', function(){
+            logger("Verifying XML file for \"MessageHeader\" section", 3);
             for (const csvFile of srcFiles) {
                 //Assign Out put folder name from CSV file name
                 outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2]
@@ -70,6 +76,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
         });
         
         it('should be encoded correctly the \"Organization\" parameter in the XML message', function(){
+            logger("Verifying XML file for \"Organization\" section", 3);
             for (const csvFile of srcFiles) {
                 //Assign Out put folder name from CSV file name
                 outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2]
@@ -97,6 +104,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          });
 
          it('should be encoded correctly the \"HealthcareService\" parameter in the XML message', function(){
+            logger("Verifying XML file for \"HealthcareService\" section", 3);
             for (const csvFile of srcFiles) {
                 //Assign Out put folder name from CSV file name
                 outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2]
@@ -122,6 +130,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          });
 
          it('should be encoded correctly the \"Patient\" details in the XML message', function(){
+            logger("Verifying XML file for \"Patient\" section", 3);
             for (const csvFile of srcFiles) {
                 //Assign Out put folder name from CSV file name
                 outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2]
@@ -132,7 +141,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                     for (let csvRecord of source) {
                         //Load generated xml
                         xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`)})[0];
-                        logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
+                        logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile)
                         //Verifying Patient's name details
                         expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/name/use')).toEqual('official')
@@ -162,6 +171,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          });
 
          it('should be encoded correctly the \"DiagnosticReport\" in the XML message', function(){
+            logger("Verifying XML file for \"DiagnosticReport\" section", 3);
             for (const csvFile of srcFiles) {
                 //Assign Out put folder name from CSV file name
                 outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2]
@@ -172,7 +182,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                     for (let csvRecord of source) {
                         //Load generated xml
                         xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`)})[0];
-                        logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
+                        logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile)
                     
                          //Verifying DiagnosticReport 
@@ -189,6 +199,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          });
 
          it('should be encoded correctly the \"Encounter\" in the XML message', function(){
+            logger("Verifying XML file for \"Encounter\" section", 3);
             for (const csvFile of srcFiles) {
                 //Assign Out put folder name from CSV file name
                 outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2]
@@ -199,7 +210,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                     for (let csvRecord of source) {
                         //Load generated xml
                         xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`)})[0];
-                        logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
+                        logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile)
                     
                          //Verifying DiagnosticReport 
@@ -213,6 +224,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          });
 
          it('should be encoded correctly the \"Location\" in the XML message', function(){
+            logger("Verifying XML file for \"Location\" section", 3);
             for (const csvFile of srcFiles) {
                 //Assign Out put folder name from CSV file name
                 outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2]
@@ -223,7 +235,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                     for (let csvRecord of source) {
                         //Load generated xml
                         xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`)})[0];
-                        logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
+                        logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile)
                     
                          //Verifying Location 
@@ -234,6 +246,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          });
 
          it('should be encoded correctly the Procedure \"Phenylketonuria screening\" in the XML message', function(){
+            logger("Verifying XML file for Procedures", 3);
             for (const csvFile of srcFiles) {
                 //Assign Out put folder name from CSV file name
                 outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2]
@@ -244,7 +257,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                     for (let csvRecord of source) {
                         //Load generated xml
                         xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`)})[0];
-                        logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
+                        logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile)
                 
                         procedure = checker.getSubElementProcedure(xmlFormat, `314081000`)
@@ -277,7 +290,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                     for (let csvRecord of source) {
                        //Load generated xml
                        xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`)})[0];
-                       logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
+                       logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                        var xmlFormat = fileHandler.getXml2Js(xmlFile)
                 
                         procedure = checker.getSubElementProcedure(xmlFormat, `314090007`)
@@ -311,7 +324,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                     for (let csvRecord of source) {
                         //Load generated xml
                         xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`)})[0];
-                        logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
+                        logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile)
                 
                         procedure = checker.getSubElementProcedure(xmlFormat, `314080004`)
@@ -345,7 +358,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                     for (let csvRecord of source) {
                         //Load generated xml
                         xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`)})[0];
-                        logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
+                        logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile)
                 
                         procedure = checker.getSubElementProcedure(xmlFormat, `400984005`)
@@ -379,7 +392,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                 for (let csvRecord of source) {
                     //Load generated xml
                     xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`)})[0];
-                    logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
+                    logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                     var xmlFormat = fileHandler.getXml2Js(xmlFile)
             
                     procedure = checker.getSubElementProcedure(xmlFormat, `428056008`)
@@ -413,7 +426,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                     for (let csvRecord of source) {
                         //Load generated xml
                         xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`)})[0];
-                        logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
+                        logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile)
                 
                         procedure = checker.getSubElementProcedure(xmlFormat, `940201000000107`)
@@ -447,7 +460,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                     for (let csvRecord of source) {
                         //Load generated xml
                         xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`)})[0];
-                        logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
+                        logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile)
                 
                         procedure = checker.getSubElementProcedure(xmlFormat, `940221000000103`)
@@ -481,7 +494,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                     for (let csvRecord of source) {
                          //Load generated xml
                          xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`)})[0];
-                         logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
+                         logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                          var xmlFormat = fileHandler.getXml2Js(xmlFile)
                 
                         procedure = checker.getSubElementProcedure(xmlFormat, `940131000000109`)
@@ -515,7 +528,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                     for (let csvRecord of source) {
                         //Load generated xml
                         xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`)})[0];
-                        logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
+                        logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile)
                 
                         procedure = checker.getSubElementProcedure(xmlFormat, `940151000000102`)

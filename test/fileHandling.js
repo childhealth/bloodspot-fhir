@@ -1,4 +1,29 @@
+const config = require('./test-config.json')
+level = {1 : "ERRORS:: ", 2 : "WARN:: ", 3 : "INFO:: ", 4 : "DEBUG:: "}
+configLevel = config['debug'] ? 4 : config['info'] ? 3 : 2
+conoleLog = config['console']
+
 const fs = require('fs');
+var stream = null;
+var startLog = function(fileName){
+    stream = fs.createWriteStream("./testOutput/"+fileName, { flags: 'a' });
+    stream.once('open', function(fd) {
+        stream.write("=================================================================="+'\n');
+        stream.write("Logginng started for test :"+new Date().toUTCString()+'\n');
+    });
+}
+
+var writeLog = function(message){
+    if (stream === null) throw "Log file not opened - Cannot write log to file"
+    stream.write(message+'\n');
+}
+
+var endLog = function(){
+    stream.write("Test completed "+new Date().toUTCString()+'\n');
+    stream.write("=================================================================="+'\n');
+    stream.end();
+}
+
 var getFiles = function(dir){
     files_ = [];
     var files = fs.readdirSync(dir);
@@ -51,11 +76,13 @@ var rmFolders = function(path){
         fs.rmdirSync(path);
       }
 };
-
+// logger for all test activities
 var logger = function(message, loglevel){
-    level = {1 : "ERRORS:: ", 2 : "WARN:: ", 3 : "INFO:: ", 4 : "DEBUG:: "}
-    if (loglevel < 4){
+    if (loglevel <= configLevel ){
+        if (conoleLog){
         console.log(level[loglevel]+ message)
+    }
+    writeLog(level[loglevel]+ message);
     }
 };
 
@@ -65,5 +92,7 @@ module.exports = {
     readFile,
     fileExists,
     rmFolders,
-    logger
+    logger,
+    startLog,
+    endLog
 };

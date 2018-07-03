@@ -1,0 +1,6 @@
+{
+"description" : "Config file for Testing",
+"console"   : false,
+"debug" : false,
+"info"  : true
+}
