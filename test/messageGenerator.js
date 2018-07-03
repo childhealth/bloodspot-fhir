@@ -1,3 +1,4 @@
+const logger =  require('./fileHandling').logger;
 // This funfction converts the source file to XML message files in destination folder
 var convert = function(srcFile, dstFolder){
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -24,8 +25,8 @@ var runScript = function (scriptArgs) {
     // keep track of whether callback has been invoked to prevent multiple invocations
     var invoked = false;
     var process = childProcess.fork('dist/index.js', scriptArgs);
-    console.log("Stadout : "+process.stdout);
-    console.log("Std Err : "+process.stderr);
+    logger("Stadout : "+process.stdout, 3);
+    logger("Std Err : "+process.stderr, 1);
 
     // listen for errors as they may prevent the exit event from firing
     process.on('error', function (err) {

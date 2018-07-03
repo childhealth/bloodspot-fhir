@@ -80,11 +80,19 @@ var rmFolders = function(path){
 var logger = function(message, loglevel){
     if (loglevel <= configLevel ){
         if (conoleLog){
-        console.log(level[loglevel]+ message)
+        console.log(colors[loglevel],level[loglevel]+ message, colors.Reset)
     }
     writeLog(level[loglevel]+ message);
     }
 };
+
+const colors = {
+    1: "\x1b[31m",
+    2: "\x1b[33m",
+    3: "\x1b[32m",
+    4: "\x1b[36m",
+    Reset: "\x1b[0m",
+   };
 
 module.exports = {
     getFiles,

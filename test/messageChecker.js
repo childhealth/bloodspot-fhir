@@ -1,16 +1,17 @@
 var expect = require('expect');
 var fileHandler = require('./fileHandling');
+const logger =  require('./fileHandling').logger;
 var checkMessageElementsText = function(srcFormat, elementName, dstXmlFormat, xpathParam) {
     var xpathValue = getXpathElementText(dstXmlFormat, xpathParam)
-    console.log("CSV name "+elementName+" and value = "+srcFormat[elementName])
-    console.log("XML name "+xpathParam+" and value = "+xpathValue)
+    logger("CSV name "+elementName+" and value = "+srcFormat[elementName], 4)
+    logger("XML name "+xpathParam+" and value = "+xpathValue, 4)
     expect(srcFormat[elementName]).toEqual(xpathValue)
 }
 
 var checkMessageElementsValue = function(srcFormat, elementName, dstXmlFormat, xpathParam) {
     var xpathValue = getXpathElementValue(dstXmlFormat, xpathParam)
-    console.log("CSV name "+elementName+" and value = "+srcFormat[elementName])
-    console.log("XML name "+xpathParam+" and value = "+xpathValue)
+    logger("CSV name "+elementName+" and value = "+srcFormat[elementName], 4)
+    logger("XML name "+xpathParam+" and value = "+xpathValue, 4)
     expect(xpathValue).toEqual(srcFormat[elementName])
 }
 
@@ -21,8 +22,8 @@ var getXpathElementValue = function(xmlFormat, xpathParam, instance) {
     try{
         var result = xpath.find(xmlFormat, xpathParam)[arrayInstance].$.value
     }catch (e) {
-        console.log("Exception when finding xpath element value: "+xpathParam)
-        console.log("Error: "+e)
+        logger("Exception when finding xpath element value: "+xpathParam, 2)
+        logger("Error: "+e, 1)
     };
     return result
 }
@@ -33,8 +34,8 @@ var getXpathElementText = function(xmlFormat, xpathParam) {
     try{
         var result = xpath.find(xmlFormat, xpathParam)
     }catch (e) {
-        console.log("Exception when finding xpath element text: "+xpathParam)
-        console.log("Error: "+e)
+        logger("Exception when finding xpath element text: "+xpathParam, 2)
+        logger("Error: "+e, 1)
     };
     return result[0]
 }
@@ -55,8 +56,8 @@ var getSubElementProcedure = function(xmlFormat, procedureCode) {
             }
         }
     }catch (e) {
-        console.log("Exception inf xpath find")
-        console.log("Exception: "+e)
+        logger("Exception in xpath find", 2)
+        logger("Exception: "+e, 1)
     };
 }
 
@@ -91,7 +92,7 @@ var xmlValidate = function(xmlFilePath, xsdFilePath) {
     var xmlDoc = xsdparser.parseXmlString(fileHandler.readFile(xmlFilePath))
     xmlValidationStatus = xmlDoc.validate(xsdDoc);
     if (xmlDoc.validationErrors.length > 0){
-        console.log(xmlDoc.validationErrors)
+        logger(xmlDoc.validationErrors, 1)
         return false
     }
     return xmlValidationStatus
