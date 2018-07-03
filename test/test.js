@@ -246,7 +246,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
          });
 
          it('should be encoded correctly the Procedure \"Phenylketonuria screening\" in the XML message', function(){
-            logger("Verifying XML file for Procedures", 3);
+            logger("Verifying XML file for \"Procedures\"", 3);
             for (const csvFile of srcFiles) {
                 //Assign Out put folder name from CSV file name
                 outFolder = 'testOutput/'+csvFile.split('.')[0].split('/')[2]
