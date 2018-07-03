@@ -25,7 +25,7 @@ var getXpathElementValue = function(xmlFormat, xpathParam, instance) {
     }catch (e) {
         logger("Exception when finding xpath element value: "+xpathParam, 2);
         logger("Error: "+e, 1);
-    };
+    }
     return result;
 };
 
@@ -37,7 +37,7 @@ var getXpathElementText = function(xmlFormat, xpathParam) {
     }catch (e) {
         logger("Exception when finding xpath element text: "+xpathParam, 2);
         logger("Error: "+e, 1);
-    };
+    }
     return result[0];
 };
 
@@ -59,7 +59,7 @@ var getSubElementProcedure = function(xmlFormat, procedureCode) {
     }catch (e) {
         logger("Exception in xpath find", 2);
         logger("Exception: "+e, 1);
-    };
+    }
 };
 
 /*

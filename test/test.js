@@ -3,7 +3,6 @@
 const expect = require('expect');
 const fileHandler = require('./fileHandling');
 const checker = require('./messageChecker');
-const converter = require('./messageGenerator');
 const logger =  require('./fileHandling').logger;
 //Read Source CSV files from Test Input folder
 const srcFiles = fileHandler.getFiles('test/testInput');
@@ -13,7 +12,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
     before('Converting all CSV files in to XML FHIR messages', async function () {
         fileHandler.startLog("test-logging.txt");
         var cmd = require('node-command-line');
-        Promise = require('bluebird');
+        var Promise = require('bluebird');
         for (const srcFile of srcFiles) {
             //create Out put folder name as CSV file name
             var outFolder = 'testOutput/' + srcFile.split('.')[0].split('/')[2];
@@ -52,11 +51,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
 
          });
         
-        it('should updated with right \"MessageHeader\" for all generated xml messages', function(){
+        it('should updated with right "MessageHeader" for all generated xml messages', function(){
             logger("Verifying XML file for \"MessageHeader\" section", 3);
             for (const csvFile of srcFiles) {
-                //Convert source file to JSON
-                var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
                 for (const file of xmlFiles) {
                     //Load generated xml
@@ -70,39 +67,40 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
             }
         });
         
-        it('should be encoded correctly the \"Organization\" parameter in the XML message', function(){
+        it('should be encoded correctly the "Organization" parameter in the XML message', function(){
             logger("Verifying XML file for \"Organization\" section", 3);
             for (const csvFile of srcFiles) {
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 0;
+
                     for (let csvRecord of source) {
                             //Load generated xml
-                        logger("Verifying record "+(i+1)+" from CSV: "+csvFile, 4);
-                        var xmlFormat = fileHandler.getXml2Js(xmlFiles[i]);
+                        logger("Verifying record "+ (source.indexOf(csvRecord)+1)+" from CSV: "+csvFile, 4);
+                        var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${ source.indexOf(csvRecord)+1}.xml`);})[0];
+                        // var xmlFile = xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)}.xml`);})[0];
+                        var xmlFormat = fileHandler.getXml2Js(xmlFile);
                         expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Organization/identifier/value')).toEqual('LAB01');
                         expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Organization/name')).toEqual('Laboratory 01');
                         expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Organization/address/line')).toEqual('First line of the address');
                         expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Organization/address/city')).toEqual('City');
                         expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Organization/address/district')).toEqual('District');
                         expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Organization/address/postalCode')).toEqual('Post Code');
-                        i = i+1;
                     }
 
             }
          });
 
-         it('should be encoded correctly the \"HealthcareService\" parameter in the XML message', function(){
+         it('should be encoded correctly the "HealthcareService" parameter in the XML message', function(){
             logger("Verifying XML file for \"HealthcareService\" section", 3);
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 0;
                     for (let csvRecord of source) {
                         //Load generated xml
-                        logger("Verifying XML file \""+xmlFiles[i]+"\" with CSV file: "+csvFile, 4);
-                        var xmlFormat = fileHandler.getXml2Js(xmlFiles[i]);
+                        logger("Verifying record "+ (source.indexOf(csvRecord)+1) +" from CSV: "+csvFile, 4);
+                        var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${ source.indexOf(csvRecord)+1}.xml`);})[0];
+                        var xmlFormat = fileHandler.getXml2Js(xmlFile);
                         expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/type/coding/code')).toEqual('C09');
                         expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/type/coding/display')).toEqual('Screener (in a National Screening Programme)');
                         expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/providedBy/display')).toEqual('Laboratory 01');
@@ -111,21 +109,19 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                         expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/specialty/coding/display')).toEqual('MIDWIFE EPISODE');
                         expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/telecom/system')).toEqual('phone');
                         expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//HealthcareService/telecom/value')).toEqual('0113 123 4567');
-                        i = i+1;
                     }
             }
          });
 
-         it('should be encoded correctly the \"Patient\" details in the XML message', function(){
+         it('should be encoded correctly the "Patient" details in the XML message', function(){
             logger("Verifying XML file for \"Patient\" section", 3);
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
-                        var xmlFile= xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`);})[0];
+                        var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${ source.indexOf(csvRecord)+1}.xml`);})[0];
                         logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile);
                         //Verifying Patient's name details
@@ -150,21 +146,19 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                           //Verifying Patient's ID
                           var nhsNumber = csvRecord['nhs_no'].replace(/\s/g, "");
                           expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Patient/identifier/value')).toEqual(nhsNumber);
-                        i = i+1;
                     }
             }
          });
 
-         it('should be encoded correctly the \"DiagnosticReport\" in the XML message', function(){
+         it('should be encoded correctly the "DiagnosticReport" in the XML message', function(){
             logger("Verifying XML file for \"DiagnosticReport\" section", 3);
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
-                        var xmlFile = xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`);})[0];
+                        var xmlFile = xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
                         logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile);
                     
@@ -175,22 +169,20 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                          var regex = /^\d\d\d\d-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[0-1])T\d\d:\d\d:\d\d\.\d\d\dZ$/;
                         var date_ = checker.getXpathElementValue(xmlFormat,'//Bundle/entry//DiagnosticReport/issued');
                         expect(date_).toMatch(RegExp(regex));
-                        i = i+1;
                     }
             }
      
          });
 
-         it('should be encoded correctly the \"Encounter\" in the XML message', function(){
+         it('should be encoded correctly the "Encounter" in the XML message', function(){
             logger("Verifying XML file for \"Encounter\" section", 3);
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
-                        var xmlFile= xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`);})[0];
+                        var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
                         logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile);
                     
@@ -199,41 +191,37 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                          expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Encounter/subject/display')).toEqual(`${csvRecord['Surname']}, ${csvRecord['First_Name']}`);
                          var date_of_collection = csvRecord['Date_Of_Collection'].split("/").reverse().join("-");
                          expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Encounter/period/start')).toEqual(date_of_collection);
-                        i = i+1;
                     }
             }
          });
 
-         it('should be encoded correctly the \"Location\" in the XML message', function(){
+         it('should be encoded correctly the "Location" in the XML message', function(){
             logger("Verifying XML file for \"Location\" section", 3);
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
-                        var xmlFile= xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`);})[0];
+                        var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
                         logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile);
                     
                          //Verifying Location 
                          expect(checker.getXpathElementValue(xmlFormat,'//Bundle/entry//Location/identifier/value')).toEqual('LAB01');
-                        i = i+1;
                     }
             }
          });
 
-         it('should be encoded correctly the Procedure \"Phenylketonuria screening\" in the XML message', function(){
+         it('should be encoded correctly the Procedure "Phenylketonuria screening" in the XML message', function(){
             logger("Verifying XML file for \"Procedures\"", 3);
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
-                        var xmlFile= xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`);})[0];
+                        var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
                         logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile);
                 
@@ -248,23 +236,21 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                          //XML code length should 2 or 4
                          expect([2, 4]).toContain(xmlPKUCode.length);
                          //Prefix csv code with 0 if code length is 1 or 3 
-                         var csvPKUCode = (csvPKUCode.length === 1 || csvPKUCode.length === 3) ? '0'+csvPKUCode : csvPKUCode;
+                         csvPKUCode = (csvPKUCode.length === 1 || csvPKUCode.length === 3) ? '0'+csvPKUCode : csvPKUCode;
                          expect(xmlPKUCode).toEqual(csvPKUCode);
                          expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['PKU_Status']);
-                        i = i+1;
                     }
             }
          });
 
-         it('should be encoded correctly the Procedure \"Sickle cell disease screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure "Sickle cell disease screening Procedure" in the XML message', function(){
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 1;
                     for (let csvRecord of source) {
                        //Load generated xml
-                       var xmlFile= xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`);})[0];
+                       var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
                        logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                        var xmlFormat = fileHandler.getXml2Js(xmlFile);
                 
@@ -279,24 +265,21 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                          //XML code length should 2 or 4
                          expect([2, 4]).toContain(xmlSickeCellCode.length);
                         //Prefix csv code with 0 if code length is 1 or 3 
-                         var csvSickeCellCode = (csvSickeCellCode.length === 1 || csvSickeCellCode.length === 3) ? '0'+csvSickeCellCode : csvSickeCellCode;
+                         csvSickeCellCode = (csvSickeCellCode.length === 1 || csvSickeCellCode.length === 3) ? '0'+csvSickeCellCode : csvSickeCellCode;
                          expect(xmlSickeCellCode).toEqual(csvSickeCellCode);
                          expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['Sickle_Status']);
-                        
-                        i = i+1;
                     }
             }
          });
 
-         it('should be encoded correctly the Procedure \"Cystic fibrosis screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure "Cystic fibrosis screening Procedure" in the XML message', function(){
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
-                        var xmlFile= xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`);})[0];
+                        var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
                         logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile);
                 
@@ -314,21 +297,18 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                          csvCFCode = (csvCFCode.length === 1 || csvCFCode.length === 3) ? '0'+csvCFCode : csvCFCode;
                           expect(xmlCFCode).toEqual(csvCFCode);
                          expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['CF_Status']);
-                        
-                        i = i+1;
                     }
             }
          });
 
-         it('should be encoded correctly the Procedure \"Congenital hypothyroidism screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure "Congenital hypothyroidism screening Procedure" in the XML message', function(){
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
-                        var xmlFile= xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`);})[0];
+                        var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
                         logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile);
                 
@@ -343,24 +323,21 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                           //XML code length should 2 or 4
                           expect([2, 4]).toContain(xmlCTHCode.length);
                          //Prefix csv code with 0 if code length is 1 or 3 
-                         var csvCTHCode = (csvCTHCode.length === 1 || csvCTHCode.length === 3) ? '0'+csvCTHCode : csvCTHCode;
+                         csvCTHCode = (csvCTHCode.length === 1 || csvCTHCode.length === 3) ? '0'+csvCTHCode : csvCTHCode;
                           expect(xmlCTHCode).toEqual(csvCTHCode);
                          expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['CHT_Status']);
-                        
-                        i = i+1;
                     }
             }
          });
 
-         it('should be encoded correctly the Procedure \"Medium-chain acyl-coenzyme A dehydrogenase deficiency screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure "Medium-chain acyl-coenzyme A dehydrogenase deficiency screening Procedure" in the XML message', function(){
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 1;
                 for (let csvRecord of source) {
                     //Load generated xml
-                    var xmlFile= xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`);})[0];
+                    var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
                     logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                     var xmlFormat = fileHandler.getXml2Js(xmlFile);
             
@@ -375,24 +352,21 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                       //XML code length should 2 or 4
                       expect([2, 4]).toContain(xmlMCADDCode.length);
                      //Prefix csv code with 0 if code length is 1 or 3 
-                     var csvMCADDCode = (csvMCADDCode.length === 1 || csvMCADDCode.length === 3) ? '0'+csvMCADDCode : csvMCADDCode;
+                      csvMCADDCode = (csvMCADDCode.length === 1 || csvMCADDCode.length === 3) ? '0'+csvMCADDCode : csvMCADDCode;
                       expect(xmlMCADDCode).toEqual(csvMCADDCode);
                      expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['MCADD_Status']);
-                    
-                    i = i+1;
                 }
             }
          });
 
-         it('should be encoded correctly the Procedure \"Blood spot homocystinuria screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure "Blood spot homocystinuria screening Procedure" in the XML message', function(){
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
-                        var xmlFile= xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`);})[0];
+                        var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
                         logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile);
                 
@@ -407,24 +381,21 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                           //XML code length should 2 or 4
                           expect([2, 4]).toContain(xmlHCUCode.length);
                          //Prefix csv code with 0 if code length is 1 or 3 
-                         var csvHCUCode = (csvHCUCode.length === 1 || csvHCUCode.length === 3) ? '0'+csvHCUCode : csvHCUCode;
+                          csvHCUCode = (csvHCUCode.length === 1 || csvHCUCode.length === 3) ? '0'+csvHCUCode : csvHCUCode;
                           expect(xmlHCUCode).toEqual(csvHCUCode);
                          expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['HCU_Status']);
-                        
-                        i = i+1;
                     }
             }
          });
 
-         it('should be encoded correctly the Procedure \"Blood spot maple syrup urine disease screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure "Blood spot maple syrup urine disease screening Procedure" in the XML message', function(){
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
-                        var xmlFile= xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`);})[0];
+                        var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
                         logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile);
                 
@@ -439,24 +410,21 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                           //XML code length should 2 or 4
                           expect([2, 4]).toContain(xmlMSUDCode.length);
                          //Prefix csv code with 0 if code length is 1 or 3 
-                         var csvMSUDCode = (csvMSUDCode.length === 1 || csvMSUDCode.length === 3) ? '0'+csvMSUDCode : csvMSUDCode;
+                          csvMSUDCode = (csvMSUDCode.length === 1 || csvMSUDCode.length === 3) ? '0'+csvMSUDCode : csvMSUDCode;
                           expect(xmlMSUDCode).toEqual(csvMSUDCode);
                          expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['MSUD_Status']);
-                        
-                        i = i+1;
                     }
             }
          });
 
-         it('should be encoded correctly the Procedure \"Blood spot glutaric aciduria type 1 screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure "Blood spot glutaric aciduria type 1 screening Procedure" in the XML message', function(){
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 1;
                     for (let csvRecord of source) {
                          //Load generated xml
-                         var xmlFile= xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`);})[0];
+                         var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
                          logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                          var xmlFormat = fileHandler.getXml2Js(xmlFile);
                 
@@ -471,24 +439,21 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                           //XML code length should 2 or 4
                           expect([2, 4]).toContain(xmlGA1Code.length);
                          //Prefix csv code with 0 if code length is 1 or 3 
-                         var csvGA1Code = (csvGA1Code.length === 1 || csvGA1Code.length === 3) ? '0'+csvGA1Code : csvGA1Code;
+                          csvGA1Code = (csvGA1Code.length === 1 || csvGA1Code.length === 3) ? '0'+csvGA1Code : csvGA1Code;
                           expect(xmlGA1Code).toEqual(csvGA1Code);
                          expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['GA1_Status']);
-                        
-                        i = i+1;
                     }
             }
          });
 
-         it('should be encoded correctly the Procedure \"Blood spot isovaleric acidaemia screening Procedure\" in the XML message', function(){
+         it('should be encoded correctly the Procedure "Blood spot isovaleric acidaemia screening Procedure" in the XML message', function(){
             for (const csvFile of srcFiles) {
                 //Convert source file to JSON
                 var source = checker.csvToJson(csvFile);
                 var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
-                var i = 1;
                     for (let csvRecord of source) {
                         //Load generated xml
-                        var xmlFile= xmlFiles.filter((value, index, array) => {return value.includes(`message-${i}.xml`);})[0];
+                        var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
                         logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
                         var xmlFormat = fileHandler.getXml2Js(xmlFile);
                 
@@ -503,11 +468,9 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
                           //XML code length should 2 or 4
                           expect([2, 4]).toContain(xmlIVACode.length);
                          //Prefix csv code with 0 if code length is 1 or 3 
-                         var csvIVACode = (csvIVACode.length === 1 || csvIVACode.length === 3) ? '0'+csvIVACode : csvIVACode;
+                          csvIVACode = (csvIVACode.length === 1 || csvIVACode.length === 3) ? '0'+csvIVACode : csvIVACode;
                           expect(xmlIVACode).toEqual(csvIVACode);
                          expect(checker.getXpathElementValue(procedure,'//Procedure/outcome/coding/display')).toEqual(csvRecord['IVA_Status'].replace(/\r|\n/g, ''));
-                        
-                        i = i+1;
                     }
             }
          });

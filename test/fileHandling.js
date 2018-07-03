@@ -8,7 +8,7 @@ const fs = require('fs');
 var stream = null;
 var startLog = function(fileName){
     stream = fs.createWriteStream("./testOutput/"+fileName, { flags: 'a' });
-    stream.once('open', function(fd) {
+    stream.once('open', function() {
         stream.write("=================================================================="+'\n');
         stream.write("Logginng started for test :"+new Date().toUTCString()+'\n');
     });
@@ -45,9 +45,8 @@ var readFile = function(fileName){
 
 var getXml2Js = function(file){
     var xml2js = require("xml2js");
-    var xpath = require("xml2js-xpath");
-    var res = null;
     var xml =  this.readFile(file);
+    var res = null;
     xml2js.parseString(xml, function(err, json){
         if(err) throw err;
         res = json;
@@ -66,10 +65,10 @@ var fileExists = function(path){
 
 var rmFolders = function(path){
     if( fs.existsSync(path) ) {
-        fs.readdirSync(path).forEach(function(file,index){
+        fs.readdirSync(path).forEach(function(file){
           var curPath = path + "/" + file;
           if(fs.lstatSync(curPath).isDirectory()) { // recurse
-            deleteFolderRecursive(curPath);
+            rmFolders(curPath);
           } else { // delete file
             fs.unlinkSync(curPath);
           }
