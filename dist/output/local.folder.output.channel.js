@@ -9,15 +9,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+const logger_service_1 = require("../services/logger.service");
 const output_channel_1 = require("./output.channel");
 class LocalFolderOutputChannel extends output_channel_1.OutputChannel {
-    constructor(localFolderUrl, logger = console, fileSystem = fs) {
+    constructor(localFolderUrl, logger = new logger_service_1.LoggerService(), fileSystem = fs) {
         super();
         this.localFolderUrl = localFolderUrl;
         this.logger = logger;
         this.fileSystem = fileSystem;
         this.writeMessageCount = 0;
-        logger.log("Writing to local output folder \"" + localFolderUrl + "\"...");
+        this.logger.info("Writing to local output folder \"" + localFolderUrl + "\"...");
         this.guaranteeFolder(localFolderUrl);
     }
     write(message) {
@@ -28,7 +29,9 @@ class LocalFolderOutputChannel extends output_channel_1.OutputChannel {
             this.fileSystem.writeFileSync(filename, messageString);
         }
         catch (e) {
-            throw new Error("Cannot write output file \"" + filename + "\".");
+            const errorMessage = "Cannot write output file \"" + filename + "\".";
+            this.logger.error(errorMessage);
+            throw new Error(errorMessage);
         }
         this.writeMessageCount++;
     }
@@ -38,7 +41,9 @@ class LocalFolderOutputChannel extends output_channel_1.OutputChannel {
                 fs.mkdirSync(folderUrl);
             }
             catch (e) {
-                throw new Error("Cannot create output folder \"" + folderUrl + "\".");
+                const message = "Cannot create output folder \"" + folderUrl + "\".";
+                this.logger.error(message);
+                throw new Error(message);
             }
         }
     }

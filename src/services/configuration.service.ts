@@ -4,6 +4,7 @@ import { IConfigurationService } from "./i.configuration.service";
 export class ConfigurationService implements IConfigurationService {
     public readonly laboratory: any;
     public readonly healthcareService: any;
+    public readonly logging: any;
 
     private config: any;
 

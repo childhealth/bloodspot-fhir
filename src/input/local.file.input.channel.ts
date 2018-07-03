@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as os from "os";
 
-import { Outcome } from "../model/outcome";
+import { LoggerService } from "../services/logger.service";
 import { CSVOutcomeMapper } from "./csv.outcome.mapper";
 import { InputChannel } from "./input.channel";
 
@@ -9,12 +9,12 @@ export class LocalFileInputChannel extends InputChannel {
 
     constructor(
         private localCSVFileUrl: string,
-        private mapper = new CSVOutcomeMapper(),
-        private logger: any = console,
+        private mapper = new CSVOutcomeMapper(new LoggerService()),
+        private logger: any = new LoggerService(),
     ) {
         super();
 
-        logger.log("Reading local input file \"" + localCSVFileUrl + "\"...");
+        this.logger.info("Reading local input file \"" + localCSVFileUrl + "\"...");
 
         const csvAsStrings = this.readCSVFile(localCSVFileUrl);
 

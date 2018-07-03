@@ -1,4 +1,5 @@
 import { Outcome } from "../model/outcome";
+import { LoggerService } from "../services/logger.service";
 
 /**
  * Knows how to build an Outcome object from the CSV file from a UK Newborn Screening Laboratory Network (UKNSLN).
@@ -6,7 +7,7 @@ import { Outcome } from "../model/outcome";
 export class CSVOutcomeMapper {
 
     constructor(
-        private logger: any = console,
+        private logger: LoggerService,
     ) {}
 
     public buildOutcomes(lines: string[], hasHeader: boolean, filename: string): Outcome[] {
@@ -23,7 +24,7 @@ export class CSVOutcomeMapper {
                 const outcome = new Outcome(each);
                 result.push(outcome);
             } catch (error) {
-                this.logger.log("Error in file \"" + filename + "\" at line " + lineNumber + ": " + error);
+                this.logger.error("Error in file \"" + filename + "\" at line " + lineNumber + ": " + error);
             }
         }
 

@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
+import { LoggerService } from "../services/logger.service";
 import { OutputChannel } from "./output.channel";
 
 export class LocalFolderOutputChannel extends OutputChannel {
@@ -8,11 +9,11 @@ export class LocalFolderOutputChannel extends OutputChannel {
 
     constructor(
         private localFolderUrl: string,
-        private logger: any = console,
+        private logger: any = new LoggerService(),
         private fileSystem = fs,
     ) {
         super();
-        logger.log("Writing to local output folder \"" + localFolderUrl + "\"...");
+        this.logger.info("Writing to local output folder \"" + localFolderUrl + "\"...");
         this.guaranteeFolder(localFolderUrl);
     }
 
@@ -25,7 +26,9 @@ export class LocalFolderOutputChannel extends OutputChannel {
         try {
             this.fileSystem.writeFileSync(filename, messageString);
         } catch (e) {
-            throw new Error("Cannot write output file \"" + filename + "\".");
+            const errorMessage = "Cannot write output file \"" + filename + "\".";
+            this.logger.error(errorMessage);
+            throw new Error(errorMessage);
         }
 
         this.writeMessageCount++;
@@ -36,7 +39,9 @@ export class LocalFolderOutputChannel extends OutputChannel {
             try {
                 fs.mkdirSync(folderUrl);
             } catch (e) {
-                throw new Error("Cannot create output folder \"" + folderUrl + "\".");
+                const message = "Cannot create output folder \"" + folderUrl + "\".";
+                this.logger.error(message);
+                throw new Error(message);
             }
         }
     }

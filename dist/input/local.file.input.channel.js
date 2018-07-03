@@ -9,15 +9,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const os = __importStar(require("os"));
+const logger_service_1 = require("../services/logger.service");
 const csv_outcome_mapper_1 = require("./csv.outcome.mapper");
 const input_channel_1 = require("./input.channel");
 class LocalFileInputChannel extends input_channel_1.InputChannel {
-    constructor(localCSVFileUrl, mapper = new csv_outcome_mapper_1.CSVOutcomeMapper(), logger = console) {
+    constructor(localCSVFileUrl, mapper = new csv_outcome_mapper_1.CSVOutcomeMapper(new logger_service_1.LoggerService()), logger = new logger_service_1.LoggerService()) {
         super();
         this.localCSVFileUrl = localCSVFileUrl;
         this.mapper = mapper;
         this.logger = logger;
-        logger.log("Reading local input file \"" + localCSVFileUrl + "\"...");
+        this.logger.info("Reading local input file \"" + localCSVFileUrl + "\"...");
         const csvAsStrings = this.readCSVFile(localCSVFileUrl);
         // Discard first line if its headings
         let hasHeaderLine = false;

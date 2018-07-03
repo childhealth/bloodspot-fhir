@@ -1,12 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const silent_console_1 = require("../testing/silent-console");
+const silent_logger_service_1 = require("../testing/silent.logger.service");
 const csv_outcome_mapper_1 = require("./csv.outcome.mapper");
 const local_file_input_channel_1 = require("./local.file.input.channel");
 describe("LocalFileInputChannel", () => {
     let subject;
     const silentConsole = new silent_console_1.SilentConsole();
-    const silentMapper = new csv_outcome_mapper_1.CSVOutcomeMapper(silentConsole);
+    const silentLogger = new silent_logger_service_1.SilentLoggerService();
+    const silentMapper = new csv_outcome_mapper_1.CSVOutcomeMapper(silentLogger);
     describe("constructor(fileUrl)", () => {
         it("should throw error if it fileUrl cannot be found or cannot be read.", () => {
             expect(() => {

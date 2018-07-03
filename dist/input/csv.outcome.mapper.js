@@ -5,7 +5,7 @@ const outcome_1 = require("../model/outcome");
  * Knows how to build an Outcome object from the CSV file from a UK Newborn Screening Laboratory Network (UKNSLN).
  */
 class CSVOutcomeMapper {
-    constructor(logger = console) {
+    constructor(logger) {
         this.logger = logger;
     }
     buildOutcomes(lines, hasHeader, filename) {
@@ -21,7 +21,7 @@ class CSVOutcomeMapper {
                 result.push(outcome);
             }
             catch (error) {
-                this.logger.log("Error in file \"" + filename + "\" at line " + lineNumber + ": " + error);
+                this.logger.error("Error in file \"" + filename + "\" at line " + lineNumber + ": " + error);
             }
         }
         return result;
