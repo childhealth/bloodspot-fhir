@@ -5,7 +5,7 @@ var convert = function(srcFile, dstFolder){
     const generator_1 = require("../dist/generator/generator");
 
     const inputChannel = srcFileChannel(srcFile);
-    const outputChannel = dstFolderChannel(dstFolder)
+    const outputChannel = dstFolderChannel(dstFolder);
     const generator = new generator_1.Generator(inputChannel, outputChannel);
     generator.execute();
 };
@@ -43,7 +43,7 @@ var runScript = function (scriptArgs) {
         throw err;
         // callback(err);
     });
-}
+};
 
 module.exports = {
     convert,

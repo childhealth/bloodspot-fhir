@@ -1,7 +1,7 @@
-const config = require('./test-config.json')
-level = {1 : "ERRORS:: ", 2 : "WARN:: ", 3 : "INFO:: ", 4 : "DEBUG:: "}
-configLevel = config['debug'] ? 4 : config['info'] ? 3 : 2
-conoleLog = config['console']
+const config = require('./test-config.json');
+level = {1 : "ERRORS:: ", 2 : "WARN:: ", 3 : "INFO:: ", 4 : "DEBUG:: "};
+configLevel = config['debug'] ? 4 : config['info'] ? 3 : 2;
+conoleLog = config['console'];
 
 const fs = require('fs');
 var stream = null;
@@ -11,18 +11,18 @@ var startLog = function(fileName){
         stream.write("=================================================================="+'\n');
         stream.write("Logginng started for test :"+new Date().toUTCString()+'\n');
     });
-}
+};
 
 var writeLog = function(message){
-    if (stream === null) throw "Log file not opened - Cannot write log to file"
+    if (stream === null) throw "Log file not opened - Cannot write log to file";
     stream.write(message+'\n');
-}
+};
 
 var endLog = function(){
     stream.write("Test completed "+new Date().toUTCString()+'\n');
     stream.write("=================================================================="+'\n');
     stream.end();
-}
+};
 
 var getFiles = function(dir){
     files_ = [];
@@ -35,12 +35,12 @@ var getFiles = function(dir){
         }
     }
     return files_;
-}
+};
 
 var readFile = function(fileName){
     var stringFile = fs.readFileSync(fileName).toString();
-    return stringFile
-}
+    return stringFile;
+};
 
 var getXml2Js = function(file){
     var xml2js = require("xml2js");
@@ -49,16 +49,16 @@ var getXml2Js = function(file){
     var xml =  this.readFile(file);
     xml2js.parseString(xml, function(err, json){
         if(err) throw err;
-        res = json
+        res = json;
     });
     return res;
-}
+};
 
 var fileExists = function(path){
     if (fs.existsSync(path)) {
-        return true
+        return true;
     }else{
-        return false
+        return false;
     }
 };
 
@@ -80,7 +80,7 @@ var rmFolders = function(path){
 var logger = function(message, loglevel){
     if (loglevel <= configLevel ){
         if (conoleLog){
-        console.log(colors[loglevel],level[loglevel]+ message, colors.Reset)
+        console.log(colors[loglevel],level[loglevel]+ message, colors.Reset);
     }
     writeLog(level[loglevel]+ message);
     }
