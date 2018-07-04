@@ -1,5 +1,6 @@
 
 "use strict";
+require('./fileHandling').startLog();
 const fileHandler = require('./fileHandling');
 const logger =  require('./fileHandling').logger;
 //Read Source CSV files from Test Input folder
@@ -8,7 +9,7 @@ const srcFiles = fileHandler.getFiles('test/testInput');
 describe('  ***** Verifying XML FHIR messages against CSV records *****', function() {
  
     before('Converting all CSV files in to XML FHIR messages', async function () {
-        fileHandler.startLog("test-logging.txt");
+        // fileHandler.startLog("test-logging.txt");
         var cmd = require('node-command-line');
         var Promise = require('bluebird');
         for (const srcFile of srcFiles) {
@@ -25,12 +26,13 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
         logger('Completed conversion of CSV files ', 3);
         logger('============================================================== ', 3);
     });
+    
+    //Selecting tests under testGroup
+    require('./testGroup/xmlTests');
+    require('./testGroup/commonSectionTests');
+    require('./testGroup/procedureTests');
 
     after("Test completed" , function () {
         fileHandler.endLog();
     });
-    require('./testGroup/xmlTests');
-    require('./testGroup/commonSectionTests');
-    require('./testGroup/procedureTests');
-   
 });

@@ -30,8 +30,8 @@ var getSourceFiles = function(){
     try{
        var files = this.getFiles(inputPath);
     }catch (e){
-        var error = "File access error - check input path: "+inputPath;
-        throw error;
+        logger("Source File access error - check input path in test-config.json: "+inputPath, 1);
+        throw "File access error";
     }
     if (files.length <= 0){
         throw "No files found in Path "+inputPath;
@@ -82,9 +82,11 @@ var rmFolders = function(path){
 // logger for all test activities
 var logger = function(message, loglevel){
     if (loglevel <= configLevel ){
-        if (conoleLog){
-        console.log(colors[loglevel],level[loglevel]+ message, colors.Reset);
-    }
+        if(loglevel <= 2){
+            console.log(colors[loglevel],level[loglevel]+ message, colors.Reset);
+        }else  if (conoleLog){
+            console.log(colors[loglevel],level[loglevel]+ message, colors.Reset);
+        }
     writeLog(level[loglevel]+ message);
     }
 };
