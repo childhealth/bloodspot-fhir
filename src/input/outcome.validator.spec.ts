@@ -60,4 +60,30 @@ describe("OutcomeValidator", () => {
         });
     });
 
+    describe("validateStatusCode", () => {
+        it("should throw an error if the value is not a number between 1 and 10.", () => {
+            expect(() => {
+                const ignored = subjectWithPrivateMethods.validateStatusCode("dog", "PKU status code");
+            }).toThrow(new Error("PKU status code should be a number between 1 and 10 but was \"dog\"."));
+            expect(() => {
+                const ignored = subjectWithPrivateMethods.validateStatusCode("0", "Some status code");
+            }).toThrow(new Error("Some status code should be a number between 1 and 10 but was \"0\"."));
+            expect(() => {
+                const ignored = subjectWithPrivateMethods.validateStatusCode("11", "Too-high status code");
+            }).toThrow(new Error("Too-high status code should be a number between 1 and 10 but was \"11\"."));
+        });
+
+        it("should pad a number; should return '04' when given '4'", () => {
+            const statusCode = "4";
+            const actual = subjectWithPrivateMethods.validateStatusCode(statusCode);
+            expect(actual).toEqual("04");
+        });
+
+        it("should return '14' when given '10'", () => {
+            const statusCode = "10";
+            const actual = subjectWithPrivateMethods.validateStatusCode(statusCode);
+            expect(actual).toEqual("10");
+        });
+    });
+
 });
