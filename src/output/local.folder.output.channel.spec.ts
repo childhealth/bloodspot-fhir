@@ -3,13 +3,13 @@ import * as os from "os";
 import * as path from "path";
 import * as tmp from "tmp";
 import { ILoggerService } from "../services/i.logger.service";
-import { SilentLoggerService } from "../testing/silent.logger.service";
+import { DummyLoggerService } from "../testing/dummy.logger.service";
 import { LocalFolderOutputChannel } from "./local.folder.output.channel";
 
 describe("LocalFolderOutputChannel", () => {
     let subject: LocalFolderOutputChannel;
 
-    const logger: ILoggerService = new SilentLoggerService();
+    const logger: ILoggerService = new DummyLoggerService();
 
     it("constructor(folderUrl) should create a folder if folder doesnt already exist", () => {
         const folderUrl = path.join(tmp.tmpNameSync());

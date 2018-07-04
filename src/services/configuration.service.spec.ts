@@ -4,15 +4,17 @@ import { ConfigurationService } from "./configuration.service";
 describe("ConfigurationService", () => {
     let subject: ConfigurationService;
 
+    const theConsole = new SilentConsole();
+
     beforeEach(() => {
-        subject = new ConfigurationService("./src/testing/good-config.json", new SilentConsole());
+        subject = new ConfigurationService("./src/testing/good-config.json", theConsole);
     });
 
     describe("constructor", () => {
         it("should error when it cannot read a config from a url", () => {
             expect(() => {
                 const badConfigUrl = "a LoAd Of rUbbIsH!";
-                const badService = new ConfigurationService(badConfigUrl, new SilentConsole());
+                const badService = new ConfigurationService(badConfigUrl, theConsole);
             }).toThrow(
                 new Error("Cannot read config file 'a LoAd Of rUbbIsH!'."));
         });

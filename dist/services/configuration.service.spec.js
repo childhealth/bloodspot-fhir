@@ -4,14 +4,15 @@ const silent_console_1 = require("../testing/silent-console");
 const configuration_service_1 = require("./configuration.service");
 describe("ConfigurationService", () => {
     let subject;
+    const theConsole = new silent_console_1.SilentConsole();
     beforeEach(() => {
-        subject = new configuration_service_1.ConfigurationService("./src/testing/good-config.json", new silent_console_1.SilentConsole());
+        subject = new configuration_service_1.ConfigurationService("./src/testing/good-config.json", theConsole);
     });
     describe("constructor", () => {
         it("should error when it cannot read a config from a url", () => {
             expect(() => {
                 const badConfigUrl = "a LoAd Of rUbbIsH!";
-                const badService = new configuration_service_1.ConfigurationService(badConfigUrl, new silent_console_1.SilentConsole());
+                const badService = new configuration_service_1.ConfigurationService(badConfigUrl, theConsole);
             }).toThrow(new Error("Cannot read config file 'a LoAd Of rUbbIsH!'."));
         });
     });

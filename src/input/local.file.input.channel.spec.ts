@@ -1,10 +1,10 @@
 import { ILoggerService } from "../services/i.logger.service";
-import { SilentLoggerService } from "../testing/silent.logger.service";
+import { DummyLoggerService } from "../testing/dummy.logger.service";
 import { LocalFileInputChannel } from "./local.file.input.channel";
 
 describe("LocalFileInputChannel", () => {
     let subject: LocalFileInputChannel;
-    const logger: ILoggerService = new SilentLoggerService();
+    const logger: ILoggerService = new DummyLoggerService();
 
     describe("constructor(fileUrl)", () => {
         it("should throw error if it fileUrl cannot be found or cannot be read.", () => {

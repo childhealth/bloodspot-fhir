@@ -11,11 +11,11 @@ const fs = __importStar(require("fs"));
 const os = __importStar(require("os"));
 const path = __importStar(require("path"));
 const tmp = __importStar(require("tmp"));
-const silent_logger_service_1 = require("../testing/silent.logger.service");
+const dummy_logger_service_1 = require("../testing/dummy.logger.service");
 const local_folder_output_channel_1 = require("./local.folder.output.channel");
 describe("LocalFolderOutputChannel", () => {
     let subject;
-    const logger = new silent_logger_service_1.SilentLoggerService();
+    const logger = new dummy_logger_service_1.DummyLoggerService();
     it("constructor(folderUrl) should create a folder if folder doesnt already exist", () => {
         const folderUrl = path.join(tmp.tmpNameSync());
         // check the folder does not exist

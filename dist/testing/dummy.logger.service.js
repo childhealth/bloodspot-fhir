@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class SilentLoggerService {
+class DummyLoggerService {
     info(ignoredMessage) {
         // ignored
     }
@@ -8,5 +8,5 @@ class SilentLoggerService {
         // ignored
     }
 }
-exports.SilentLoggerService = SilentLoggerService;
-//# sourceMappingURL=silent.logger.service.js.map
+exports.DummyLoggerService = DummyLoggerService;
+//# sourceMappingURL=dummy.logger.service.js.map

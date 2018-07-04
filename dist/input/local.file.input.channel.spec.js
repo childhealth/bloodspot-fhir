@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const silent_logger_service_1 = require("../testing/silent.logger.service");
+const dummy_logger_service_1 = require("../testing/dummy.logger.service");
 const local_file_input_channel_1 = require("./local.file.input.channel");
 describe("LocalFileInputChannel", () => {
     let subject;
-    const logger = new silent_logger_service_1.SilentLoggerService();
+    const logger = new dummy_logger_service_1.DummyLoggerService();
     describe("constructor(fileUrl)", () => {
         it("should throw error if it fileUrl cannot be found or cannot be read.", () => {
             expect(() => {
