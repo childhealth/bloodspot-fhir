@@ -1,6 +1,6 @@
 
 "use strict";
-require('./fileHandling').startLog();
+require('./fileHandling').startLog('test-logging.log');
 const fileHandler = require('./fileHandling');
 const logger =  require('./fileHandling').logger;
 //Read Source CSV files from Test Input folder
