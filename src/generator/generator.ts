@@ -26,8 +26,8 @@ export class Generator {
     constructor(
         public inputChannel: InputChannel,
         public outputChannel: OutputChannel,
+        private configurationService: IConfigurationService,
         private uuidService = new UuidService(),
-        private configurationService: IConfigurationService = new ConfigurationService("./bloodspot-helper.json"),
     ) {
         this.healthcareServiceGenerator = new HealthcareServiceGenerator(configurationService);
         this.locationGenerator = new LocationGenerator(configurationService);

@@ -10,11 +10,16 @@ export class ConfigurationService implements IConfigurationService {
 
     constructor(
         private configUrl: string,
-        private logger: any = console,
+        private loggingConsole: any = console,
     ) {
         this.config = this.readConfig(configUrl);
         this.laboratory = this.config.laboratory;
         this.healthcareService = this.config.healthcareService;
+        this.logging = this.config.logging;
+
+        if (!this.logging) {
+            throw new Error("'logging' configuration not set.");
+        }
     }
 
     private readConfig(url: string): string {
@@ -25,7 +30,7 @@ export class ConfigurationService implements IConfigurationService {
             const message = e.message.startsWith("ENOENT") ?
                                 "Cannot read config file '" + this.configUrl + "'."
                                 : e.message;
-            this.logger.log("Error: readConfig: url '"
+            this.loggingConsole.log("Error: readConfig: url '"
               + ((typeof url) === "object" ? JSON.stringify(url) : url) + "': " + message);
             throw new Error(message);
         }

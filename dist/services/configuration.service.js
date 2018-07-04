@@ -5,12 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 class ConfigurationService {
-    constructor(configUrl, logger = console) {
+    constructor(configUrl, loggingConsole = console) {
         this.configUrl = configUrl;
-        this.logger = logger;
+        this.loggingConsole = loggingConsole;
         this.config = this.readConfig(configUrl);
         this.laboratory = this.config.laboratory;
         this.healthcareService = this.config.healthcareService;
+        this.logging = this.config.logging;
+        if (!this.logging) {
+            throw new Error("'logging' configuration not set.");
+        }
     }
     readConfig(url) {
         let configFile = null;
@@ -21,7 +25,7 @@ class ConfigurationService {
             const message = e.message.startsWith("ENOENT") ?
                 "Cannot read config file '" + this.configUrl + "'."
                 : e.message;
-            this.logger.log("Error: readConfig: url '"
+            this.loggingConsole.log("Error: readConfig: url '"
                 + ((typeof url) === "object" ? JSON.stringify(url) : url) + "': " + message);
             throw new Error(message);
         }

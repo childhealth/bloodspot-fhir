@@ -23,8 +23,9 @@ describe("Generator", () => {
         subject = new Generator(
             inputChannel,
             outputChannel,
+            new MockConfigurationService(),
             new UuidService(),
-            new MockConfigurationService());
+        );
         subjectWithPrivateMethods = subject as any;
     });
 

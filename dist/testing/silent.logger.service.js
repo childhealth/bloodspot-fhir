@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const logger_service_1 = require("../services/logger.service");
-class SilentLoggerService extends logger_service_1.LoggerService {
+class SilentLoggerService {
     info(ignoredMessage) {
         // ignored
     }

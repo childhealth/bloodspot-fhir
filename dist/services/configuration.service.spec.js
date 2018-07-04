@@ -24,5 +24,13 @@ describe("ConfigurationService", () => {
             expect(keys).toContain("address");
         });
     });
+    describe("logging", () => {
+        it("should return logging configuration", () => {
+            const actual = subject.logging;
+            const keys = Object.keys(actual);
+            expect(keys).toContain("errorLogFilename");
+            expect(keys).toContain("auditLogFilename");
+        });
+    });
 });
 //# sourceMappingURL=configuration.service.spec.js.map

@@ -1,29 +1,19 @@
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const winston_1 = __importStar(require("winston"));
+const winston_1 = __importDefault(require("winston"));
 class LoggerService {
     constructor(configuration) {
-        if (!configuration) {
-            configuration = {
-                errorLogFilename: "error.log",
-                auditLogFilename: "audit.log",
-            };
-        }
         const errorLogFilename = configuration.errorLogFilename;
         const auditLogFilename = configuration.auditLogFilename;
-        const simpleFormat = winston_1.format.printf((info) => {
+        const simpleFormat = winston_1.default.format.printf((info) => {
             return `${info.timestamp} ${info.level}: ${info.message}`;
         });
         const winstonConfiguration = {
             level: "debug",
-            format: winston_1.format.combine(winston_1.format.timestamp(), simpleFormat),
+            format: winston_1.default.format.combine(winston_1.default.format.timestamp(), simpleFormat),
             transports: [
                 new winston_1.default.transports.File({ filename: errorLogFilename, level: "error" }),
                 new winston_1.default.transports.File({ filename: auditLogFilename }),

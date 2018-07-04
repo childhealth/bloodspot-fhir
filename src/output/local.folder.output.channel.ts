@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { LoggerService } from "../services/logger.service";
+import { ILoggerService } from "../services/i.logger.service";
 import { OutputChannel } from "./output.channel";
 
 export class LocalFolderOutputChannel extends OutputChannel {
@@ -9,7 +9,7 @@ export class LocalFolderOutputChannel extends OutputChannel {
 
     constructor(
         private localFolderUrl: string,
-        private logger: any = new LoggerService(),
+        private logger: ILoggerService,
         private fileSystem = fs,
     ) {
         super();

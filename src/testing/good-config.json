@@ -8,5 +8,9 @@
             "district": "District",
             "postCode": "Post Code"
         }
+    },
+    "logging": {
+        "errorLogFilename": "error.log",
+        "auditLogFilename": "audit.log"
     }
 }

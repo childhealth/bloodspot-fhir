@@ -19,5 +19,9 @@
             "code": "560",
             "description": "MIDWIFE EPISODE"
         }
+    },
+    "logging": {
+        "errorLogFilename": "error.log",
+        "auditLogFilename": "audit.log"
     }
 }

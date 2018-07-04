@@ -1,5 +1,5 @@
 import { Outcome } from "../model/outcome";
-import { LoggerService } from "../services/logger.service";
+import { ILoggerService } from "../services/i.logger.service";
 
 /**
  * Knows how to build an Outcome object from the CSV file from a UK Newborn Screening Laboratory Network (UKNSLN).
@@ -7,7 +7,7 @@ import { LoggerService } from "../services/logger.service";
 export class CSVOutcomeMapper {
 
     constructor(
-        private logger: LoggerService,
+        private logger: ILoggerService,
     ) {}
 
     public buildOutcomes(lines: string[], hasHeader: boolean, filename: string): Outcome[] {

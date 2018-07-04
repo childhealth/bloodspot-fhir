@@ -16,7 +16,7 @@ describe("Generator", () => {
     beforeEach(() => {
         inputChannel = new dummy_local_file_input_channel_1.DummyLocalFileInputChannel();
         outputChannel = new dummy_local_folder_output_channel_1.DummyLocalFolderOutputChannel();
-        subject = new generator_1.Generator(inputChannel, outputChannel, new uuid_service_1.UuidService(), new mock_configuration_service_1.MockConfigurationService());
+        subject = new generator_1.Generator(inputChannel, outputChannel, new mock_configuration_service_1.MockConfigurationService(), new uuid_service_1.UuidService());
         subjectWithPrivateMethods = subject;
     });
     describe("execute", () => {

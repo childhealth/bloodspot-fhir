@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as os from "os";
 
-import { LoggerService } from "../services/logger.service";
+import { ILoggerService } from "../services/i.logger.service";
 import { CSVOutcomeMapper } from "./csv.outcome.mapper";
 import { InputChannel } from "./input.channel";
 
@@ -9,8 +9,8 @@ export class LocalFileInputChannel extends InputChannel {
 
     constructor(
         private localCSVFileUrl: string,
-        private mapper = new CSVOutcomeMapper(new LoggerService()),
-        private logger: any = new LoggerService(),
+        private logger: ILoggerService,
+        private mapper = new CSVOutcomeMapper(logger),
     ) {
         super();
 

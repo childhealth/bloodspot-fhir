@@ -1,6 +1,6 @@
-import { LoggerService } from "../services/logger.service";
+import { ILoggerService } from "../services/i.logger.service";
 
-export class SilentLoggerService extends LoggerService {
+export class SilentLoggerService implements ILoggerService {
     public info(ignoredMessage: string) {
         // ignored
     }

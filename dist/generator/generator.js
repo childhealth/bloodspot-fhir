@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const configuration_service_1 = require("../services/configuration.service");
 const common_generator_1 = require("./common.generator");
 const diagnostic_report_generator_1 = require("./diagnostic.report.generator");
 const encounter_generator_1 = require("./encounter.generator");
@@ -11,11 +10,11 @@ const procedure_generator_1 = require("./procedure.generator");
 const screening_procedure_1 = require("./screening.procedure");
 const uuid_service_1 = require("./uuid.service");
 class Generator {
-    constructor(inputChannel, outputChannel, uuidService = new uuid_service_1.UuidService(), configurationService = new configuration_service_1.ConfigurationService("./bloodspot-helper.json")) {
+    constructor(inputChannel, outputChannel, configurationService, uuidService = new uuid_service_1.UuidService()) {
         this.inputChannel = inputChannel;
         this.outputChannel = outputChannel;
-        this.uuidService = uuidService;
         this.configurationService = configurationService;
+        this.uuidService = uuidService;
         this.commonGenerator = new common_generator_1.CommonGenerator();
         this.patientGenerator = new patient_generator_1.PatientGenerator();
         this.procedureGenerator = new procedure_generator_1.ProcedureGenerator();
