@@ -11,9 +11,9 @@ class OutcomeValidator {
         const birthOrder = fields[10];
         this.validateNumber(birthOrder);
         const dateOfBirth = fields[6];
-        this.validateDate(dateOfBirth);
+        this.validateDate(dateOfBirth, "Date Of Birth");
         const collectionDate = fields[26];
-        this.validateDate(collectionDate);
+        this.validateDate(collectionDate, "Collection Date");
         const pkuStatusCode = fields[30];
         this.validateStatusCode(pkuStatusCode, "PKU status code");
         const chtStatusCode = fields[33];
@@ -38,19 +38,20 @@ class OutcomeValidator {
             throw new Error("Invalid number \"" + value + "\".");
         }
     }
-    validateDate(dateString) {
+    validateDate(dateString, fieldLabel) {
         const components = dateString.split("/");
+        const prefixErrorMessage = fieldLabel + " should be a date DD/MM/YYYY but was \"";
         if (components.length !== 3) {
-            throw new Error("Invalid date \"" + dateString + "\".");
+            throw new Error(prefixErrorMessage + dateString + "\".");
         }
         const year = Number(components[2]);
         const month = Number(components[1]) - 1;
         if (month > 11) {
-            throw new Error("Invalid date \"" + dateString + "\".");
+            throw new Error(prefixErrorMessage + dateString + "\".");
         }
         const day = Number(components[0]);
         if (day > 31) {
-            throw new Error("Invalid date \"" + dateString + "\".");
+            throw new Error(prefixErrorMessage + dateString + "\".");
         }
         return new Date(Date.UTC(year, month, day));
     }

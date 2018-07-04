@@ -32,23 +32,23 @@ describe("OutcomeValidator", () => {
         });
         it("should throw error when given 'rubbish'", () => {
             expect(() => {
-                const ignored = subjectWithPrivateMethods.validateDate("rubbish");
-            }).toThrow(new Error("Invalid date \"rubbish\"."));
+                const ignored = subjectWithPrivateMethods.validateDate("rubbish", "Date Of Birth");
+            }).toThrow(new Error("Date Of Birth should be a date DD/MM/YYYY but was \"rubbish\"."));
         });
         it("should throw error when given '1/2/3/4'", () => {
             expect(() => {
-                const ignored = subjectWithPrivateMethods.validateDate("1/2/3/4");
-            }).toThrow(new Error("Invalid date \"1/2/3/4\"."));
+                const ignored = subjectWithPrivateMethods.validateDate("1/2/3/4", "Nonsense");
+            }).toThrow(new Error("Nonsense should be a date DD/MM/YYYY but was \"1/2/3/4\"."));
         });
         it("should throw error when given '32/1/2018'", () => {
             expect(() => {
-                const ignored = subjectWithPrivateMethods.validateDate("32/1/2018");
-            }).toThrow(new Error("Invalid date \"32/1/2018\"."));
+                const ignored = subjectWithPrivateMethods.validateDate("32/1/2018", "Date1");
+            }).toThrow(new Error("Date1 should be a date DD/MM/YYYY but was \"32/1/2018\"."));
         });
         it("should throw error when given '1/15/2018'", () => {
             expect(() => {
-                const ignored = subjectWithPrivateMethods.validateDate("1/15/2018");
-            }).toThrow(new Error("Invalid date \"1/15/2018\"."));
+                const ignored = subjectWithPrivateMethods.validateDate("1/15/2018", "Date2");
+            }).toThrow(new Error("Date2 should be a date DD/MM/YYYY but was \"1/15/2018\"."));
         });
     });
     describe("validateStatusCode", () => {
