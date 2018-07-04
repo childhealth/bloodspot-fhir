@@ -12,11 +12,10 @@ const os = __importStar(require("os"));
 const csv_outcome_mapper_1 = require("./csv.outcome.mapper");
 const input_channel_1 = require("./input.channel");
 class LocalFileInputChannel extends input_channel_1.InputChannel {
-    constructor(localCSVFileUrl, logger, mapper = new csv_outcome_mapper_1.CSVOutcomeMapper(logger)) {
+    constructor(localCSVFileUrl, logger) {
         super();
         this.localCSVFileUrl = localCSVFileUrl;
         this.logger = logger;
-        this.mapper = mapper;
         this.logger.info("Reading local input file \"" + localCSVFileUrl + "\"...");
         const csvAsStrings = this.readCSVFile(localCSVFileUrl);
         // Discard first line if its headings
@@ -25,7 +24,8 @@ class LocalFileInputChannel extends input_channel_1.InputChannel {
             hasHeaderLine = true;
             csvAsStrings.shift();
         }
-        this.outcomes = mapper.buildOutcomes(csvAsStrings, hasHeaderLine, localCSVFileUrl);
+        this.mapper = new csv_outcome_mapper_1.CSVOutcomeMapper(logger);
+        this.outcomes = this.mapper.buildOutcomes(csvAsStrings, hasHeaderLine, localCSVFileUrl);
     }
     readCSVFile(localFileUrl) {
         let localFile = null;

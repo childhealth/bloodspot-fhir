@@ -77,15 +77,13 @@ export class Outcome {
     constructor(public allValues: string) {
         const fields = allValues.split(",");
 
-        this.validate(fields);
-
         // this.nationalId = fields[0]; // Not used
         this.labCardSerialNo = fields[1];
         this.providerUnit = fields[2];
         this.nhsNumber = fields[3].replace(/ /g, "");  // "NNN NNN NNN" is a display string for "NNNNNNNNN"
         this.surname = fields[4];
         this.firstName = fields[5];
-        this.dateOfBirth = this.validateDate(fields[6]);
+        this.dateOfBirth = this.buildDate(fields[6]);
         this.genderCode = Number(fields[7]);
         this.gpName = fields[8];
         this.gpPracticeCode = fields[9];
@@ -105,7 +103,7 @@ export class Outcome {
         this.postcode = fields[23];
         this.mothersTelephone = fields[24];
 
-        this.collectionDate = this.validateDate(fields[26]);
+        this.collectionDate = this.buildDate(fields[26]);
 
         this.labCode = fields[29];
 
@@ -146,26 +144,7 @@ export class Outcome {
         this.ivaStatusDescription = fields[56];
     }
 
-    private validate(fields: string[]) {
-        if (fields.length !== Outcome.MaxFields) {
-            throw new Error("Invalid values: string has " + fields.length
-              + " values but was expecting " + Outcome.MaxFields + ".");
-        }
-
-        const genderCode = fields[7];
-        this.validateNumber(genderCode);
-
-        const birthOrder = fields[10];
-        this.validateNumber(birthOrder);
-    }
-
-    private validateNumber(value: string) {
-        if (isNaN(Number(value))) {
-            throw new Error("Invalid number \"" + value + "\".");
-        }
-    }
-
-    private validateDate(dateString: string): Date {
+    private buildDate(dateString: string): Date {
         const components = dateString.split("/");
         if (components.length !== 3) {
             throw new Error("Invalid date \"" + dateString + "\".");

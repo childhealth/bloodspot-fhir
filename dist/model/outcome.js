@@ -62,14 +62,13 @@ class Outcome {
         this.ivaSupplementaryCode = "";
         this.ivaStatusDescription = "";
         const fields = allValues.split(",");
-        this.validate(fields);
         // this.nationalId = fields[0]; // Not used
         this.labCardSerialNo = fields[1];
         this.providerUnit = fields[2];
         this.nhsNumber = fields[3].replace(/ /g, ""); // "NNN NNN NNN" is a display string for "NNNNNNNNN"
         this.surname = fields[4];
         this.firstName = fields[5];
-        this.dateOfBirth = this.validateDate(fields[6]);
+        this.dateOfBirth = this.buildDate(fields[6]);
         this.genderCode = Number(fields[7]);
         this.gpName = fields[8];
         this.gpPracticeCode = fields[9];
@@ -88,7 +87,7 @@ class Outcome {
         this.address5 = fields[22];
         this.postcode = fields[23];
         this.mothersTelephone = fields[24];
-        this.collectionDate = this.validateDate(fields[26]);
+        this.collectionDate = this.buildDate(fields[26]);
         this.labCode = fields[29];
         this.pkuStatusCode = this.validatedStatusCode(fields[30], "PKU status code");
         this.pkuSupplementaryCode = this.validatedSupplementaryCode(fields[31]);
@@ -121,22 +120,7 @@ class Outcome {
     get displayName() {
         return this.surname + ", " + this.firstName;
     }
-    validate(fields) {
-        if (fields.length !== Outcome.MaxFields) {
-            throw new Error("Invalid values: string has " + fields.length
-                + " values but was expecting " + Outcome.MaxFields + ".");
-        }
-        const genderCode = fields[7];
-        this.validateNumber(genderCode);
-        const birthOrder = fields[10];
-        this.validateNumber(birthOrder);
-    }
-    validateNumber(value) {
-        if (isNaN(Number(value))) {
-            throw new Error("Invalid number \"" + value + "\".");
-        }
-    }
-    validateDate(dateString) {
+    buildDate(dateString) {
         const components = dateString.split("/");
         if (components.length !== 3) {
             throw new Error("Invalid date \"" + dateString + "\".");

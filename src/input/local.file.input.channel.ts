@@ -7,10 +7,11 @@ import { InputChannel } from "./input.channel";
 
 export class LocalFileInputChannel extends InputChannel {
 
+    private mapper: CSVOutcomeMapper;
+
     constructor(
         private localCSVFileUrl: string,
         private logger: ILoggerService,
-        private mapper = new CSVOutcomeMapper(logger),
     ) {
         super();
 
@@ -25,7 +26,8 @@ export class LocalFileInputChannel extends InputChannel {
             csvAsStrings.shift();
         }
 
-        this.outcomes = mapper.buildOutcomes(csvAsStrings, hasHeaderLine, localCSVFileUrl);
+        this.mapper = new CSVOutcomeMapper(logger);
+        this.outcomes = this.mapper.buildOutcomes(csvAsStrings, hasHeaderLine, localCSVFileUrl);
     }
 
     private readCSVFile(localFileUrl: string): string[] {
