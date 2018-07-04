@@ -34,7 +34,8 @@ var getSourceFiles = function(){
         throw "File access error";
     }
     if (files.length <= 0){
-        throw "No files found in Path "+inputPath;
+        logger("Source File access error - No CSV files found in the path : "+inputPath, 1);
+        throw "No files found in input";
     }
     return files;
 };
