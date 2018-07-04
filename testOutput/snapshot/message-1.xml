@@ -1,15 +1,15 @@
 <?xml version='1.0'?>
 <Bundle xmlns='http://hl7.org/fhir'>
-    <id value='84c15a74-7a6b-489d-8a09-21bffa173c50'/>
+    <id value='f98a1794-a62c-45a9-81a3-d3bc06cdda9d'/>
     <meta>
         <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/DCH-Bundle-1'/>
     </meta>
     <type value='message'/>
     <entry>
-        <fullUrl value='urn:uuid:af9087b2-225b-4ea9-b547-5f22339f3643'/>
+        <fullUrl value='urn:uuid:dc97a735-eea3-4879-9ca1-86f86da6f731'/>
         <resource>
             <MessageHeader>
-                <id value='af9087b2-225b-4ea9-b547-5f22339f3643'/>
+                <id value='dc97a735-eea3-4879-9ca1-86f86da6f731'/>
                 <meta>
                     <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/DCH-MessageHeader-1'/>
                 </meta>
@@ -27,23 +27,490 @@
                     <code value='CH035'/>
                     <display value='Blood Spot Test Outcome'/>
                 </event>
-                <timestamp value='2018-06-22T14:04:50.755Z'/>
+                <timestamp value='2018-07-04T16:07:18.543Z'/>
                 <source>
-                    <source>
-                        <endpoint value='urn:nhs-uk:addressing:ods:LAB01'/>
-                    </source>
+                    <endpoint value='urn:nhs-uk:addressing:ods:LAB01'/>
                 </source>
                 <responsible>
-                    <reference value='urn:uuid:ce89f5d7-c066-4bc8-a6e2-68492f4273fe'/>
+                    <reference value='urn:uuid:49970220-e42a-4509-a3a9-e72e1a67417a'/>
                     <display value='Laboratory 01'/>
                 </responsible>
                 <focus>
-                    <reference value='urn:uuid:26ff5187-8c56-4ff4-b0b5-0ae8c10384bc'/>
+                    <reference value='urn:uuid:34f0b5ca-69fb-4656-85b4-fe7e6e195426'/>
                 </focus>
             </MessageHeader>
         </resource>
     </entry>
     <entry>
-        <Organization>08A</Organization>
+        <fullUrl>urn:uuid:49970220-e42a-4509-a3a9-e72e1a67417a</fullUrl>
+        <resource>
+            <Organization>
+                <id>49970220-e42a-4509-a3a9-e72e1a67417a</id>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Organization-1'/>
+                </meta>
+                <identifier>
+                    <system value='https://fhir.nhs.uk/Id/ods-organization-code'/>
+                    <value value='LAB01'/>
+                </identifier>
+                <name value='Laboratory 01'/>
+                <address>
+                    <line value='First line of the address'/>
+                    <city value='City'/>
+                    <district value='District'/>
+                    <postalCode value='Post Code'/>
+                </address>
+            </Organization>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl>urn:uuid:eabcca17-86a1-423b-a888-64d9f7a69d10</fullUrl>
+        <resource>
+            <HealthcareService>
+                <id value='eabcca17-86a1-423b-a888-64d9f7a69d10'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/DCH-HealthcareService-1'/>
+                </meta>
+                <type>
+                    <coding>
+                        <system value='https://fhir.nhs.uk/STU3/ValueSet/DCH-ProfessionalType-1'/>
+                        <code value='C09'/>
+                        <display value='Screener (in a National Screening Programme)'/>
+                    </coding>
+                </type>
+                <providedBy>
+                    <reference value='urn:uuid:49970220-e42a-4509-a3a9-e72e1a67417a'/>
+                    <display value='Laboratory 01'/>
+                </providedBy>
+                <specialty>
+                    <coding>
+                        <system value='https://fhir.nhs.uk/STU3/CodeSystem/DCH-Specialty-1'/>
+                        <code value='560'/>
+                        <display value='MIDWIFE EPISODE'/>
+                    </coding>
+                </specialty>
+                <location>
+                    <reference value='urn:uuid:e6ad4724-3d97-4558-aa11-f19d3b5cdcb9'/>
+                </location>
+                <telecom>
+                    <system value='phone'/>
+                    <value value='0113 123 4567'/>
+                </telecom>
+            </HealthcareService>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value='urn:uuid:a8927521-0384-4304-a812-c761432180e2'/>
+        <resource>
+            <Patient>
+                <id value='a8927521-0384-4304-a812-c761432180e2'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Patient-1'/>
+                </meta>
+                <name>
+                    <use value='official'/>
+                    <family value='TEST'/>
+                    <given value='BABY'/>
+                </name>
+                <birthDate value='2016-06-17'/>
+                <address>
+                    <use value='home'/>
+                    <line value='Flat 11# Test House'/>
+                    <line value='Test Quay'/>
+                    <line value='Woolwich'/>
+                    <line value='LONDON'/>
+                    <line value='London'/>
+                    <postalCode value='SE18 5NH'/>
+                </address>
+                <gender value='female'/>
+                <identifier>
+                    <system value='https://fhir.nhs.uk/Id/nhs-number'/>
+                    <value value='9991234567'/>
+                </identifier>
+            </Patient>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value='urn:uuid:5870f4f0-6684-4d5a-bf79-08ae127c7c3f'/>
+        <resource>
+            <Procedure>
+                <id value='5870f4f0-6684-4d5a-bf79-08ae127c7c3f'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-NewbornBloodSpotScreeningPKU-Procedure-1'/>
+                </meta>
+                <status value='completed'/>
+                <code>
+                    <coding>
+                        <system value='http://snomed.info/sct'/>
+                        <code value='314081000'/>
+                        <display value='Phenylketonuria screening test'/>
+                    </coding>
+                </code>
+                <subject>
+                    <reference value='urn:uuid:a8927521-0384-4304-a812-c761432180e2'/>
+                </subject>
+                <context>
+                    <reference value='urn:uuid:34f0b5ca-69fb-4656-85b4-fe7e6e195426'/>
+                </context>
+                <outcome>
+                    <coding>
+                        <system value='https://fhir.nhs.uk/STU3/CodeSystem/DCH-BloodSpotOutcomePKU-1'/>
+                        <code value='04'/>
+                        <display value='PKU Not Suspected. Status Code 04'/>
+                    </coding>
+                </outcome>
+                <report>
+                    <reference value='urn:uuid:fe574f89-0bc2-4e68-8466-57094a3bf679'/>
+                </report>
+            </Procedure>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value='urn:uuid:bbffdbdd-cdda-48f0-b9cd-b9df001c942d'/>
+        <resource>
+            <Procedure>
+                <id value='bbffdbdd-cdda-48f0-b9cd-b9df001c942d'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-NewbornBloodSpotScreeningSCD-Procedure-1'/>
+                </meta>
+                <status value='completed'/>
+                <code>
+                    <coding>
+                        <system value='http://snomed.info/sct'/>
+                        <code value='314090007'/>
+                        <display value='Sickle cell disease screening test'/>
+                    </coding>
+                </code>
+                <subject>
+                    <reference value='urn:uuid:a8927521-0384-4304-a812-c761432180e2'/>
+                </subject>
+                <context>
+                    <reference value='urn:uuid:34f0b5ca-69fb-4656-85b4-fe7e6e195426'/>
+                </context>
+                <outcome>
+                    <coding>
+                        <system value='https://fhir.nhs.uk/STU3/CodeSystem/DCH-BloodSpotOutcomeSCD-1'/>
+                        <code value='0602'/>
+                        <display value='Carrier of Other Haemoglobin. Status Code 06'/>
+                    </coding>
+                </outcome>
+                <report>
+                    <reference value='urn:uuid:fe574f89-0bc2-4e68-8466-57094a3bf679'/>
+                </report>
+            </Procedure>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value='urn:uuid:008cc7ad-4761-4559-91b9-7f1726fccc18'/>
+        <resource>
+            <Procedure>
+                <id value='008cc7ad-4761-4559-91b9-7f1726fccc18'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-NewbornBloodSpotScreeningCF-Procedure-1'/>
+                </meta>
+                <status value='completed'/>
+                <code>
+                    <coding>
+                        <system value='http://snomed.info/sct'/>
+                        <code value='314080004'/>
+                        <display value='Cystic fibrosis screening test'/>
+                    </coding>
+                </code>
+                <subject>
+                    <reference value='urn:uuid:a8927521-0384-4304-a812-c761432180e2'/>
+                </subject>
+                <context>
+                    <reference value='urn:uuid:34f0b5ca-69fb-4656-85b4-fe7e6e195426'/>
+                </context>
+                <outcome>
+                    <coding>
+                        <system value='https://fhir.nhs.uk/STU3/CodeSystem/DCH-BloodSpotOutcomeCF-1'/>
+                        <code value='04'/>
+                        <display value='CF Not Suspected. Status Code 04'/>
+                    </coding>
+                </outcome>
+                <report>
+                    <reference value='urn:uuid:fe574f89-0bc2-4e68-8466-57094a3bf679'/>
+                </report>
+            </Procedure>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value='urn:uuid:4d7eef55-395b-4654-8e08-c1996feb4298'/>
+        <resource>
+            <Procedure>
+                <id value='4d7eef55-395b-4654-8e08-c1996feb4298'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-NewbornBloodSpotScreeningCHT-Procedure-1'/>
+                </meta>
+                <status value='completed'/>
+                <code>
+                    <coding>
+                        <system value='http://snomed.info/sct'/>
+                        <code value='400984005'/>
+                        <display value='Congenital hypothyroidism screening test'/>
+                    </coding>
+                </code>
+                <subject>
+                    <reference value='urn:uuid:a8927521-0384-4304-a812-c761432180e2'/>
+                </subject>
+                <context>
+                    <reference value='urn:uuid:34f0b5ca-69fb-4656-85b4-fe7e6e195426'/>
+                </context>
+                <outcome>
+                    <coding>
+                        <system value='https://fhir.nhs.uk/STU3/CodeSystem/DCH-BloodSpotOutcomeCHT-1'/>
+                        <code value='04'/>
+                        <display value='CHT Not Suspected. Status Code 04'/>
+                    </coding>
+                </outcome>
+                <report>
+                    <reference value='urn:uuid:fe574f89-0bc2-4e68-8466-57094a3bf679'/>
+                </report>
+            </Procedure>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value='urn:uuid:95954a14-43f1-40e9-ae40-12e095ae319c'/>
+        <resource>
+            <Procedure>
+                <id value='95954a14-43f1-40e9-ae40-12e095ae319c'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-NewbornBloodSpotScreeningMCADD-Procedure-1'/>
+                </meta>
+                <status value='completed'/>
+                <code>
+                    <coding>
+                        <system value='http://snomed.info/sct'/>
+                        <code value='428056008'/>
+                        <display value='Medium-chain acyl-coenzyme A dehydrogenase deficiency screening test'/>
+                    </coding>
+                </code>
+                <subject>
+                    <reference value='urn:uuid:a8927521-0384-4304-a812-c761432180e2'/>
+                </subject>
+                <context>
+                    <reference value='urn:uuid:34f0b5ca-69fb-4656-85b4-fe7e6e195426'/>
+                </context>
+                <outcome>
+                    <coding>
+                        <system value='https://fhir.nhs.uk/STU3/CodeSystem/DCH-BloodSpotOutcomeMCADD-1'/>
+                        <code value='04'/>
+                        <display value='MCADD Not Suspected. Status Code 04'/>
+                    </coding>
+                </outcome>
+                <report>
+                    <reference value='urn:uuid:fe574f89-0bc2-4e68-8466-57094a3bf679'/>
+                </report>
+            </Procedure>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value='urn:uuid:58330f8c-0e82-45b0-b664-ecba93d7b482'/>
+        <resource>
+            <Procedure>
+                <id value='58330f8c-0e82-45b0-b664-ecba93d7b482'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-NewbornBloodSpotScreeningHCU-Procedure-1'/>
+                </meta>
+                <status value='completed'/>
+                <code>
+                    <coding>
+                        <system value='http://snomed.info/sct'/>
+                        <code value='940201000000107'/>
+                        <display value='Blood spot homocystinuria screening test'/>
+                    </coding>
+                </code>
+                <subject>
+                    <reference value='urn:uuid:a8927521-0384-4304-a812-c761432180e2'/>
+                </subject>
+                <context>
+                    <reference value='urn:uuid:34f0b5ca-69fb-4656-85b4-fe7e6e195426'/>
+                </context>
+                <outcome>
+                    <coding>
+                        <system value='https://fhir.nhs.uk/STU3/CodeSystem/DCH-BloodSpotOutcomeHCU-1'/>
+                        <code value='04'/>
+                        <display value='HCU Not Suspected. Status Code 04'/>
+                    </coding>
+                </outcome>
+                <report>
+                    <reference value='urn:uuid:fe574f89-0bc2-4e68-8466-57094a3bf679'/>
+                </report>
+            </Procedure>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value='urn:uuid:77152e6f-6974-4706-9b69-4feddb55f34e'/>
+        <resource>
+            <Procedure>
+                <id value='77152e6f-6974-4706-9b69-4feddb55f34e'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-NewbornBloodSpotScreeningMSUD-Procedure-1'/>
+                </meta>
+                <status value='completed'/>
+                <code>
+                    <coding>
+                        <system value='http://snomed.info/sct'/>
+                        <code value='940221000000103'/>
+                        <display value='Blood spot maple syrup urine disease screening test'/>
+                    </coding>
+                </code>
+                <subject>
+                    <reference value='urn:uuid:a8927521-0384-4304-a812-c761432180e2'/>
+                </subject>
+                <context>
+                    <reference value='urn:uuid:34f0b5ca-69fb-4656-85b4-fe7e6e195426'/>
+                </context>
+                <outcome>
+                    <coding>
+                        <system value='https://fhir.nhs.uk/STU3/CodeSystem/DCH-BloodSpotOutcomeMSUD-1'/>
+                        <code value='04'/>
+                        <display value='MSUD Not Suspected. Status Code 04'/>
+                    </coding>
+                </outcome>
+                <report>
+                    <reference value='urn:uuid:fe574f89-0bc2-4e68-8466-57094a3bf679'/>
+                </report>
+            </Procedure>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value='urn:uuid:d0519a9c-2d33-4a92-818d-f35c12bbf00e'/>
+        <resource>
+            <Procedure>
+                <id value='d0519a9c-2d33-4a92-818d-f35c12bbf00e'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-NewbornBloodSpotScreeningGA1-Procedure-1'/>
+                </meta>
+                <status value='completed'/>
+                <code>
+                    <coding>
+                        <system value='http://snomed.info/sct'/>
+                        <code value='940131000000109'/>
+                        <display value='Blood spot glutaric aciduria type 1 screening test'/>
+                    </coding>
+                </code>
+                <subject>
+                    <reference value='urn:uuid:a8927521-0384-4304-a812-c761432180e2'/>
+                </subject>
+                <context>
+                    <reference value='urn:uuid:34f0b5ca-69fb-4656-85b4-fe7e6e195426'/>
+                </context>
+                <outcome>
+                    <coding>
+                        <system value='https://fhir.nhs.uk/STU3/CodeSystem/DCH-BloodSpotOutcomeGA1-1'/>
+                        <code value='04'/>
+                        <display value='GA1 Not Suspected. Status Code 04'/>
+                    </coding>
+                </outcome>
+                <report>
+                    <reference value='urn:uuid:fe574f89-0bc2-4e68-8466-57094a3bf679'/>
+                </report>
+            </Procedure>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value='urn:uuid:62045974-1183-4a0e-9d15-a84dd3689af1'/>
+        <resource>
+            <Procedure>
+                <id value='62045974-1183-4a0e-9d15-a84dd3689af1'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-NewbornBloodSpotScreeningIVA-Procedure-1'/>
+                </meta>
+                <status value='completed'/>
+                <code>
+                    <coding>
+                        <system value='http://snomed.info/sct'/>
+                        <code value='940151000000102'/>
+                        <display value='Blood spot isovaleric acidaemia screening test'/>
+                    </coding>
+                </code>
+                <subject>
+                    <reference value='urn:uuid:a8927521-0384-4304-a812-c761432180e2'/>
+                </subject>
+                <context>
+                    <reference value='urn:uuid:34f0b5ca-69fb-4656-85b4-fe7e6e195426'/>
+                </context>
+                <outcome>
+                    <coding>
+                        <system value='https://fhir.nhs.uk/STU3/CodeSystem/DCH-BloodSpotOutcomeIVA-1'/>
+                        <code value='04'/>
+                        <display value='IVA Not Suspected. Status Code 04'/>
+                    </coding>
+                </outcome>
+                <report>
+                    <reference value='urn:uuid:fe574f89-0bc2-4e68-8466-57094a3bf679'/>
+                </report>
+            </Procedure>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value='urn:uuid:fe574f89-0bc2-4e68-8466-57094a3bf679'/>
+        <resource>
+            <DiagnosticReport>
+                <id value='fe574f89-0bc2-4e68-8466-57094a3bf679'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/DCH-NewbornBloodSpotScreening-DiagnosticReport-1'/>
+                </meta>
+                <status value='final'/>
+                <code>
+                    <coding>
+                        <system value='http://snomed.info/sct'/>
+                        <code value='86637100000010'/>
+                        <display value='Child Screening Report (record artifact)'/>
+                    </coding>
+                </code>
+                <subject>
+                    <reference value='urn:uuid:a8927521-0384-4304-a812-c761432180e2'/>
+                </subject>
+                <context>
+                    <reference value='urn:uuid:34f0b5ca-69fb-4656-85b4-fe7e6e195426'/>
+                </context>
+                <issued value='2018-07-04T16:07:18.544Z'/>
+            </DiagnosticReport>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value='urn:uuid:34f0b5ca-69fb-4656-85b4-fe7e6e195426'/>
+        <resource>
+            <Encounter>
+                <id value='34f0b5ca-69fb-4656-85b4-fe7e6e195426'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Encounter-1'/>
+                </meta>
+                <status value='finished'/>
+                <subject>
+                    <reference value='urn:uuid:a8927521-0384-4304-a812-c761432180e2'/>
+                    <display value='TEST, BABY'/>
+                </subject>
+                <period>
+                    <start value='2016-05-22'/>
+                </period>
+                <location>
+                    <location>
+                        <reference value='urn:uuid:e6ad4724-3d97-4558-aa11-f19d3b5cdcb9'/>
+                    </location>
+                </location>
+                <serviceProvider>
+                    <reference value='urn:uuid:eabcca17-86a1-423b-a888-64d9f7a69d10'/>
+                </serviceProvider>
+            </Encounter>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value='urn:uuid:e6ad4724-3d97-4558-aa11-f19d3b5cdcb9'/>
+        <resource>
+            <Location>
+                <id value='e6ad4724-3d97-4558-aa11-f19d3b5cdcb9'/>
+                <meta>
+                    <profile value='https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-DCH-Location-1'/>
+                </meta>
+                <identifier>
+                    <system value='https://fhir.nhs.uk/Id/ods-site-code'/>
+                    <value value='LAB01'/>
+                </identifier>
+            </Location>
+        </resource>
     </entry>
 </Bundle>
