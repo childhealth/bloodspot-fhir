@@ -1,5 +1,6 @@
 {
 "description" : "Config file for Testing",
+"inputpath" : "test/testInput",
 "console"   : false,
 "debug" : false,
 "info"  : true

@@ -3,6 +3,7 @@ const config = require('./test-config.json');
 const level = {1 : "ERRORS:: ", 2 : "WARN:: ", 3 : "INFO:: ", 4 : "DEBUG:: "};
 const configLevel = config['debug'] ? 4 : config['info'] ? 3 : 2;
 const conoleLog = config['console'];
+const inputPath = config['inputpath'];
 
 const fs = require('fs');
 var stream = null;
@@ -25,6 +26,19 @@ var endLog = function(){
     stream.end();
 };
 
+var getSourceFiles = function(){
+    try{
+       var files = this.getFiles(inputPath);
+    }catch (e){
+        var error = "File access error - check input path: "+inputPath;
+        throw error;
+    }
+    if (files.length <= 0){
+        throw "No files found in Path "+inputPath;
+    }
+    return files;
+};
+
 var getFiles = function(dir){
     var files_ = [];
     var files = fs.readdirSync(dir);
@@ -41,17 +55,6 @@ var getFiles = function(dir){
 var readFile = function(fileName){
     var stringFile = fs.readFileSync(fileName).toString();
     return stringFile;
-};
-
-var getXml2Js = function(file){
-    var xml2js = require("xml2js");
-    var xml =  this.readFile(file);
-    var res = null;
-    xml2js.parseString(xml, function(err, json){
-        if(err) throw err;
-        res = json;
-    });
-    return res;
 };
 
 var fileExists = function(path){
@@ -96,11 +99,11 @@ const colors = {
 
 module.exports = {
     getFiles,
-    getXml2Js,
     readFile,
     fileExists,
     rmFolders,
     logger,
     startLog,
-    endLog
+    endLog,
+    getSourceFiles
 };

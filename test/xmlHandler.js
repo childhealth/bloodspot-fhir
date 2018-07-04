@@ -69,10 +69,33 @@ var xmlValidate = function(xmlFilePath, xsdFilePath) {
     return xmlValidationStatus;
 };
 
+var getXml2Js = function(xmlFiles, index){
+    var xml2js = require("xml2js");
+    var xmlFile = this.getXMLFile(xmlFiles, index);
+    var xml =  fileHandler.readFile(xmlFile);
+    var res = null;
+    xml2js.parseString(xml, function(err, json){
+        if(err) throw err;
+        res = json;
+    });
+    return res;
+};
+
+var getXMLFiles = function(sourceCSVFile) {
+    return fileHandler.getFiles('testOutput/'+sourceCSVFile.split('.')[0].split('/')[2]);
+};
+
+var getXMLFile = function(xmlFiles, csvRecordIndex) {
+    return xmlFiles.filter((value) => {return value.includes(`message-${csvRecordIndex}.xml`);})[0];
+};
+
 module.exports = {
     getXpathElementValue,
     getXpathElementText,
     xmlValidate,
     getSubElementProcedure,
-    getXpathNode
+    getXpathNode,
+    getXml2Js,
+    getXMLFiles,
+    getXMLFile
 };

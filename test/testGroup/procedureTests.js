@@ -1,26 +1,26 @@
 
 "use strict";
 const expect = require('expect');
-const fileHandler = require('../fileHandling');
 // const checker = require('./xmlHandler');
 const csvHandler = require('../csvHandler');
 const logger =  require('../fileHandling').logger;
 //Read Source CSV files from Test Input folder
-const srcFiles = fileHandler.getFiles('test/testInput');
+const srcFiles =  require('../fileHandling').getSourceFiles();
 const xpathGetValue = require('../xmlHandler').getXpathElementValue;
 const xpathSubElement = require('../xmlHandler').getSubElementProcedure;
+const xmlHandler =  require('../xmlHandler');
 
     it('should be encoded correctly the Procedure "Phenylketonuria screening" in the XML message', function(){
         logger("Verifying XML file for \"Procedures\"", 3);
         for (const csvFile of srcFiles) {
             //Convert source file to JSON
             var source = csvHandler.csvToJson(csvFile);
-            var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
+            var xmlFiles = xmlHandler.getXMLFiles(csvFile);
                 for (let csvRecord of source) {
+                    var csvIndex =  source.indexOf(csvRecord)+1;
                     //Load generated xml
-                    var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
-                    logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
-                    var xmlFormat = fileHandler.getXml2Js(xmlFile);
+                    logger("Verifying XML file \""+xmlHandler.getXMLFile(xmlFiles,csvIndex)+"\" with CSV file: "+csvFile+" index: "+csvIndex, 4);
+                    var xmlFormat = xmlHandler.getXml2Js(xmlFiles, csvIndex);
             
                     var procedure = xpathSubElement(xmlFormat, `314081000`);
                      //Verifying Procedure 
@@ -30,7 +30,7 @@ const xpathSubElement = require('../xmlHandler').getSubElementProcedure;
                      //status code replaced by supplementary code if supplementary code not empty
                      var csvPKUCode = csvRecord['PKU_Supplementary_Code'] === '' ? csvRecord['PKU_Status_Code'] : csvRecord['PKU_Supplementary_Code'];
                      var xmlPKUCode = xpathGetValue(procedure,'//Procedure/outcome/coding/code');
-                     //XML code length should 2 or 4
+                     //XML code length should be 2 or 4
                      expect([2, 4]).toContain(xmlPKUCode.length);
                      //Prefix csv code with 0 if code length is 1 or 3 
                      csvPKUCode = (csvPKUCode.length === 1 || csvPKUCode.length === 3) ? '0'+csvPKUCode : csvPKUCode;
@@ -44,12 +44,12 @@ const xpathSubElement = require('../xmlHandler').getSubElementProcedure;
         for (const csvFile of srcFiles) {
             //Convert source file to JSON
             var source = csvHandler.csvToJson(csvFile);
-            var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
+            var xmlFiles = xmlHandler.getXMLFiles(csvFile);
                 for (let csvRecord of source) {
-                   //Load generated xml
-                   var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
-                   logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
-                   var xmlFormat = fileHandler.getXml2Js(xmlFile);
+                    var csvIndex =  source.indexOf(csvRecord)+1;
+                    //Load generated xml
+                    logger("Verifying XML file \""+xmlHandler.getXMLFile(xmlFiles,csvIndex)+"\" with CSV file: "+csvFile+" index: "+csvIndex, 4);
+                    var xmlFormat = xmlHandler.getXml2Js(xmlFiles, csvIndex);
             
                     var procedure = xpathSubElement(xmlFormat, `314090007`);
                      //Verifying Procedure 
@@ -73,12 +73,12 @@ const xpathSubElement = require('../xmlHandler').getSubElementProcedure;
         for (const csvFile of srcFiles) {
             //Convert source file to JSON
             var source = csvHandler.csvToJson(csvFile);
-            var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
+            var xmlFiles = xmlHandler.getXMLFiles(csvFile);
                 for (let csvRecord of source) {
+                    var csvIndex =  source.indexOf(csvRecord)+1;
                     //Load generated xml
-                    var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
-                    logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
-                    var xmlFormat = fileHandler.getXml2Js(xmlFile);
+                    logger("Verifying XML file \""+xmlHandler.getXMLFile(xmlFiles,csvIndex)+"\" with CSV file: "+csvFile+" index: "+csvIndex, 4);
+                    var xmlFormat = xmlHandler.getXml2Js(xmlFiles, csvIndex);
             
                     var procedure = xpathSubElement(xmlFormat, `314080004`);
                      //Verifying Procedure 
@@ -102,12 +102,12 @@ const xpathSubElement = require('../xmlHandler').getSubElementProcedure;
         for (const csvFile of srcFiles) {
             //Convert source file to JSON
             var source = csvHandler.csvToJson(csvFile);
-            var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
+            var xmlFiles = xmlHandler.getXMLFiles(csvFile);
                 for (let csvRecord of source) {
+                    var csvIndex =  source.indexOf(csvRecord)+1;
                     //Load generated xml
-                    var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
-                    logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
-                    var xmlFormat = fileHandler.getXml2Js(xmlFile);
+                    logger("Verifying XML file \""+xmlHandler.getXMLFile(xmlFiles,csvIndex)+"\" with CSV file: "+csvFile+" index: "+csvIndex, 4);
+                    var xmlFormat = xmlHandler.getXml2Js(xmlFiles, csvIndex);
             
                     var procedure = xpathSubElement(xmlFormat, `400984005`);
                      //Verifying Procedure 
@@ -131,12 +131,12 @@ const xpathSubElement = require('../xmlHandler').getSubElementProcedure;
         for (const csvFile of srcFiles) {
             //Convert source file to JSON
             var source = csvHandler.csvToJson(csvFile);
-            var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
+            var xmlFiles = xmlHandler.getXMLFiles(csvFile);
             for (let csvRecord of source) {
+                var csvIndex =  source.indexOf(csvRecord)+1;
                 //Load generated xml
-                var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
-                logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
-                var xmlFormat = fileHandler.getXml2Js(xmlFile);
+                logger("Verifying XML file \""+xmlHandler.getXMLFile(xmlFiles,csvIndex)+"\" with CSV file: "+csvFile+" index: "+csvIndex, 4);
+                var xmlFormat = xmlHandler.getXml2Js(xmlFiles, csvIndex);
         
                 var procedure = xpathSubElement(xmlFormat, `428056008`);
                  //Verifying Procedure 
@@ -160,12 +160,12 @@ const xpathSubElement = require('../xmlHandler').getSubElementProcedure;
         for (const csvFile of srcFiles) {
             //Convert source file to JSON
             var source = csvHandler.csvToJson(csvFile);
-            var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
+            var xmlFiles = xmlHandler.getXMLFiles(csvFile);
                 for (let csvRecord of source) {
+                    var csvIndex =  source.indexOf(csvRecord)+1;
                     //Load generated xml
-                    var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
-                    logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
-                    var xmlFormat = fileHandler.getXml2Js(xmlFile);
+                    logger("Verifying XML file \""+xmlHandler.getXMLFile(xmlFiles,csvIndex)+"\" with CSV file: "+csvFile+" index: "+csvIndex, 4);
+                    var xmlFormat = xmlHandler.getXml2Js(xmlFiles, csvIndex);
             
                     var procedure = xpathSubElement(xmlFormat, `940201000000107`);
                      //Verifying Procedure 
@@ -189,12 +189,12 @@ const xpathSubElement = require('../xmlHandler').getSubElementProcedure;
         for (const csvFile of srcFiles) {
             //Convert source file to JSON
             var source = csvHandler.csvToJson(csvFile);
-            var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
+            var xmlFiles = xmlHandler.getXMLFiles(csvFile);
                 for (let csvRecord of source) {
+                    var csvIndex =  source.indexOf(csvRecord)+1;
                     //Load generated xml
-                    var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
-                    logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
-                    var xmlFormat = fileHandler.getXml2Js(xmlFile);
+                    logger("Verifying XML file \""+xmlHandler.getXMLFile(xmlFiles,csvIndex)+"\" with CSV file: "+csvFile+" index: "+csvIndex, 4);
+                    var xmlFormat = xmlHandler.getXml2Js(xmlFiles, csvIndex);
             
                     var procedure = xpathSubElement(xmlFormat, `940221000000103`);
                      //Verifying Procedure 
@@ -218,12 +218,12 @@ const xpathSubElement = require('../xmlHandler').getSubElementProcedure;
         for (const csvFile of srcFiles) {
             //Convert source file to JSON
             var source = csvHandler.csvToJson(csvFile);
-            var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
+            var xmlFiles = xmlHandler.getXMLFiles(csvFile);
                 for (let csvRecord of source) {
-                     //Load generated xml
-                     var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
-                     logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
-                     var xmlFormat = fileHandler.getXml2Js(xmlFile);
+                    var csvIndex =  source.indexOf(csvRecord)+1;
+                    //Load generated xml
+                    logger("Verifying XML file \""+xmlHandler.getXMLFile(xmlFiles,csvIndex)+"\" with CSV file: "+csvFile+" index: "+csvIndex, 4);
+                    var xmlFormat = xmlHandler.getXml2Js(xmlFiles, csvIndex);
             
                      var procedure = xpathSubElement(xmlFormat, `940131000000109`);
                      //Verifying Procedure 
@@ -247,12 +247,12 @@ const xpathSubElement = require('../xmlHandler').getSubElementProcedure;
         for (const csvFile of srcFiles) {
             //Convert source file to JSON
             var source = csvHandler.csvToJson(csvFile);
-            var xmlFiles = fileHandler.getFiles('testOutput/'+csvFile.split('.')[0].split('/')[2]);
+            var xmlFiles = xmlHandler.getXMLFiles(csvFile);
                 for (let csvRecord of source) {
+                    var csvIndex =  source.indexOf(csvRecord)+1;
                     //Load generated xml
-                    var xmlFile= xmlFiles.filter((value) => {return value.includes(`message-${source.indexOf(csvRecord)+1}.xml`);})[0];
-                    logger("Verifying XML file \""+xmlFile+"\" with CSV file: "+csvFile, 4);
-                    var xmlFormat = fileHandler.getXml2Js(xmlFile);
+                    logger("Verifying XML file \""+xmlHandler.getXMLFile(xmlFiles,csvIndex)+"\" with CSV file: "+csvFile+" index: "+csvIndex, 4);
+                    var xmlFormat = xmlHandler.getXml2Js(xmlFiles, csvIndex);
             
                     var procedure = xpathSubElement(xmlFormat, `940151000000102`);
                      //Verifying Procedure 
