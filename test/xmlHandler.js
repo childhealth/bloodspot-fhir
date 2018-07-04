@@ -1,8 +1,17 @@
 const logger =  require('./fileHandling').logger;
 var fileHandler = require('./fileHandling');
 var xpath = require("xml2js-xpath");
+
+class xpathParser {
+    constructor(xmlData){
+        this.xmlData = xmlData;
+    }
+    valueOf(xpath, instance){
+       return getXpathElementValue(this.xmlData, xpath, instance);
+    }
+}
+
 var getXpathElementText = function(xmlFormat, xpathParam) {
-    xpath = require("xml2js-xpath");
     //Added try catch to report which xpath search failed
     try{
         var result = xpath.find(xmlFormat, xpathParam);
@@ -15,7 +24,6 @@ var getXpathElementText = function(xmlFormat, xpathParam) {
 
 
 var getSubElementProcedure = function(xmlFormat, procedureCode) {
-    xpath = require("xml2js-xpath");
     //Added try catch to report which xpath search failed
     try{
         var subElements = xpath.find(xmlFormat, '//Bundle//resource');
@@ -34,10 +42,14 @@ var getSubElementProcedure = function(xmlFormat, procedureCode) {
     }
 };
 
+var getXpathBundleNode = function(xmlFormat, nodename) {
+    return getXpathNode(xmlFormat, '//Bundle//'+nodename);
+};
+
 var getXpathNode = function(xmlFormat, nodename) {
     //Added try catch to report which xpath search failed
     try{
-       return xpath.find(xmlFormat, '//Bundle//'+nodename);
+       return xpath.find(xmlFormat, nodename);
     }catch (e) {
         logger("Exception in xpath find", 2);
         logger("Exception: "+e, 1);
@@ -45,7 +57,6 @@ var getXpathNode = function(xmlFormat, nodename) {
 };
 
 var getXpathElementValue = function(xmlFormat, xpathParam, instance) {
-    var xpath = require("xml2js-xpath");
     var arrayInstance = typeof  instance  === 'number' ? instance : 0;
     //Added try catch to report which xpath search failed
     try{
@@ -94,8 +105,10 @@ module.exports = {
     getXpathElementText,
     xmlValidate,
     getSubElementProcedure,
+    getXpathBundleNode,
     getXpathNode,
     getXml2Js,
     getXMLFiles,
-    getXMLFile
+    getXMLFile,
+    xpathParser
 };
