@@ -15,9 +15,14 @@
     "test": "npm run unit-tests && npm run e2e-tests",
     "dist": "npm unlink && npm run build && npm link"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:childhealth/bloodspot-fhir.git"
+  },
   "keywords": [
     "bloodspot"
   ],
+  "license": "Apache-2.0",
   "author": "matt.west@bjss.com",
   "devDependencies": {
     "@types/jasmine": "^2.8.8",
