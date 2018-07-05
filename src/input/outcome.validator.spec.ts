@@ -53,6 +53,12 @@ describe("OutcomeValidator", () => {
             }).toThrow(new Error("Date1 should be a date DD/MM/YYYY but was \"32/1/2018\"."));
         });
 
+        it("should throw error when given '25/12/1999'", () => {
+            expect(() => {
+                const ignored = subjectWithPrivateMethods.validateDate("25/12/1999", "Date1");
+            }).toThrow(new Error("Date1 should be a date DD/MM/YYYY but was \"25/12/1999\"."));
+        });
+
         it("should throw error when given '1/15/2018'", () => {
             expect(() => {
                 const ignored = subjectWithPrivateMethods.validateDate("1/15/2018", "Date2");
@@ -96,6 +102,15 @@ describe("OutcomeValidator", () => {
             const statusCode = "10";
             const actual = subjectWithPrivateMethods.validateStatusCode(statusCode);
             expect(actual).toEqual("10");
+        });
+    });
+
+    describe("validateStringLength", () => {
+        it("should throw an error when length is exceeded", () => {
+            expect(() => {
+                const longString = "12345678901234567890";
+                const ignored = subjectWithPrivateMethods.validateStringLength(longString, 10, "Field1");
+            }).toThrow(new Error("Field1 value \"12345678901234567890\" exceeds the maximum length of 10."));
         });
     });
 

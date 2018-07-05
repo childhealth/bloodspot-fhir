@@ -8,6 +8,9 @@ export class OutcomeValidator {
               + " values but was expecting " + OutcomeValidator.MaxFields + ".");
         }
 
+        const labSerialNo = fields[1];
+        this.validateStringLength(labSerialNo, 50, "Lab Serial Number");
+
         const genderCode = fields[7];
         this.validateGender(genderCode);
 
@@ -66,6 +69,10 @@ export class OutcomeValidator {
         }
 
         const year = Number(components[2]);
+        if ((year < 2000) || (year > 3000)) {
+            throw new Error(prefixErrorMessage + dateString + "\".");
+        }
+
         const month = Number(components[1]) - 1;
         if (month > 11) {
             throw new Error(prefixErrorMessage + dateString + "\".");
@@ -97,4 +104,10 @@ export class OutcomeValidator {
         return code;
     }
 
+    private validateStringLength(value: string, maximumLength: number, fieldLabel: string) {
+        if (value.length > maximumLength) {
+            throw new Error(fieldLabel + " value \"" + value
+                    + "\" exceeds the maximum length of " + maximumLength + ".");
+        }
+    }
 }
