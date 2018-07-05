@@ -17,6 +17,9 @@ export class OutcomeValidator {
         const dateOfBirth = fields[6];
         this.validateDate(dateOfBirth, "Date Of Birth");
 
+        const receiptDate = fields[25];
+        this.validateDate(receiptDate, "Date Of Receipt");
+
         const collectionDate = fields[26];
         this.validateDate(collectionDate, "Collection Date");
 
