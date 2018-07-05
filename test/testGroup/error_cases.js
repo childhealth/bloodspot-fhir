@@ -54,7 +54,7 @@ describe('  ***** Verifying Error cases *****', function() {
         expect(stdOut).toContain(error_response);
      });
 
-     it.only('should error if date of receipt or date of collection are in wrong format', async function(){
+     it('should error if date of receipt or date of collection are in wrong format', async function(){
         var error_file = srcFiles.filter((value) => {return value.includes("error_date_format");})[0];
         var error_collection_date = "Collection Date should be a date DD/MM/YYYY";
         var error_receipt_date = "Date Of Receipt should be a date DD/MM/YYYY";
