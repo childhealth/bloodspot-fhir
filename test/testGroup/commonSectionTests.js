@@ -8,7 +8,7 @@ const logger =  require('../fileHandling').logger;
 const srcFiles =  require('../fileHandling').getSourceFiles();
 const xmlHandler =  require('../xmlHandler');
 const xpathParser = require('../xmlHandler').xpathParser;
-
+describe('  ***** Verifying common elements *****', function() {
     it('should updated with right "MessageHeader" for all generated xml messages', function(){
         logger("Verifying XML file for \"MessageHeader\" section", 3);
         for (const csvFile of srcFiles) {
@@ -191,3 +191,4 @@ const xpathParser = require('../xmlHandler').xpathParser;
                 }
         }
      });
+});

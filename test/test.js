@@ -31,6 +31,7 @@ describe('  ***** Verifying XML FHIR messages against CSV records *****', functi
     require('./testGroup/xmlTests');
     require('./testGroup/commonSectionTests');
     require('./testGroup/procedureTests');
+    require('./testGroup/error_cases');
 
     after("Test completed" , function () {
         fileHandler.endLog();

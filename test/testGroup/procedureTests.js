@@ -9,7 +9,7 @@ const srcFiles =  require('../fileHandling').getSourceFiles();
 const xpathSubElement = require('../xmlHandler').getSubElementProcedure;
 const xmlHandler =  require('../xmlHandler');
 const xpathParser = require('../xmlHandler').xpathParser;
-
+describe('  ***** Verifying Procedures *****', function() {
     it('should be encoded correctly the Procedure "Phenylketonuria screening" in the XML message', function(){
         logger("Verifying XML file for \"Procedures\"", 3);
         for (const csvFile of srcFiles) {
@@ -263,3 +263,4 @@ const xpathParser = require('../xmlHandler').xpathParser;
                 }
         }
      });
+});

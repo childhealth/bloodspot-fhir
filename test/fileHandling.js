@@ -40,6 +40,20 @@ var getSourceFiles = function(){
     return files;
 };
 
+var getErrorFiles = function(){
+    try{
+       var files = this.getFiles('test/testInputError');
+    }catch (e){
+        logger("Source File access error - check input path in test-config.json: "+inputPath, 1);
+        throw "File access error";
+    }
+    if (files.length <= 0){
+        logger("Source File access error - No CSV files found in the path : "+inputPath, 1);
+        throw "No files found in input";
+    }
+    return files;
+};
+
 var getFiles = function(dir){
     var files_ = [];
     var files = fs.readdirSync(dir);
@@ -108,5 +122,6 @@ module.exports = {
     logger,
     startLog,
     endLog,
-    getSourceFiles
+    getSourceFiles,
+    getErrorFiles
 };
