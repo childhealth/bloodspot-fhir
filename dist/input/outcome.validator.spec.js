@@ -51,6 +51,17 @@ describe("OutcomeValidator", () => {
             }).toThrow(new Error("Date2 should be a date DD/MM/YYYY but was \"1/15/2018\"."));
         });
     });
+    describe("validateGender", () => {
+        it("should allow valid values", () => {
+            const thing = subjectWithPrivateMethods.validateGender("1");
+            // everything is fine.
+        });
+        it("should throw an error when given an invalid code", () => {
+            expect(() => {
+                const ignored = subjectWithPrivateMethods.validateGender("x");
+            }).toThrow(new Error("Gender code should be in [0129] but was \"x\"."));
+        });
+    });
     describe("validateStatusCode", () => {
         it("should throw an error if the value is not a number between 1 and 10.", () => {
             expect(() => {

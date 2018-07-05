@@ -60,6 +60,19 @@ describe("OutcomeValidator", () => {
         });
     });
 
+    describe("validateGender", () => {
+        it("should allow valid values", () => {
+            const thing = subjectWithPrivateMethods.validateGender("1");
+            // everything is fine.
+        });
+
+        it("should throw an error when given an invalid code", () => {
+            expect (() => {
+                const ignored = subjectWithPrivateMethods.validateGender("x");
+            }).toThrow(new Error("Gender code should be in [0129] but was \"x\"."));
+        });
+    });
+
     describe("validateStatusCode", () => {
         it("should throw an error if the value is not a number between 1 and 10.", () => {
             expect(() => {

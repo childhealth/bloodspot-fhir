@@ -7,7 +7,7 @@ class OutcomeValidator {
                 + " values but was expecting " + OutcomeValidator.MaxFields + ".");
         }
         const genderCode = fields[7];
-        this.validateNumber(genderCode);
+        this.validateGender(genderCode);
         const birthOrder = fields[10];
         this.validateNumber(birthOrder);
         const dateOfBirth = fields[6];
@@ -54,6 +54,11 @@ class OutcomeValidator {
             throw new Error(prefixErrorMessage + dateString + "\".");
         }
         return new Date(Date.UTC(year, month, day));
+    }
+    validateGender(code) {
+        if ((code !== "0") && (code !== "1") && (code !== "2") && (code !== "9")) {
+            throw new Error("Gender code should be in [0129] but was \"" + code + "\".");
+        }
     }
     validateStatusCode(code, fieldLabel) {
         const numberCode = Number(code);

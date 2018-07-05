@@ -9,7 +9,7 @@ export class OutcomeValidator {
         }
 
         const genderCode = fields[7];
-        this.validateNumber(genderCode);
+        this.validateGender(genderCode);
 
         const birthOrder = fields[10];
         this.validateNumber(birthOrder);
@@ -73,6 +73,12 @@ export class OutcomeValidator {
             throw new Error(prefixErrorMessage + dateString + "\".");
         }
         return new Date(Date.UTC(year, month, day));
+    }
+
+    private validateGender(code: string) {
+        if ((code !== "0") && (code !== "1") && (code !== "2") && (code !== "9")) {
+            throw new Error("Gender code should be in [0129] but was \"" + code + "\".");
+        }
     }
 
     private validateStatusCode(code: string, fieldLabel: string): string {
