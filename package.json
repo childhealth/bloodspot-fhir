@@ -39,6 +39,7 @@
   "dependencies": {
     "@types/dateformat": "^1.0.1",
     "@types/uuid": "^3.4.3",
+    "ajv": "^6.5.2",
     "bluebird": "^3.5.1",
     "dateformat": "^3.0.3",
     "expect": "^23.1.0",
