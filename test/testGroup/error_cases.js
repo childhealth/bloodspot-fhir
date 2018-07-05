@@ -56,13 +56,15 @@ describe('  ***** Verifying Error cases *****', function() {
 
      it('should error if date of receipt or date of collection are in wrong format', async function(){
         var error_file = srcFiles.filter((value) => {return value.includes("error_date_format");})[0];
-        var error_response = "Collection Date should be a date DD/MM/YYYY";
+        var error_collection_date = "Collection Date should be a date DD/MM/YYYY";
+        var error_receipt_date = "Date Of Receipt should be a date DD/MM/YYYY";
         var outFolder = 'testOutput/' + error_file.split('.')[0].split('/')[2];
             //Remove if folder already exists
         fileHandler.rmFolders(outFolder);
         var res =  await executeCommand('node dist/index.js '+error_file+" "+outFolder);
         var stdOut = res.success ?  res.message : res.error;
-        expect(stdOut).toContain(error_response);
+        expect(stdOut).toContain(error_collection_date);
+        expect(stdOut).toContain(error_receipt_date);
      });
 });
 
