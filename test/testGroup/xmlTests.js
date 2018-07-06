@@ -7,6 +7,7 @@ const logger =  require('../fileHandling').logger;
 //Read Source CSV files from Test Input folder
 const srcFiles =  require('../fileHandling').getSourceFiles();
 const xmlHandler =  require('../xmlHandler');
+
 describe('  ***** Verifying XML validation*****', function() {
     it('should pass XML validation against Schema - DCH-BloodSpotTestOutcome-Bundle', function(){
         for (const csvFile of srcFiles) {
