@@ -8,6 +8,9 @@ export class OutcomeValidator {
               + " values but was expecting " + OutcomeValidator.MaxFields + ".");
         }
 
+        const nationalId = fields[0];
+        this.validateStringLength(nationalId, 19, "National Id");
+
         const labSerialNo = fields[1];
         this.validateStringLength(labSerialNo, 50, "Lab Serial Number");
 
@@ -54,6 +57,12 @@ export class OutcomeValidator {
         const nicu = fields[14]; // Is the baby in Intensive Care Unit? "1" or "0"
         this.validateNumber(nicu, "NICU Flag");
         this.validateNumberRange(nicu, 0, 1, "NICU Flag");
+
+        const mothersSurname = fields[15];
+        this.validateStringLength(mothersSurname, 35, "Mother's Surname");
+
+        const alternativeSurname = fields[16];
+        this.validateStringLength(alternativeSurname, 35, "Alternative Surname");
 
         const receiptDate = fields[25];
         this.validateDate(receiptDate, "Date Of Receipt");
