@@ -13,7 +13,7 @@ describe("LocalFileInputChannel", () => {
         });
         it("should set outcomes if given a good fileUrl to read", () => {
             subject = new local_file_input_channel_1.LocalFileInputChannel("./src/testing/NBBSTestfile.csv", logger);
-            expect(subject.outcomes.length).toEqual(69);
+            expect(subject.outcomes.length).toEqual(58);
         });
     });
 });
