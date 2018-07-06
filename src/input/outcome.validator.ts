@@ -29,6 +29,12 @@ export class OutcomeValidator {
         const genderCode = fields[7];
         this.validateGender(genderCode);
 
+        const gpName = fields[8];
+        this.validateStringLength(gpName, 35, "GP Name");
+
+        const gpCode = fields[9];
+        this.validateStringLength(gpCode, 6, "GP Code");
+
         const birthOrder = fields[10];
         this.validateNumber(birthOrder, "Birth Order");
 
