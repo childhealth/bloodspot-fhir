@@ -8,14 +8,20 @@ class OutcomeValidator {
         }
         const labSerialNo = fields[1];
         this.validateStringLength(labSerialNo, 50, "Lab Serial Number");
+        const providerUnit = fields[2];
+        this.validateStringLength(providerUnit, 35, "Provider Unit");
         const nhsNumber = fields[3].replace(/ /g, "");
         this.validateStringLength(nhsNumber, 10, "NHS Number");
+        const surname = fields[4];
+        this.validateStringLength(surname, 35, "Surname");
+        const firstName = fields[5];
+        this.validateStringLength(firstName, 35, "Child's First Name");
+        const dateOfBirth = fields[6];
+        this.validateDate(dateOfBirth, "Date Of Birth");
         const genderCode = fields[7];
         this.validateGender(genderCode);
         const birthOrder = fields[10];
         this.validateNumber(birthOrder);
-        const dateOfBirth = fields[6];
-        this.validateDate(dateOfBirth, "Date Of Birth");
         const receiptDate = fields[25];
         this.validateDate(receiptDate, "Date Of Receipt");
         const collectionDate = fields[26];
