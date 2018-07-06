@@ -94,6 +94,15 @@ export class OutcomeValidator {
         const collectionDate = fields[26];
         this.validateDate(collectionDate, "Collection Date");
 
+        const previousLabSerialNo = fields[27];
+        this.validateStringLength(previousLabSerialNo, 50, "Previous Lab Serial Number");
+
+        const sampleTakerName = fields[28];
+        this.validateStringLength(sampleTakerName, 35, "Sample Taker's Name");
+
+        const labCode = fields[29];
+        this.validateStringLength(labCode, 35, "Lab Code");
+
         const pkuStatusCode = fields[30];
         this.validateStatusCode(pkuStatusCode, "PKU status code");
 
