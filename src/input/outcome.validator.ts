@@ -30,7 +30,7 @@ export class OutcomeValidator {
         this.validateGender(genderCode);
 
         const birthOrder = fields[10];
-        this.validateNumber(birthOrder);
+        this.validateNumber(birthOrder, "Birth Order");
 
         const receiptDate = fields[25];
         this.validateDate(receiptDate, "Date Of Receipt");
@@ -67,9 +67,9 @@ export class OutcomeValidator {
 
     }
 
-    private validateNumber(value: string) {
+    private validateNumber(value: string, fieldLabel: string) {
         if (isNaN(Number(value))) {
-            throw new Error("Invalid number \"" + value + "\".");
+            throw new Error(fieldLabel + " should be a number but was \"" + value + "\".");
         }
     }
 
