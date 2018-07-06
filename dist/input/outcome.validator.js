@@ -8,6 +8,8 @@ class OutcomeValidator {
         }
         const labSerialNo = fields[1];
         this.validateStringLength(labSerialNo, 50, "Lab Serial Number");
+        const nhsNumber = fields[3].replace(/ /g, "");
+        this.validateStringLength(nhsNumber, 10, "NHS Number");
         const genderCode = fields[7];
         this.validateGender(genderCode);
         const birthOrder = fields[10];
