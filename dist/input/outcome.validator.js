@@ -26,6 +26,19 @@ class OutcomeValidator {
         this.validateStringLength(gpCode, 6, "GP Code");
         const birthOrder = fields[10];
         this.validateNumber(birthOrder, "Birth Order");
+        this.validateNumberRange(birthOrder, 1, 9, "Birth Order");
+        const birthConfinement = fields[11];
+        this.validateNumber(birthConfinement, "Birth Confinement");
+        this.validateNumberRange(birthConfinement, 1, 9, "Birth Confinement");
+        const birthWeighInGrams = fields[12];
+        this.validateNumber(birthWeighInGrams, "Birth Weight");
+        this.validateNumberRange(birthWeighInGrams, 0, 9999, "Birth Weight");
+        const gestationLengthInWeeks = fields[13];
+        this.validateNumber(gestationLengthInWeeks, "Gestation Length");
+        this.validateNumberRange(gestationLengthInWeeks, 0, 49, "Gestation Length");
+        const nicu = fields[14]; // Is the baby in Intensive Care Unit? "1" or "0"
+        this.validateNumber(nicu, "NICU Flag");
+        this.validateNumberRange(nicu, 0, 1, "NICU Flag");
         const receiptDate = fields[25];
         this.validateDate(receiptDate, "Date Of Receipt");
         const collectionDate = fields[26];
@@ -52,6 +65,13 @@ class OutcomeValidator {
     validateNumber(value, fieldLabel) {
         if (isNaN(Number(value))) {
             throw new Error(fieldLabel + " should be a number but was \"" + value + "\".");
+        }
+    }
+    validateNumberRange(value, minimum, maximum, fieldLabel) {
+        const numberValue = Number(value);
+        if ((numberValue < minimum) || (numberValue > maximum)) {
+            throw new Error(fieldLabel + " should be between " + minimum + " and " + maximum
+                + " but was " + value + ".");
         }
     }
     validateDate(dateString, fieldLabel) {

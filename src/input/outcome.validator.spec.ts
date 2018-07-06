@@ -37,6 +37,14 @@ describe("OutcomeValidator", () => {
             });
     });
 
+    describe("validateNumberRange", () => {
+        it("should throw an error if the given value is too low", () => {
+            expect(() => {
+                subjectWithPrivateMethods.validateNumberRange(4, 10, 100, "LowField");
+            }).toThrow(new Error("LowField should be between 10 and 100 but was 4."));
+        });
+    });
+
     describe("validateDate", () => {
         it("should set date of birth", () => {
             const actualDate: Date = subjectWithPrivateMethods.validateDate("17/06/2016");
