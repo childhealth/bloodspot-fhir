@@ -24,7 +24,24 @@ describe("OutcomeValidator", () => {
             const badBirthOrderCsv = ",16N023744,08A,999 123 4567,TEST,BABY,17/06/2016,2,Dr Foster,G83067,X,1,2518,36,1,,,TEST# Firstname,Flat 11# Test House,Test Quay,Woolwich,LONDON,London,SE18 5NH,,23/05/2016,22/05/2016,,SAMPLE TAKER,SEThames,4,,PKU Not Suspected. Status Code 04,4,,CHT Not Suspected. Status Code 04,6,602,Carrier of Other Haemoglobin. Status Code 06,4,,CF Not Suspected. Status Code 04,4,,MCADD Not Suspected. Status Code 04,4,,HCU Not Suspected. Status Code 04,4,,MSUD Not Suspected. Status Code 04,4,,GA1 Not Suspected. Status Code 04,4,,IVA Not Suspected. Status Code 04";
             expect(() => {
                 subject.validate(badBirthOrderCsv.split(","));
-            }).toThrow(new Error("Invalid number \"X\"."));
+            }).toThrow(new Error("Birth Order should be a number but was \"X\"."));
+        });
+    });
+
+    describe("validateNumber", () => {
+        it("should throw an error when given value is not a number", () => {
+                // tslint:disable-next-line:max-line-length
+                expect(() => {
+                    subjectWithPrivateMethods.validateNumber("cow", "Number Of Doors");
+                }).toThrow(new Error("Number Of Doors should be a number but was \"cow\"."));
+            });
+    });
+
+    describe("validateNumberRange", () => {
+        it("should throw an error if the given value is too low", () => {
+            expect(() => {
+                subjectWithPrivateMethods.validateNumberRange(4, 10, 100, "LowField");
+            }).toThrow(new Error("LowField should be between 10 and 100 but was 4."));
         });
     });
 

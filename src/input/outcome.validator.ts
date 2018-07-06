@@ -8,17 +8,61 @@ export class OutcomeValidator {
               + " values but was expecting " + OutcomeValidator.MaxFields + ".");
         }
 
+        const nationalId = fields[0];
+        this.validateStringLength(nationalId, 19, "National Id");
+
         const labSerialNo = fields[1];
         this.validateStringLength(labSerialNo, 50, "Lab Serial Number");
+
+        const providerUnit = fields[2];
+        this.validateStringLength(providerUnit, 35, "Provider Unit");
+
+        const nhsNumber = fields[3].replace(/ /g, "");
+        this.validateStringLength(nhsNumber, 10, "NHS Number");
+
+        const surname = fields[4];
+        this.validateStringLength(surname, 35, "Surname");
+
+        const firstName = fields[5];
+        this.validateStringLength(firstName, 35, "Child's First Name");
+
+        const dateOfBirth = fields[6];
+        this.validateDate(dateOfBirth, "Date Of Birth");
 
         const genderCode = fields[7];
         this.validateGender(genderCode);
 
-        const birthOrder = fields[10];
-        this.validateNumber(birthOrder);
+        const gpName = fields[8];
+        this.validateStringLength(gpName, 35, "GP Name");
 
-        const dateOfBirth = fields[6];
-        this.validateDate(dateOfBirth, "Date Of Birth");
+        const gpCode = fields[9];
+        this.validateStringLength(gpCode, 6, "GP Code");
+
+        const birthOrder = fields[10];
+        this.validateNumber(birthOrder, "Birth Order");
+        this.validateNumberRange(birthOrder, 1, 9, "Birth Order");
+
+        const birthConfinement = fields[11];
+        this.validateNumber(birthConfinement, "Birth Confinement");
+        this.validateNumberRange(birthConfinement, 1, 9, "Birth Confinement");
+
+        const birthWeighInGrams = fields[12];
+        this.validateNumber(birthWeighInGrams, "Birth Weight");
+        this.validateNumberRange(birthWeighInGrams, 0, 9999, "Birth Weight");
+
+        const gestationLengthInWeeks = fields[13];
+        this.validateNumber(gestationLengthInWeeks, "Gestation Length");
+        this.validateNumberRange(gestationLengthInWeeks, 0, 49, "Gestation Length");
+
+        const nicu = fields[14]; // Is the baby in Intensive Care Unit? "1" or "0"
+        this.validateNumber(nicu, "NICU Flag");
+        this.validateNumberRange(nicu, 0, 1, "NICU Flag");
+
+        const mothersSurname = fields[15];
+        this.validateStringLength(mothersSurname, 35, "Mother's Surname");
+
+        const alternativeSurname = fields[16];
+        this.validateStringLength(alternativeSurname, 35, "Alternative Surname");
 
         const receiptDate = fields[25];
         this.validateDate(receiptDate, "Date Of Receipt");
@@ -55,9 +99,17 @@ export class OutcomeValidator {
 
     }
 
-    private validateNumber(value: string) {
+    private validateNumber(value: string, fieldLabel: string) {
         if (isNaN(Number(value))) {
-            throw new Error("Invalid number \"" + value + "\".");
+            throw new Error(fieldLabel + " should be a number but was \"" + value + "\".");
+        }
+    }
+
+    private validateNumberRange(value: string, minimum: number, maximum: number, fieldLabel: string) {
+        const numberValue = Number(value);
+        if ((numberValue < minimum) || (numberValue > maximum)) {
+            throw new Error(fieldLabel + " should be between " + minimum + " and " + maximum
+                    + " but was " + value + ".");
         }
     }
 

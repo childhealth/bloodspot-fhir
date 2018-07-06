@@ -1,7 +1,6 @@
 import { InputChannel } from "../input/input.channel";
 import { Outcome } from "../model/outcome";
 import { OutputChannel } from "../output/output.channel";
-import { ConfigurationService } from "../services/configuration.service";
 import { IConfigurationService } from "../services/i.configuration.service";
 import { CommonGenerator } from "./common.generator";
 import { DiagnosticReportGenerator } from "./diagnostic.report.generator";

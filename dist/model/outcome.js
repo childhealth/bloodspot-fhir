@@ -65,7 +65,7 @@ class Outcome {
         // this.nationalId = fields[0]; // Not used
         this.labCardSerialNo = fields[1];
         this.providerUnit = fields[2];
-        this.nhsNumber = fields[3].replace(/ /g, ""); // "NNN NNN NNN" is a display string for "NNNNNNNNN"
+        this.nhsNumber = this.buildNhsNumber(fields[3]); // "NNN NNN NNN" is a display string for "NNNNNNNNN"
         this.surname = fields[4];
         this.firstName = fields[5];
         this.dateOfBirth = this.buildDate(fields[6]);
@@ -141,6 +141,9 @@ class Outcome {
             return "0" + code;
         }
         return code;
+    }
+    buildNhsNumber(value) {
+        return value.replace(/ /g, "");
     }
     validatedSupplementaryCode(code) {
         const numberCode = Number(code);
