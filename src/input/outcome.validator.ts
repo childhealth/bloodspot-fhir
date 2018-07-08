@@ -21,6 +21,7 @@ export class OutcomeValidator {
         this.validateStringLength(nhsNumber, 10, "NHS Number");
 
         const surname = fields[4];
+        this.validateMandatory(surname, "Surname");
         this.validateStringLength(surname, 35, "Surname");
 
         const firstName = fields[5];
@@ -130,6 +131,12 @@ export class OutcomeValidator {
         const ivaStatusCode = fields[54];
         this.validateStatusCode(ivaStatusCode, "IVA status code");
 
+    }
+
+    private validateMandatory(value: string, fieldLabel: string) {
+        if (value === null || (value === "")) {
+            throw new Error(fieldLabel + " is mandatory but was empty.");
+        }
     }
 
     private validateNumber(value: string, fieldLabel: string) {

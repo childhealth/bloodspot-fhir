@@ -15,6 +15,7 @@ class OutcomeValidator {
         const nhsNumber = fields[3].replace(/ /g, "");
         this.validateStringLength(nhsNumber, 10, "NHS Number");
         const surname = fields[4];
+        this.validateMandatory(surname, "Surname");
         this.validateStringLength(surname, 35, "Surname");
         const firstName = fields[5];
         this.validateStringLength(firstName, 35, "Child's First Name");
@@ -89,6 +90,11 @@ class OutcomeValidator {
         this.validateStatusCode(ga1StatusCode, "GA1 status code");
         const ivaStatusCode = fields[54];
         this.validateStatusCode(ivaStatusCode, "IVA status code");
+    }
+    validateMandatory(value, fieldLabel) {
+        if (value === null || (value === "")) {
+            throw new Error(fieldLabel + " is mandatory but was empty.");
+        }
     }
     validateNumber(value, fieldLabel) {
         if (isNaN(Number(value))) {
