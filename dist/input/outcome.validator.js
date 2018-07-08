@@ -9,10 +9,13 @@ class OutcomeValidator {
         const nationalId = fields[0];
         this.validateStringLength(nationalId, 19, "National Id");
         const labSerialNo = fields[1];
+        this.validateMandatory(labSerialNo, "Lab Serial Number");
         this.validateStringLength(labSerialNo, 50, "Lab Serial Number");
         const providerUnit = fields[2];
+        this.validateMandatory(providerUnit, "Provider Unit");
         this.validateStringLength(providerUnit, 35, "Provider Unit");
         const nhsNumber = fields[3].replace(/ /g, "");
+        this.validateMandatory(nhsNumber, "NHS Number");
         this.validateStringLength(nhsNumber, 10, "NHS Number");
         const surname = fields[4];
         this.validateMandatory(surname, "Surname");
@@ -20,6 +23,7 @@ class OutcomeValidator {
         const firstName = fields[5];
         this.validateStringLength(firstName, 35, "Child's First Name");
         const dateOfBirth = fields[6];
+        this.validateMandatory(dateOfBirth, "Date Of Birth");
         this.validateDate(dateOfBirth, "Date Of Birth");
         const genderCode = fields[7];
         this.validateGender(genderCode);
@@ -34,6 +38,7 @@ class OutcomeValidator {
         this.validateNumber(birthConfinement, "Birth Confinement");
         this.validateNumberRange(birthConfinement, 1, 9, "Birth Confinement");
         const birthWeighInGrams = fields[12];
+        this.validateMandatory(birthWeighInGrams, "Birth Weight");
         this.validateNumber(birthWeighInGrams, "Birth Weight");
         this.validateNumberRange(birthWeighInGrams, 0, 9999, "Birth Weight");
         const gestationLengthInWeeks = fields[13];
@@ -59,6 +64,7 @@ class OutcomeValidator {
         const mothersAddressLine5 = fields[22];
         this.validateStringLength(mothersAddressLine5, 35, "Mother's Address Line 5");
         const mothersPostcode = fields[23];
+        this.validateMandatory(mothersPostcode, "Mother's Post Code");
         this.validateStringLength(mothersPostcode, 8, "Mother's Post Code");
         const mothersTelephone = fields[24];
         this.validateStringLength(mothersTelephone, 20, "Mother's Telephone");
@@ -71,6 +77,7 @@ class OutcomeValidator {
         const sampleTakerName = fields[28];
         this.validateStringLength(sampleTakerName, 35, "Sample Taker's Name");
         const labCode = fields[29];
+        this.validateMandatory(labCode, "Lab Code");
         this.validateStringLength(labCode, 35, "Lab Code");
         const pkuStatusCode = fields[30];
         this.validateStatusCode(pkuStatusCode, "PKU status code");
