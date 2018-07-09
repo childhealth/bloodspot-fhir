@@ -28,6 +28,20 @@ describe("OutcomeValidator", () => {
         });
     });
 
+    describe("validateMandatory", () => {
+        it("should throw an error when given an empty value", () => {
+            expect(() => {
+                const ignored = subjectWithPrivateMethods.validateMandatory("", "MandatoryField");
+            }).toThrow(new Error("MandatoryField is mandatory but was empty."));
+        });
+
+        it("should not throw an error when given a proper value", () => {
+            expect(() => {
+                const ignored = subjectWithPrivateMethods.validateMandatory("the value", "MandatoryField");
+            }).not.toThrow(new Error("MandatoryField has a value but threw an error."));
+        });
+    });
+
     describe("validateNumber", () => {
         it("should throw an error when given value is not a number", () => {
                 // tslint:disable-next-line:max-line-length
